@@ -4,7 +4,7 @@ project(MonsterLunch)
 find_package(grumble)
 find_package(SDL2)
 
-add_executable(ml main.cpp)
+add_executable(ml src/main.cpp)
 target_link_libraries(ml grumble::grumble)
 target_link_libraries(ml SDL2::SDL2)
 
