@@ -1,0 +1,14 @@
+#!/usr/bin/python3
+
+import subprocess
+import os
+import shutil
+
+subprocess.run(["conan", "install", "." ,"--output-folder=build", "--build=missing"])
+
+os.chdir("build")
+
+subprocess.run(["cmake", "..", "-DCMAKE_TOOLCHAIN_FILE='conan_toolchain.cmake'"])
+subprocess.run(["cmake", "--build", ".", "--config Release"])
+
+shutil.move("ml", "../ml")
