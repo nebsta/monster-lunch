@@ -1,5 +1,6 @@
 [requires]
 grumble/1.0.0
+sdl/2.28.5
 
 [generators]
 CMakeDeps
