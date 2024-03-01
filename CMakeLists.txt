@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.9.1)
-project(MonsterLunch)
+set (CMAKE_CXX_STANDARD 17)
+project(ml)
 
-find_package(grumble)
-find_package(SDL2)
+find_package(grumble REQUIRED)
+find_package(SDL2 REQUIRED)
 
 add_executable(ml src/main.cpp)
 target_link_libraries(ml grumble::grumble)
