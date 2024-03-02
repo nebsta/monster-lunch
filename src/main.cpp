@@ -3,8 +3,6 @@
 #include <iostream>
 
 int main() {
-  std::cout << "Hello World";
-
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     std::cout << "Failed to initialize the SDL2 library\n";
     return -1;
@@ -19,7 +17,6 @@ int main() {
   }
 
   SDL_Surface *window_surface = SDL_GetWindowSurface(window);
-
   if (!window_surface) {
     std::cout << "Failed to get the surface from the window\n";
     return -1;
