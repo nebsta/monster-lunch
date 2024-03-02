@@ -1,5 +1,5 @@
 #include <SDL2/SDL.h>
-#include <core/Game.hpp>
+#include <grumble/core/Game.hpp>
 #include <iostream>
 
 int main() {
