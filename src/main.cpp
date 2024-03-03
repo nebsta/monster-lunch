@@ -1,10 +1,12 @@
+#include "rendering/SDLRendererManager.hpp"
 #include <SDL2/SDL.h>
 #include <grumble/core/Game.hpp>
+#include <grumble/logging/Logger.hpp>
 #include <iostream>
 
 int main() {
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-    std::cout << "Failed to initialize the SDL2 library\n";
+    grumble::Logger::error("Failed to initialize the SDL2 library");
     return -1;
   }
 
