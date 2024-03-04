@@ -5,7 +5,7 @@ project(ml)
 find_package(grumble REQUIRED)
 find_package(SDL2 REQUIRED)
 
-add_executable(ml src/main.cpp)
+add_executable(ml src/main.cpp src/rendering/SDLRendererManager.cpp)
 target_link_libraries(ml grumble::grumble)
 target_link_libraries(ml SDL2::SDL2)
 

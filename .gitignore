@@ -2,3 +2,4 @@ build
 CMakeUserPresets.json
 ml
 .cache
+.DS_Store
