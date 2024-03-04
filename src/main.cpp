@@ -1,7 +1,6 @@
 #include "rendering/SDLRendererManager.hpp"
 #include <SDL2/SDL.h>
 #include <SDL_render.h>
-#include <SDL_surface.h>
 #include <SDL_video.h>
 #include <grumble/core/Game.hpp>
 #include <grumble/font/FontManagerConfiguration.hpp>
@@ -14,15 +13,14 @@
 #include <memory>
 
 SDL_Window *window;
-SDL_Surface *surface;
 SDL_Renderer *renderer;
 
 void close() {
-  SDL_FreeSurface(surface);
-  surface = NULL;
-
   SDL_DestroyWindow(window);
-  window = NULL;
+  window = nullptr;
+
+  SDL_DestroyRenderer(renderer);
+  renderer = nullptr;
 
   SDL_Quit();
 }
@@ -49,6 +47,8 @@ bool handleInput() {
   return quit;
 }
 
+void presentScene() { SDL_RenderPresent(renderer); }
+
 int main() {
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     grumble::Logger::error("Failed to initialize the SDL2 library");
@@ -57,17 +57,11 @@ int main() {
 
   Uint32 rendererFlags = SDL_RENDERER_ACCELERATED;
 
-  window = SDL_CreateWindow("SDL2 Window", SDL_WINDOWPOS_CENTERED,
+  window = SDL_CreateWindow("Monster Lunch", SDL_WINDOWPOS_CENTERED,
                             SDL_WINDOWPOS_CENTERED, 680, 480, 0);
 
   if (!window) {
     grumble::Logger::error("Failed to create window");
-    return -1;
-  }
-
-  surface = SDL_GetWindowSurface(window);
-  if (!surface) {
-    grumble::Logger::error("Failed to get the surface from the window");
     return -1;
   }
 
@@ -102,11 +96,12 @@ int main() {
 
   // main rendering loop
   SDL_UpdateWindowSurface(window);
-  SDL_Event e;
-  bool quit = false;
-  while (!quit) {
+  while (true) {
     prepareScene();
-    handleInput();
+    if (handleInput()) {
+      break;
+    }
+    presentScene();
   }
 
   close();
