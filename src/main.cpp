@@ -15,39 +15,40 @@
 
 int main() {
   SDLApplication application;
+  application.setup();
 
   // file manager
   grumble::FileManagerConfiguration fileManangerConf = {"", ""};
-  grumble::FileManager::shared_ptr fileManager =
-      std::make_shared<grumble::FileManager>(fileManangerConf);
+  auto fileManager = std::make_shared<grumble::FileManager>(fileManangerConf);
 
   // sprite manager
   grumble::SpriteManagerConfiguration spriteConf = {"", {}};
-  grumble::SpriteManager::shared_ptr spriteManager =
+  auto spriteManager =
       std::make_shared<grumble::SpriteManager>(spriteConf, fileManager);
 
   // font manager
   grumble::FontManagerConfiguration fontConfig = {"", "", {}};
-  grumble::FontManager::shared_ptr fontManager =
+  auto fontManager =
       std::make_shared<grumble::FontManager>(fontConfig, fileManager);
 
   // renderer manager
-  SDLRendererManager::shared_ptr rendererManager =
-      std::make_shared<SDLRendererManager>(spriteManager, fontManager);
+  auto rendererManager = std::make_shared<SDLRendererManager>(
+      spriteManager, fontManager, application.renderer());
 
   // game instance
-  grumble::Game game =
+  auto game =
       grumble::Game(rendererManager, fileManager, spriteManager, fontManager);
-
+  game.setup(1.0);
   game.rootView()->renderer()->setTint(COLOR_RED);
 
   // main rendering loop
-  application.setup();
   while (true) {
     application.prepareScene();
     if (application.handleInput()) {
       break;
     }
+
+    game.render();
     application.presentScene();
   }
 

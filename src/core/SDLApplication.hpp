@@ -16,8 +16,8 @@ public:
 
   bool isSetup() const;
 
-  const SDL_Window *window() const;
-  const SDL_Renderer *renderer() const;
+  SDL_Window *window() const;
+  SDL_Renderer *renderer() const;
 
 private:
   SDL_Window *_window;

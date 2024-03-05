@@ -1,4 +1,8 @@
 #include "SDLApplication.hpp"
+#include <SDL_stdinc.h>
+#include <glm/fwd.hpp>
+#include <glm/glm.hpp>
+#include <grumble/logging/Logger.hpp>
 
 SDLApplication::SDLApplication() {}
 
@@ -10,10 +14,11 @@ void SDLApplication::setup() {
     return;
   }
 
+  Uint32 windowFlags = SDL_WINDOW_RESIZABLE;
   Uint32 rendererFlags = SDL_RENDERER_ACCELERATED;
 
   _window = SDL_CreateWindow("Monster Lunch", SDL_WINDOWPOS_CENTERED,
-                             SDL_WINDOWPOS_CENTERED, 680, 480, 0);
+                             SDL_WINDOWPOS_CENTERED, 680, 480, windowFlags);
 
   if (!_window) {
     grumble::Logger::error("Failed to create window");
@@ -36,13 +41,20 @@ bool SDLApplication::handleInput() const {
   SDL_Event e;
   bool quit = false;
   while (SDL_PollEvent(&e)) {
+
+    if (e.type == SDL_WINDOWEVENT) {
+
+      if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
+        Sint32 width = e.window.data1;
+        Sint32 height = e.window.data2;
+        glm::vec2 size = glm::vec2(width, height);
+        grumble::Logger::debug("Resizing window " + size);
+        resizeWindow(e.window.data1, e.window.data2);
+      }
+      break;
+    }
+
     if (e.type == SDL_QUIT) {
-      quit = true;
-    }
-    if (e.type == SDL_KEYDOWN) {
-      quit = true;
-    }
-    if (e.type == SDL_MOUSEBUTTONDOWN) {
       quit = true;
     }
   }
@@ -61,9 +73,9 @@ void SDLApplication::teardown() {
   SDL_Quit();
 }
 
-const SDL_Window *SDLApplication::window() const { return _window; }
+SDL_Window *SDLApplication::window() const { return _window; }
 
-const SDL_Renderer *SDLApplication::renderer() const { return _renderer; }
+SDL_Renderer *SDLApplication::renderer() const { return _renderer; }
 
 bool SDLApplication::isSetup() const {
   return _window != nullptr && _renderer != nullptr;

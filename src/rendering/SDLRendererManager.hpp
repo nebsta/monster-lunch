@@ -1,3 +1,4 @@
+#include <SDL_render.h>
 #include <grumble/font/FontManager.hpp>
 #include <grumble/render/ImageRenderer.hpp>
 #include <grumble/render/Renderer.hpp>
@@ -10,7 +11,8 @@ public:
   typedef std::shared_ptr<SDLRendererManager> shared_ptr;
 
   SDLRendererManager(grumble::SpriteManager::shared_ptr spriteManager,
-                     grumble::FontManager::shared_ptr fontManager);
+                     grumble::FontManager::shared_ptr fontManager,
+                     SDL_Renderer *sdlRenderer);
   ~SDLRendererManager() override;
 
   void renderView(grumble::Transform::shared_ptr transform,
@@ -25,4 +27,5 @@ public:
 private:
   grumble::SpriteManager::shared_ptr _spriteManager;
   grumble::FontManager::shared_ptr _fontManager;
+  SDL_Renderer *_sdlRenderer;
 };
