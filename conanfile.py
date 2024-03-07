@@ -7,6 +7,7 @@ class Generator(ConanFile):
   settings = "os", "build_type", "arch"
   description = "Cooking tactics game based on grumble"
   author = "Benjamin Wallis"
-  requires = [ "grumble/1.0.0", "sdl/2.28.5", "sokol/cci.20230925" ]
+  requires = [ "grumble/1.0.0", "sdl/2.28.5", "glfw/3.4" ]
   generators = ["CMakeDeps", "CMakeToolchain"]
+
 

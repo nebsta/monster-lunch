@@ -1,9 +1,4 @@
 #include "SDLApplication.hpp"
-#include <SDL_stdinc.h>
-#include <glm/fwd.hpp>
-#include <glm/glm.hpp>
-#include <glm/gtx/string_cast.hpp>
-#include <grumble/logging/Logger.hpp>
 
 SDLApplication::SDLApplication() {}
 
@@ -16,7 +11,7 @@ void SDLApplication::setup() {
   }
 
   Uint32 windowFlags = SDL_WINDOW_RESIZABLE;
-  Uint32 rendererFlags = SDL_RENDERER_ACCELERATED;
+  Uint32 rendererFlags = SDL_WINDOW_OPENGL;
 
   _window = SDL_CreateWindow("Monster Lunch", SDL_WINDOWPOS_CENTERED,
                              SDL_WINDOWPOS_CENTERED, 680, 480, windowFlags);
@@ -26,16 +21,14 @@ void SDLApplication::setup() {
     return;
   }
 
-  _renderer = SDL_CreateRenderer(_window, -1, rendererFlags);
-  if (!_renderer) {
-    grumble::Logger::error("Failed to create the renderer");
-    return;
-  }
+  _context = SDL_GL_CreateContext(_window);
+
+  SDL_GL_SetSwapInterval(-1);
 }
 
 void SDLApplication::prepareScene() const {
-  SDL_SetRenderDrawColor(_renderer, 96, 128, 255, 255);
-  SDL_RenderClear(_renderer);
+  // SDL_SetRenderDrawColor(_renderer, 96, 128, 255, 255);
+  // SDL_RenderClear(_renderer);
 }
 
 bool SDLApplication::handleInput() const {
@@ -62,22 +55,17 @@ bool SDLApplication::handleInput() const {
   return quit;
 }
 
-void SDLApplication::presentScene() const { SDL_RenderPresent(_renderer); }
+void SDLApplication::presentScene() const {}
 
 void SDLApplication::teardown() {
+  // sg_shutdown();
+
   SDL_DestroyWindow(_window);
   _window = nullptr;
-
-  SDL_DestroyRenderer(_renderer);
-  _renderer = nullptr;
 
   SDL_Quit();
 }
 
 SDL_Window *SDLApplication::window() const { return _window; }
 
-SDL_Renderer *SDLApplication::renderer() const { return _renderer; }
-
-bool SDLApplication::isSetup() const {
-  return _window != nullptr && _renderer != nullptr;
-}
+bool SDLApplication::isSetup() const { return _window != nullptr; }

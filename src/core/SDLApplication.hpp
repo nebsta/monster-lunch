@@ -1,6 +1,8 @@
+#pragma once
+
 #include <SDL2/SDL.h>
 #include <SDL_render.h>
-#include <SDL_video.h>
+#include <glm/gtx/string_cast.hpp>
 #include <grumble/logging/Logger.hpp>
 
 class SDLApplication {
@@ -17,9 +19,8 @@ public:
   bool isSetup() const;
 
   SDL_Window *window() const;
-  SDL_Renderer *renderer() const;
 
 private:
   SDL_Window *_window;
-  SDL_Renderer *_renderer;
+  SDL_GLContext _context;
 };

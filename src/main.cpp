@@ -1,5 +1,4 @@
-#include "core/SDLApplication.hpp"
-#include "rendering/SDLRendererManager.hpp"
+
 #include <SDL2/SDL.h>
 #include <SDL_render.h>
 #include <SDL_video.h>
@@ -14,8 +13,8 @@
 #include <memory>
 
 int main() {
-  SDLApplication application;
-  application.setup();
+  // SDLApplication application;
+  // application.setup();
 
   // file manager
   grumble::FileManagerConfiguration fileManangerConf = {"", ""};
@@ -31,27 +30,26 @@ int main() {
   auto fontManager =
       std::make_shared<grumble::FontManager>(fontConfig, fileManager);
 
-  // renderer manager
-  auto rendererManager = std::make_shared<SDLRendererManager>(
-      spriteManager, fontManager, application.renderer());
+  // renderer manager auto rendererManager =
+  // std::make_shared<SDLRendererManager>(spriteManager, fontManager);
 
   // game instance
-  auto game =
-      grumble::Game(rendererManager, fileManager, spriteManager, fontManager);
-  game.setup(1.0);
-  game.rootView()->renderer()->setTint(COLOR_RED);
+  // auto game =
+  // grumble::Game(rendererManager, fileManager, spriteManager, fontManager);
+  // game.setup(1.0);
+  // game.rootView()->renderer()->setTint(COLOR_RED);
 
   // main rendering loop
-  while (true) {
-    application.prepareScene();
-    if (application.handleInput()) {
-      break;
-    }
-
-    game.render();
-    application.presentScene();
-  }
-
-  application.teardown();
+  // while (true) {
+  //   application.prepareScene();
+  //   if (application.handleInput()) {
+  //     break;
+  //   }
+  //
+  //   // game.render();
+  //   application.presentScene();
+  // }
+  //
+  // appliction.teardown();
   return 0;
 }
