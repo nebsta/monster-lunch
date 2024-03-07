@@ -1,7 +1,4 @@
 #pragma once
-#include "../sokol/sokol.hpp"
-#include <SDL_rect.h>
-#include <SDL_render.h>
 #include <grumble/font/FontManager.hpp>
 #include <grumble/logging/Logger.hpp>
 #include <grumble/render/ImageRenderer.hpp>
@@ -29,6 +26,4 @@ public:
 private:
   grumble::SpriteManager::shared_ptr _spriteManager;
   grumble::FontManager::shared_ptr _fontManager;
-
-  sg_desc sg_desc;
 };

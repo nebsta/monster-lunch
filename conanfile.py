@@ -1,5 +1,6 @@
 from conan import ConanFile, tools
 from conans.model.version import Version
+from conan.tools.cmake import cmake_layout
 
 class Generator(ConanFile):
   name = "monster-lunch"
@@ -10,4 +11,5 @@ class Generator(ConanFile):
   requires = [ "grumble/1.0.0", "sdl/2.28.5", "glfw/3.4" ]
   generators = ["CMakeDeps", "CMakeToolchain"]
 
-
+  def layout(self):
+    cmake_layout(self)

@@ -1,7 +1,5 @@
 
-#include <SDL2/SDL.h>
-#include <SDL_render.h>
-#include <SDL_video.h>
+#include "core/GLFWApplication.hpp"
 #include <grumble/core/Game.hpp>
 #include <grumble/font/FontManagerConfiguration.hpp>
 #include <grumble/io/FileManager.hpp>
@@ -12,9 +10,11 @@
 #include <grumble/ui/View.hpp>
 #include <memory>
 
+#include <GLFW/glfw3.h>
+
 int main() {
-  // SDLApplication application;
-  // application.setup();
+  GLFWApplication application;
+  application.setup();
 
   // file manager
   grumble::FileManagerConfiguration fileManangerConf = {"", ""};
@@ -40,16 +40,12 @@ int main() {
   // game.rootView()->renderer()->setTint(COLOR_RED);
 
   // main rendering loop
-  // while (true) {
-  //   application.prepareScene();
-  //   if (application.handleInput()) {
-  //     break;
-  //   }
-  //
-  //   // game.render();
-  //   application.presentScene();
-  // }
-  //
-  // appliction.teardown();
+  while (!application.shouldTerminate()) {
+    application.prepareFrame();
+    application.handleInput();
+    // game.render();
+    application.presentFrame();
+  }
+  application.teardown();
   return 0;
 }
