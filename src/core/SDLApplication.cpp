@@ -2,6 +2,7 @@
 #include <SDL_stdinc.h>
 #include <glm/fwd.hpp>
 #include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
 #include <grumble/logging/Logger.hpp>
 
 SDLApplication::SDLApplication() {}
@@ -48,8 +49,8 @@ bool SDLApplication::handleInput() const {
         Sint32 width = e.window.data1;
         Sint32 height = e.window.data2;
         glm::vec2 size = glm::vec2(width, height);
-        grumble::Logger::debug("Resizing window " + size);
-        resizeWindow(e.window.data1, e.window.data2);
+        grumble::Logger::debug("Resizing window " + glm::to_string(size));
+        // resizeWindow(e.window.data1, e.window.data2);
       }
       break;
     }

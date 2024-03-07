@@ -3,12 +3,23 @@
 import subprocess
 import os
 import shutil
+import sys
 
-if os.path.isdir("build"):
-  shutil.rmtree("build")
+clean_project = False
+run_executable = False
 
-if os.path.exists(".cache"):
-  shutil.rmtree(".cache")
+for arg in sys.argv:
+  if arg == "--clean":
+    clean_project = True
+  elif arg == "--run":
+    run_executable = True
+
+if clean_project:
+  if os.path.isdir("build"):
+    shutil.rmtree("build")
+
+  if os.path.exists(".cache"):
+    shutil.rmtree(".cache")
 
 if os.path.exists("ml"):
   os.remove("ml")
@@ -19,23 +30,22 @@ subprocess.run([
   ".",
   "--output-folder=build", 
   "--build=missing"#,
-  # "--conf:host",
-  # "*:tools.graph:skip_binaries=False",
-  # "--conf:build",
-  # "*:tools.graph:skip_binaries=True"
 ])
 
 os.chdir("build")
 
 subprocess.run([
-    "cmake", 
-    "..", 
-    "-DCMAKE_TOOLCHAIN_FILE='conan_toolchain.cmake'", 
-    "-DCMAKE_BUILD_TYPE=Debug",
-    "-DCMAKE_EXPORT_COMPILE_COMMANDS=1"
+  "cmake", 
+  "..", 
+  "-DCMAKE_TOOLCHAIN_FILE='conan_toolchain.cmake'", 
+  "-DCMAKE_BUILD_TYPE=Debug",
+  "-DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 ])
 
 subprocess.run(["cmake", "--build", ".", "--config Debug"])
 
 if os.path.exists("ml"):
   shutil.move("ml", "../ml")
+
+  if run_executable:
+    subprocess.run(["../ml"])
