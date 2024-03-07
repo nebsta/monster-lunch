@@ -1,8 +1,6 @@
 #pragma once
 
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
-#include <glad/glad.h>
+#include "../glfw/glfw.hpp"
 #include <glm/gtx/string_cast.hpp>
 #include <grumble/logging/Logger.hpp>
 

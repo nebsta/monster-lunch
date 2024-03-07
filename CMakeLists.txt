@@ -1,10 +1,13 @@
 cmake_minimum_required(VERSION 3.9.1)
 set (CMAKE_CXX_STANDARD 17)
 project(ml)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 find_package(grumble REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(glad REQUIRED)
+
+FILE(COPY res/ DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/res")
 
 add_executable(ml src/main.cpp src/core/GLFWApplication.cpp)
 target_link_libraries(ml grumble::grumble)

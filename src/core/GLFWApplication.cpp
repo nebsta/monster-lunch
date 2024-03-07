@@ -28,6 +28,7 @@ void GLFWApplication::setup() {
 
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     grumble::Logger::error("Unable to load glad");
+    teardown();
     return;
   }
 }

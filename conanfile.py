@@ -11,9 +11,6 @@ class Generator(ConanFile):
   requires = [ "grumble/1.0.0", "sdl/2.28.5", "glfw/3.4", "glad/0.1.36" ]
   generators = ["CMakeDeps", "CMakeToolchain"]
 
-  def layout(self):
-    cmake_layout(self)
-
   def configure(self):
     self.options['glad'].spec = 'gl'
     self.options['glad'].gl_profile = 'core'

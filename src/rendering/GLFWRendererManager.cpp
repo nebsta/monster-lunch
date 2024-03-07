@@ -8,7 +8,13 @@ GLFWRendererManager::GLFWRendererManager(
 
 GLFWRendererManager::~GLFWRendererManager() {}
 
-void GLFWRendererManager::setup() {}
+void GLFWRendererManager::setup() { buildShaders(); }
+
+void GLFWRendererManager::buildShaders() {
+  GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+  glShaderSource(vertexShader, 1, "", NULL);
+  glCompileShader(vertexShader);
+}
 
 void GLFWRendererManager::renderView(grumble::Transform::shared_ptr transform,
                                      grumble::Renderer::shared_ptr renderer) {}

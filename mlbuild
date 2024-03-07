@@ -44,8 +44,8 @@ subprocess.run([
 
 subprocess.run(["cmake", "--build", ".", "--config Debug"])
 
-if os.path.exists("ml"):
-  shutil.move("ml", "../ml")
+if os.path.exists("bin"):
+  shutil.move("bin", "../bin")
 
   if run_executable:
-    subprocess.run(["../ml"])
+    subprocess.run(["../bin/ml"])
