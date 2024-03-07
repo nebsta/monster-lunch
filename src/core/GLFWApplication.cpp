@@ -1,12 +1,17 @@
 #include "GLFWApplication.hpp"
 #include <GLFW/glfw3.h>
-#include <grumble/logging/Logger.hpp>
+
+void error_callback(int error, const char *description) {
+  grumble::Logger::error(std::string(description));
+}
 
 GLFWApplication::GLFWApplication() {}
 
 GLFWApplication::~GLFWApplication() {}
 
 void GLFWApplication::setup() {
+  glfwSetErrorCallback(error_callback);
+
   if (!glfwInit()) {
     grumble::Logger::error("Unable to initialize glfw");
     return;
@@ -20,6 +25,11 @@ void GLFWApplication::setup() {
   }
 
   glfwMakeContextCurrent(_window);
+
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    grumble::Logger::error("Unable to load glad");
+    return;
+  }
 }
 
 void GLFWApplication::prepareFrame() const { glClear(GL_COLOR_BUFFER_BIT); }

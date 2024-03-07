@@ -8,8 +8,13 @@ class Generator(ConanFile):
   settings = "os", "build_type", "arch"
   description = "Cooking tactics game based on grumble"
   author = "Benjamin Wallis"
-  requires = [ "grumble/1.0.0", "sdl/2.28.5", "glfw/3.4" ]
+  requires = [ "grumble/1.0.0", "sdl/2.28.5", "glfw/3.4", "glad/0.1.36" ]
   generators = ["CMakeDeps", "CMakeToolchain"]
 
   def layout(self):
     cmake_layout(self)
+
+  def configure(self):
+    self.options['glad'].spec = 'gl'
+    self.options['glad'].gl_profile = 'core'
+    self.options['glad'].gl_version = '4.6'
