@@ -1,7 +1,4 @@
 #include "SDLApplication.hpp"
-#include <SDL.h>
-#include <SDL_video.h>
-#include <glm/gtx/string_cast.hpp>
 
 SDLApplication::SDLApplication() {}
 
@@ -35,6 +32,9 @@ void SDLApplication::setup() {
   }
 
   SDL_GL_SetSwapInterval(-1);
+
+  // sg_desc desc = {};
+  // sg_setup(&desc);
 }
 
 void SDLApplication::prepareFrame() const {}
@@ -62,6 +62,7 @@ void SDLApplication::presentFrame() const {}
 void SDLApplication::teardown() {
   SDL_DestroyWindow(_window);
   SDL_Quit();
+  // sg_shutdown();
 }
 
 bool SDLApplication::isSetup() const {

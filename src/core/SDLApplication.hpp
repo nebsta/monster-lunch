@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../rendering/sokol.hpp"
+#include <SDL.h>
 #include <SDL_video.h>
 #include <glm/gtx/string_cast.hpp>
 #include <grumble/logging/Logger.hpp>

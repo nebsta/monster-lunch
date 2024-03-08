@@ -1,5 +1,4 @@
 #pragma once
-#include "../glfw/glfw.hpp"
 #include <grumble/font/FontManager.hpp>
 #include <grumble/logging/Logger.hpp>
 #include <grumble/render/ImageRenderer.hpp>
@@ -27,9 +26,4 @@ public:
 private:
   grumble::SpriteManager::shared_ptr _spriteManager;
   grumble::FontManager::shared_ptr _fontManager;
-
-  void buildShaders();
-
-  GLuint _shaderProgram;
-  GLint _mvpLocation;
 };
