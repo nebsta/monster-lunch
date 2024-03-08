@@ -1,24 +1,23 @@
 #pragma once
 
-#include "../glfw/glfw.hpp"
+#include <SDL_video.h>
 #include <glm/gtx/string_cast.hpp>
 #include <grumble/logging/Logger.hpp>
 
-class GLFWApplication {
+class SDLApplication {
 public:
-  GLFWApplication();
-  ~GLFWApplication();
+  SDLApplication();
+  ~SDLApplication();
 
   void setup();
   void prepareFrame() const;
-  void handleInput() const;
+  bool handleInput() const;
   void presentFrame() const;
   void teardown();
 
   bool isSetup() const;
 
-  bool shouldTerminate() const;
-
 private:
-  GLFWwindow *_window;
+  SDL_Window *_window;
+  SDL_GLContext _context;
 };

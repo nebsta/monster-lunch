@@ -4,12 +4,14 @@ project(ml)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 find_package(grumble REQUIRED)
-find_package(glfw3 REQUIRED)
+find_package(SDL2 REQUIRED)
 find_package(glad REQUIRED)
+find_package(sokol REQUIRED)
 
 FILE(COPY res/ DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/res")
 
-add_executable(ml src/main.cpp src/core/GLFWApplication.cpp)
+add_executable(ml src/main.cpp src/core/SDLApplication.cpp)
 target_link_libraries(ml grumble::grumble)
-target_link_libraries(ml glfw)
+target_link_libraries(ml SDL2::SDL2)
+target_link_libraries(ml sokol::sokol)
 target_link_libraries(ml glad::glad)

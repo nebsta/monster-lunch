@@ -1,5 +1,5 @@
 
-#include "core/GLFWApplication.hpp"
+#include "core/SDLApplication.hpp"
 #include <grumble/core/Game.hpp>
 #include <grumble/font/FontManagerConfiguration.hpp>
 #include <grumble/io/FileManager.hpp>
@@ -10,10 +10,8 @@
 #include <grumble/ui/View.hpp>
 #include <memory>
 
-#include <GLFW/glfw3.h>
-
 int main() {
-  GLFWApplication application;
+  SDLApplication application;
   application.setup();
 
   // file manager
@@ -30,11 +28,6 @@ int main() {
   auto fontManager =
       std::make_shared<grumble::FontManager>(fontConfig, fileManager);
 
-  auto file = fileManager->loadFile("res/view.vert");
-
-  grumble::Logger::info("Starting game");
-  grumble::Logger::info("FILE: " + file);
-
   // renderer manager auto rendererManager =
   // std::make_shared<SDLRendererManager>(spriteManager, fontManager);
 
@@ -45,9 +38,11 @@ int main() {
   // game.rootView()->renderer()->setTint(COLOR_RED);
 
   // main rendering loop
-  while (!application.shouldTerminate()) {
+  while (true) {
+    if (application.handleInput()) {
+      break;
+    }
     application.prepareFrame();
-    application.handleInput();
     // game.render();
     application.presentFrame();
   }
