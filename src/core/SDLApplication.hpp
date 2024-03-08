@@ -22,4 +22,5 @@ public:
 private:
   SDL_Window *_window;
   SDL_GLContext _context;
+  sg_desc _sg_desc;
 };

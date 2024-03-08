@@ -1,12 +1,13 @@
 #include "SDLApplication.hpp"
 
-SDLApplication::SDLApplication() {}
+SDLApplication::SDLApplication() : _sg_desc({0}) {}
 
 SDLApplication::~SDLApplication() {}
 
 void SDLApplication::setup() {
 
-  Uint32 windowFlags = SDL_WINDOW_RESIZABLE;
+  Uint32 windowFlags =
+      SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
   Uint32 sdlFlags = SDL_INIT_VIDEO | SDL_INIT_EVENTS;
 
   // setting up sdl
@@ -31,10 +32,25 @@ void SDLApplication::setup() {
     return;
   }
 
+  SDL_GL_MakeCurrent(_window, _context);
+
+  int version = gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
+  if (version == 0) {
+    grumble::Logger::error("Error when loading glad");
+    return;
+  }
+  grumble::Logger::debug("Glad GL Loader Version: " + std::to_string(version));
+
+  int gl_err = glGetError();
+  if (gl_err != GL_NO_ERROR) {
+    grumble::Logger::error("GL error: " + std::to_string(gl_err));
+    return;
+  }
+
   SDL_GL_SetSwapInterval(-1);
 
-  // sg_desc desc = {};
-  // sg_setup(&desc);
+  sg_setup(&_sg_desc);
+  assert(sg_isvalid());
 }
 
 void SDLApplication::prepareFrame() const {}
@@ -62,7 +78,7 @@ void SDLApplication::presentFrame() const {}
 void SDLApplication::teardown() {
   SDL_DestroyWindow(_window);
   SDL_Quit();
-  // sg_shutdown();
+  sg_shutdown();
 }
 
 bool SDLApplication::isSetup() const {
