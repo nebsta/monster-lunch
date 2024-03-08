@@ -8,11 +8,16 @@ import sys
 clean_project = False
 run_executable = False
 
+# check if we need to clean the project or run after building
 for arg in sys.argv:
   if arg == "--clean":
     clean_project = True
   elif arg == "--run":
     run_executable = True
+
+# removing the old bin folder
+if os.path.isdir("bin"):
+  shutil.rmtree("bin")
 
 if clean_project:
   if os.path.isdir("build"):
@@ -24,6 +29,7 @@ if clean_project:
 if os.path.exists("ml"):
   os.remove("ml")
 
+# installing dependencies using conan
 subprocess.run([
   "conan", 
   "install", 
@@ -32,8 +38,8 @@ subprocess.run([
   "--build=missing"#,
 ])
 
+# generating the cmake files
 os.chdir("build")
-
 subprocess.run([
   "cmake", 
   "..", 
@@ -42,8 +48,10 @@ subprocess.run([
   "-DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 ])
 
+# building the project using the generated cmake files
 subprocess.run(["cmake", "--build", ".", "--config Debug"])
 
+# move the bin folder to the root dir and run if needed
 if os.path.exists("bin"):
   shutil.move("bin", "../bin")
 

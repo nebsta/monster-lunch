@@ -17,7 +17,7 @@ int main() {
   application.setup();
 
   // file manager
-  grumble::FileManagerConfiguration fileManangerConf = {"", ""};
+  grumble::FileManagerConfiguration fileManangerConf = {"/", "/"};
   auto fileManager = std::make_shared<grumble::FileManager>(fileManangerConf);
 
   // sprite manager
@@ -30,13 +30,18 @@ int main() {
   auto fontManager =
       std::make_shared<grumble::FontManager>(fontConfig, fileManager);
 
+  auto file = fileManager->loadFile("res/view.vert");
+
+  grumble::Logger::info("Starting game");
+  grumble::Logger::info("FILE: " + file);
+
   // renderer manager auto rendererManager =
   // std::make_shared<SDLRendererManager>(spriteManager, fontManager);
 
   // game instance
   // auto game =
-  // grumble::Game(rendererManager, fileManager, spriteManager, fontManager);
-  // game.setup(1.0);
+  // grumble::Game(rendererManager, fileManager, spriteManager,
+  // fontManager); game.setup(1.0);
   // game.rootView()->renderer()->setTint(COLOR_RED);
 
   // main rendering loop
