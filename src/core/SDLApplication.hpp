@@ -1,11 +1,12 @@
 #pragma once
 
+#include "../rendering/SokolState.hpp"
+#include "../rendering/shader/shader_view.h"
 #include "../rendering/sokol.hpp"
 #include <SDL.h>
 #include <SDL_video.h>
 #include <glm/gtx/string_cast.hpp>
 #include <grumble/logging/Logger.hpp>
-
 class SDLApplication {
 public:
   SDLApplication();
@@ -22,5 +23,6 @@ public:
 private:
   SDL_Window *_window;
   SDL_GLContext _context;
+  SokolState _state;
   sg_desc _sg_desc;
 };

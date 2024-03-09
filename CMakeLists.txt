@@ -15,3 +15,6 @@ target_link_libraries(ml grumble::grumble)
 target_link_libraries(ml SDL2::SDL2)
 target_link_libraries(ml sokol::sokol)
 target_link_libraries(ml glad::glad)
+
+
+# ./sokol-shdc -i res/view.glsl -o src/rendering/shader/shader_view.h -l glsl330
