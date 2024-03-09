@@ -1,7 +1,20 @@
 #include "SDLApplication.hpp"
 #include <SDL_video.h>
+#include <grumble/logging/Logger.hpp>
+void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
+               const char *message_or_null, uint32_t line_nr,
+               const char *filename_or_null, void *user_data) {
 
-SDLApplication::SDLApplication() { _sg_desc = {0}; }
+  grumble::Logger::info("SOKOL");
+}
+
+SDLApplication::SDLApplication() {
+  sg_logger logger = {};
+  logger.func = sokol_log;
+
+  _sg_desc = {};
+  _sg_desc.logger = logger;
+}
 
 SDLApplication::~SDLApplication() {}
 
@@ -27,18 +40,20 @@ void SDLApplication::setup() {
     return;
   }
 
+  // setting SDL GL attributes
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
+  // creating SDL GL context
   _context = SDL_GL_CreateContext(_window);
   if (!_context) {
     grumble::Logger::error("Error when trying to create SDL context");
     return;
   }
-
   SDL_GL_MakeCurrent(_window, _context);
 
+  // loading glad
   int version = gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
   if (version == 0) {
     grumble::Logger::error("Error when loading glad");
@@ -48,8 +63,8 @@ void SDLApplication::setup() {
 
   SDL_GL_SetSwapInterval(-1);
 
-  sg_desc desc = {0};
-  sg_setup(&desc);
+  // setting up sokol
+  sg_setup(&_sg_desc);
   assert(sg_isvalid());
 }
 
