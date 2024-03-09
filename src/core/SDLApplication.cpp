@@ -1,6 +1,7 @@
 #include "SDLApplication.hpp"
+#include <SDL_video.h>
 
-SDLApplication::SDLApplication() : _sg_desc({0}) {}
+SDLApplication::SDLApplication() { _sg_desc = {0}; }
 
 SDLApplication::~SDLApplication() {}
 
@@ -8,7 +9,7 @@ void SDLApplication::setup() {
 
   Uint32 windowFlags =
       SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
-  Uint32 sdlFlags = SDL_INIT_VIDEO | SDL_INIT_EVENTS;
+  Uint32 sdlFlags = SDL_INIT_VIDEO;
 
   // setting up sdl
   int result = SDL_Init(sdlFlags);
@@ -26,6 +27,10 @@ void SDLApplication::setup() {
     return;
   }
 
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+
   _context = SDL_GL_CreateContext(_window);
   if (!_context) {
     grumble::Logger::error("Error when trying to create SDL context");
@@ -41,15 +46,10 @@ void SDLApplication::setup() {
   }
   grumble::Logger::debug("Glad GL Loader Version: " + std::to_string(version));
 
-  int gl_err = glGetError();
-  if (gl_err != GL_NO_ERROR) {
-    grumble::Logger::error("GL error: " + std::to_string(gl_err));
-    return;
-  }
-
   SDL_GL_SetSwapInterval(-1);
 
-  sg_setup(&_sg_desc);
+  sg_desc desc = {0};
+  sg_setup(&desc);
   assert(sg_isvalid());
 }
 
