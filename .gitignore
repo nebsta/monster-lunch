@@ -4,3 +4,4 @@ ml
 .cache
 .DS_Store
 bin/
+src/rendering/_gen_shader/

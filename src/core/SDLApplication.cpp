@@ -1,5 +1,4 @@
 #include "SDLApplication.hpp"
-#include <ostream>
 
 void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
                const char *message_or_null, uint32_t line_nr,
@@ -73,6 +72,12 @@ void SDLApplication::setup() {
                       0.0f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
                       0.5f,  -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
                       -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f};
+
+  /* Coordinate space
+   *     1
+   * -1     1
+   *    -1
+   */
 
   sg_buffer_desc buffer_desc;
   buffer_desc.data = SG_RANGE(vertices);

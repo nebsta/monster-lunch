@@ -8,13 +8,10 @@ find_package(SDL2 REQUIRED)
 find_package(glad REQUIRED)
 find_package(sokol REQUIRED)
 
-FILE(COPY res/ DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/res")
-
-add_executable(ml src/main.cpp src/rendering/sokol.cpp src/core/SDLApplication.cpp )
+add_executable(ml src/main.cpp src/rendering/sokol.cpp src/core/SDLApplication.cpp)
 target_link_libraries(ml grumble::grumble)
 target_link_libraries(ml SDL2::SDL2)
 target_link_libraries(ml sokol::sokol)
 target_link_libraries(ml glad::glad)
 
 
-# ./sokol-shdc -i res/view.glsl -o src/rendering/shader/shader_view.h -l glsl330

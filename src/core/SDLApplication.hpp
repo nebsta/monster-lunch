@@ -1,12 +1,12 @@
 #pragma once
-
 #include "../rendering/SokolState.hpp"
-#include "../rendering/shader/shader_view.h"
+#include "../rendering/_gen_shader/shader_view.h"
 #include "../rendering/sokol.hpp"
 #include <SDL.h>
 #include <SDL_video.h>
 #include <glm/gtx/string_cast.hpp>
 #include <grumble/logging/Logger.hpp>
+#include <ostream>
 class SDLApplication {
 public:
   SDLApplication();

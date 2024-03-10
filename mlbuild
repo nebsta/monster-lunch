@@ -8,6 +8,8 @@ import sys
 clean_project = False
 run_executable = False
 
+SHADER_GEN_PATH = "src/rendering/_gen_shader"
+
 # check if we need to clean the project or run after building
 for arg in sys.argv:
   if arg == "--clean":
@@ -38,7 +40,23 @@ subprocess.run([
   "--build=missing"#,
 ])
 
-# generating the cmake files
+# ensuring the generated shader folder exists
+if os.path.isdir(SHADER_GEN_PATH):
+  shutil.rmtree(SHADER_GEN_PATH)
+os.mkdir(SHADER_GEN_PATH)
+
+# generating the shader files
+subprocess.run([
+  "./tool/sokol-shdc",
+  "-i",
+  "res/view.glsl",
+  "-o",
+  f"{SHADER_GEN_PATH}/shader_view.h",
+  "-l",
+  "glsl330"
+])
+
+# enerating the cmake files
 os.chdir("build")
 subprocess.run([
   "cmake", 
@@ -49,7 +67,12 @@ subprocess.run([
 ])
 
 # building the project using the generated cmake files
-subprocess.run(["cmake", "--build", ".", "--config Debug"])
+subprocess.run([
+  "cmake", 
+  "--build", 
+  ".", 
+  "--config Debug"
+])
 
 # move the bin folder to the root dir and run if needed
 if os.path.exists("bin"):
