@@ -6,6 +6,8 @@
 #include <grumble/io/FileManager.hpp>
 #include <grumble/io/FileManagerConfiguration.hpp>
 #include <grumble/logging/Logger.hpp>
+#include <grumble/render/RendererManagerConfiguration.hpp>
+#include <grumble/render/Shape.hpp>
 #include <grumble/sprite/SpriteManager.hpp>
 #include <grumble/sprite/SpriteManagerConfiguration.hpp>
 #include <grumble/ui/View.hpp>
@@ -29,12 +31,13 @@ int main() {
   auto fontManager =
       std::make_shared<grumble::FontManager>(fontConfig, fileManager);
 
+  grumble::RendererManagerConfiguration rendererConfig = {1.0, {SHAPE_SQUARE}};
   auto rendererManager = std::make_shared<SokolRendererManager>(
-      spriteManager, fontManager, application.window());
+      rendererConfig, spriteManager, fontManager, application.window());
 
   auto game =
       grumble::Game(rendererManager, fileManager, spriteManager, fontManager);
-  game.setup(1.0);
+  game.setup();
   game.rootView()->renderer()->setTint(COLOR_RED);
 
   // main rendering loop

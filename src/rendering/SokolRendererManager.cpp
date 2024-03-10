@@ -9,10 +9,11 @@ void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
 }
 
 SokolRendererManager::SokolRendererManager(
+    grumble::RendererManagerConfiguration configuration,
     grumble::SpriteManager::shared_ptr spriteManager,
     grumble::FontManager::shared_ptr fontMananger, SDL_Window *sdlWindow)
     : _spriteManager(spriteManager), _fontManager(fontMananger),
-      _sdlWindow(sdlWindow) {
+      _sdlWindow(sdlWindow), grumble::RendererManager(configuration) {
 
   sg_logger logger = {};
   logger.func = sokol_log;
