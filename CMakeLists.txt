@@ -8,7 +8,7 @@ find_package(SDL2 REQUIRED)
 find_package(glad REQUIRED)
 find_package(sokol REQUIRED)
 
-add_executable(ml src/main.cpp src/rendering/sokol.cpp src/core/SDLApplication.cpp)
+add_executable(ml src/main.cpp src/rendering/sokol.cpp src/core/SDLApplication.cpp src/rendering/SokolRendererManager.cpp)
 target_link_libraries(ml grumble::grumble)
 target_link_libraries(ml SDL2::SDL2)
 target_link_libraries(ml sokol::sokol)

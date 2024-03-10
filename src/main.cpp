@@ -1,5 +1,6 @@
 
 #include "core/SDLApplication.hpp"
+#include "rendering/SokolRendererManager.hpp"
 #include <grumble/core/Game.hpp>
 #include <grumble/font/FontManagerConfiguration.hpp>
 #include <grumble/io/FileManager.hpp>
@@ -28,24 +29,23 @@ int main() {
   auto fontManager =
       std::make_shared<grumble::FontManager>(fontConfig, fileManager);
 
-  // renderer manager auto rendererManager =
-  // std::make_shared<SDLRendererManager>(spriteManager, fontManager);
+  auto rendererManager = std::make_shared<SokolRendererManager>(
+      spriteManager, fontManager, application.window());
 
-  // game instance
-  // auto game =
-  // grumble::Game(rendererManager, fileManager, spriteManager,
-  // fontManager); game.setup(1.0);
-  // game.rootView()->renderer()->setTint(COLOR_RED);
+  auto game =
+      grumble::Game(rendererManager, fileManager, spriteManager, fontManager);
+  game.setup(1.0);
+  game.rootView()->renderer()->setTint(COLOR_RED);
 
   // main rendering loop
   while (true) {
     if (application.handleInput()) {
       break;
     }
-    application.prepareFrame();
-    // game.render();
-    application.presentFrame();
+    game.render();
   }
+
   application.teardown();
+  game.teardown();
   return 0;
 }

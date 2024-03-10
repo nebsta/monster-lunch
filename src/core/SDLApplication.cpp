@@ -1,20 +1,8 @@
 #include "SDLApplication.hpp"
+#include <SDL_video.h>
+#include <memory>
 
-void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
-               const char *message_or_null, uint32_t line_nr,
-               const char *filename_or_null, void *user_data) {
-  std::cout << log_item_id << ":" << message_or_null << std::endl;
-}
-
-SDLApplication::SDLApplication() {
-  sg_logger logger = {};
-  logger.func = sokol_log;
-
-  _sg_desc = {};
-  _sg_desc.logger = logger;
-
-  _state = {};
-}
+SDLApplication::SDLApplication() {}
 
 SDLApplication::~SDLApplication() {}
 
@@ -52,62 +40,7 @@ void SDLApplication::setup() {
     return;
   }
   SDL_GL_MakeCurrent(_window, _context);
-
-  // loading glad
-  int version = gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
-  if (version == 0) {
-    grumble::Logger::error("Error when loading glad");
-    return;
-  }
-  grumble::Logger::debug("Glad GL Loader Version: " + std::to_string(version));
-
-  SDL_GL_SetSwapInterval(-1);
-
-  // setting up sokol
-  sg_setup(&_sg_desc);
-  assert(sg_isvalid());
-
-  // a vertex buffer with 3 vertices
-  float vertices[] = {// positions            // colors
-                      0.0f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
-                      0.5f,  -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
-                      -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f};
-
-  /* Coordinate space
-   *     1
-   * -1     1
-   *    -1
-   */
-
-  sg_buffer_desc buffer_desc;
-  buffer_desc.data = SG_RANGE(vertices);
-  buffer_desc.label = "triangle-vertices";
-
-  _state.bindings.vertex_buffers[0] = sg_make_buffer(&buffer_desc);
-
-  sg_shader shader = sg_make_shader(triangle_shader_desc(sg_query_backend()));
-
-  sg_pipeline_desc pipeline_desc = {};
-  pipeline_desc.shader = shader;
-  pipeline_desc.label = "triangle-pipeline";
-
-  sg_vertex_layout_state layout = {};
-  layout.attrs[ATTR_vs_position].format = SG_VERTEXFORMAT_FLOAT3;
-  layout.attrs[ATTR_vs_color0].format = SG_VERTEXFORMAT_FLOAT4;
-
-  pipeline_desc.layout = layout;
-  _state.pipeline = sg_make_pipeline(&pipeline_desc);
-
-  // a pass action to clear framebuffer to black
-  sg_pass_action action = {};
-  sg_color_attachment_action color_action = {};
-  color_action.load_action = SG_LOADACTION_CLEAR;
-  color_action.clear_value = {0.0f, 0.0f, 0.0f, 1.0f};
-  action.colors[0] = color_action;
-  _state.pass_action = action;
 }
-
-void SDLApplication::prepareFrame() const {}
 
 bool SDLApplication::handleInput() const {
   SDL_Event e;
@@ -127,27 +60,9 @@ bool SDLApplication::handleInput() const {
   return terminate;
 }
 
-void SDLApplication::presentFrame() const {
-
-  int cur_width, cur_height;
-  SDL_GetWindowSize(_window, &cur_width, &cur_height);
-
-  sg_begin_default_pass(_state.pass_action, cur_width, cur_height);
-  sg_apply_pipeline(_state.pipeline);
-  sg_apply_bindings(&_state.bindings);
-  sg_draw(0, 3, 1);
-  sg_end_pass();
-  sg_commit();
-
-  SDL_GL_SwapWindow(_window);
-}
-
 void SDLApplication::teardown() {
   SDL_DestroyWindow(_window);
   SDL_Quit();
-  sg_shutdown();
 }
 
-bool SDLApplication::isSetup() const {
-  return _window != nullptr && _context != nullptr;
-}
+SDL_Window *SDLApplication::window() const { return _window; }
