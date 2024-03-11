@@ -4,6 +4,7 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/fwd.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
                const char *message_or_null, uint32_t line_nr,
@@ -101,17 +102,20 @@ void SokolRendererManager::prepareFrame() {
 void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
                                       grumble::Renderer::shared_ptr renderer) {
 
-  // int cur_width, cur_height;
-  // SDL_GetWindowSize(_sdlWindow, &cur_width, &cur_height);
-  // auto ortho = glm::ortho(0.0f, (float)cur_width, (float)cur_height, 0.0f,
-  // 0.0f,
-  // 1000.0f);
-  // vs_params_t params = {to_float_arr(ortho)};
+  int cur_width, cur_height;
+  SDL_GetWindowSize(_sdlWindow, &cur_width, &cur_height);
 
   sg_apply_bindings(&_state.bindings);
 
-  // sg_apply_uniforms(SG_SHADERSTAGE_VS,
-  // SLOT_vs_params, SG_RANGE(params));
+  vs_params_t params;
+  HMM_Mat4 ortho =
+      HMM_Orthographic_LH_NO(0.0f, cur_width, cur_height, 0.0f, -1.0f, 1.0f);
+
+  auto scale = HMM_Scale({100.0f, 100.0f, 1.0f});
+
+  params.ortho = ortho;
+  params.model = scale;
+  sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, SG_RANGE(params));
   sg_draw(0, 6, 1);
 }
 

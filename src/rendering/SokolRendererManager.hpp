@@ -2,7 +2,7 @@
 #include "../rendering/SokolState.hpp"
 #include "../rendering/_gen_shader/shader_view.h"
 #include "../rendering/sokol.hpp"
-#include "../utils/SokolUtils.hpp"
+#include "../utils/HandmadeMath.h"
 #include "instance/ViewInstance.hpp"
 #include "shapes.hpp"
 #include <SDL.h>
