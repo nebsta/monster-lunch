@@ -1,6 +1,6 @@
 
 #include "SokolRendererManager.hpp"
-#include <SDL_video.h>
+#include <glm/ext/matrix_clip_space.hpp>
 
 void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
                const char *message_or_null, uint32_t line_nr,
@@ -42,33 +42,72 @@ void SokolRendererManager::setup() {
   sg_setup(&_sg_desc);
   assert(sg_isvalid());
 
-  // a vertex buffer with 3 vertices
-  float vertices[] = {// positions            // colors
-                      0.0f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
-                      0.5f,  -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
-                      -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f};
-
   /* Coordinate space
    *     1
    * -1     1
    *    -1
    */
 
-  sg_buffer_desc buffer_desc = {};
-  buffer_desc.data = SG_RANGE(vertices);
-  buffer_desc.label = "triangle-vertices";
+  const std::vector<Shape> preloadedShapes = configuration().preloadedShapes;
+  for (int i = 0; i < preloadedShapes.size(); i++) {
+    Shape shape = preloadedShapes[i];
 
-  _state.bindings.vertex_buffers[0] = sg_make_buffer(&buffer_desc);
+    sg_buffer_desc index_buffer_desc = {};
+    index_buffer_desc.type = SG_BUFFERTYPE_INDEXBUFFER;
+    index_buffer_desc.data = SG_RANGE(shape.indices);
+    index_buffer_desc.label = fmt::format("index-shape-{}", shape.id).c_str();
 
-  sg_shader shader = sg_make_shader(triangle_shader_desc(sg_query_backend()));
+    sg_buffer_desc vertex_buffer_desc = {};
+    vertex_buffer_desc.type = SG_BUFFERTYPE_VERTEXBUFFER;
+    vertex_buffer_desc.data = SG_RANGE(shape.vertices);
+    vertex_buffer_desc.label = fmt::format("vertex-shape-{}", shape.id).c_str();
+
+    sg_buffer_desc instance_buffer_desc = {};
+    instance_buffer_desc.size = 500 * sizeof(ViewInstance);
+    instance_buffer_desc.usage = SG_USAGE_STREAM;
+    instance_buffer_desc.label =
+        fmt::format("instance-shape-{}", shape.id).c_str();
+
+    _state.bindings.vertex_buffers[0] = sg_make_buffer(&vertex_buffer_desc);
+    _state.bindings.vertex_buffers[1] = sg_make_buffer(&instance_buffer_desc);
+    _state.bindings.index_buffer = sg_make_buffer(&index_buffer_desc);
+  }
+
+  _state.instances[0].color = COLOR_RED;
+  _state.instances[0].position = {0.0f, 0.0f, 0.0f};
+
+  _state.instances[1].color = COLOR_GREEN;
+  _state.instances[1].position = {0.0f, 0.0f, 0.0f};
+
+  _state.instances[2].color = COLOR_BLUE;
+  _state.instances[2].position = {0.0f, 0.0f, 0.0f};
+
+  _state.instances[3].color = COLOR_WHITE;
+  _state.instances[3].position = {0.0f, 0.0f, 0.0f};
+
+  // setting the initial instance data
+  sg_range range = {};
+  range.ptr = _state.instances;
+  range.size = (size_t)4 * sizeof(ViewInstance);
+  sg_update_buffer(_state.bindings.vertex_buffers[1], range);
+
+  sg_shader shader = sg_make_shader(view_shader_desc(sg_query_backend()));
 
   sg_pipeline_desc pipeline_desc = {};
   pipeline_desc.shader = shader;
-  pipeline_desc.label = "triangle-pipeline";
+  pipeline_desc.label = "main-pipeline";
+  pipeline_desc.index_type = SG_INDEXTYPE_UINT16;
 
   sg_vertex_layout_state layout = {};
-  layout.attrs[ATTR_vs_position].format = SG_VERTEXFORMAT_FLOAT3;
-  layout.attrs[ATTR_vs_color0].format = SG_VERTEXFORMAT_FLOAT4;
+  layout.buffers[1].step_func = SG_VERTEXSTEP_PER_INSTANCE;
+  layout.attrs[ATTR_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
+  layout.attrs[ATTR_vs_pos].buffer_index = 0;
+
+  layout.attrs[ATTR_vs_inst_pos].format = SG_VERTEXFORMAT_FLOAT3;
+  layout.attrs[ATTR_vs_inst_pos].buffer_index = 0;
+
+  layout.attrs[ATTR_vs_inst_col].format = SG_VERTEXFORMAT_FLOAT4;
+  layout.attrs[ATTR_vs_inst_col].buffer_index = 1;
 
   pipeline_desc.layout = layout;
   _state.pipeline = sg_make_pipeline(&pipeline_desc);
@@ -94,8 +133,18 @@ void SokolRendererManager::prepareFrame() {
 
 void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
                                       grumble::Renderer::shared_ptr renderer) {
+  int cur_width, cur_height;
+  SDL_GetWindowSize(_sdlWindow, &cur_width, &cur_height);
+  auto ortho = glm::ortho(0.0f, (float)cur_width, (float)cur_height, 0.0f, 0.0f,
+                          1000.0f);
+  vs_params_t params = {{ortho[0][0], ortho[0][1], ortho[0][2], ortho[0][3],
+                         ortho[1][0], ortho[1][1], ortho[1][2], ortho[1][3],
+                         ortho[2][0], ortho[2][1], ortho[2][2], ortho[2][3],
+                         ortho[3][0], ortho[3][1], ortho[3][2], ortho[3][3]}};
+
   sg_apply_bindings(&_state.bindings);
-  sg_draw(0, 3, 1);
+  sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, SG_RANGE(params));
+  sg_draw(0, 6, 4);
 }
 
 void SokolRendererManager::renderImageView(

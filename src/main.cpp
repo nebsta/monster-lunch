@@ -32,6 +32,7 @@ int main() {
       std::make_shared<grumble::FontManager>(fontConfig, fileManager);
 
   grumble::RendererManagerConfiguration rendererConfig = {1.0, {SHAPE_SQUARE}};
+
   auto rendererManager = std::make_shared<SokolRendererManager>(
       rendererConfig, spriteManager, fontManager, application.window());
 

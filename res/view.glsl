@@ -1,12 +1,17 @@
 @vs vs
-in vec4 position;
-in vec4 color0;
+uniform vs_params {
+  mat4 mvp;
+};
+
+in vec3 pos;
+in vec3 inst_pos;
+in vec4 inst_col;
 
 out vec4 color;
 
 void main() {
-    gl_Position = position;
-    color = color0;
+  gl_Position = mvp * vec4(pos + inst_pos, 1.0);
+  color = inst_col;
 }
 @end
 
@@ -19,4 +24,4 @@ void main() {
 }
 @end
 
-@program triangle vs fs
+@program view vs fs

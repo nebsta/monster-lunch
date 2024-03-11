@@ -2,8 +2,10 @@
 #include "../rendering/SokolState.hpp"
 #include "../rendering/_gen_shader/shader_view.h"
 #include "../rendering/sokol.hpp"
+#include "instance/ViewInstance.hpp"
 #include <SDL.h>
 #include <SDL_video.h>
+#include <fmt/core.h>
 #include <grumble/font/FontManager.hpp>
 #include <grumble/logging/Logger.hpp>
 #include <grumble/render/ImageRenderer.hpp>
@@ -13,6 +15,7 @@
 #include <grumble/sprite/SpriteManager.hpp>
 #include <grumble/ui/Transform.hpp>
 #include <memory>
+
 class SokolRendererManager : public grumble::RendererManager {
 public:
   typedef std::shared_ptr<SokolRendererManager> shared_ptr;
