@@ -4,6 +4,7 @@
 #include "../rendering/sokol.hpp"
 #include "../utils/SokolUtils.hpp"
 #include "instance/ViewInstance.hpp"
+#include "shapes.hpp"
 #include <SDL.h>
 #include <SDL_video.h>
 #include <fmt/core.h>

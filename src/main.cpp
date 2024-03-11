@@ -7,7 +7,6 @@
 #include <grumble/io/FileManagerConfiguration.hpp>
 #include <grumble/logging/Logger.hpp>
 #include <grumble/render/RendererManagerConfiguration.hpp>
-#include <grumble/render/Shape.hpp>
 #include <grumble/sprite/SpriteManager.hpp>
 #include <grumble/sprite/SpriteManagerConfiguration.hpp>
 #include <grumble/ui/View.hpp>
@@ -31,7 +30,7 @@ int main() {
   auto fontManager =
       std::make_shared<grumble::FontManager>(fontConfig, fileManager);
 
-  grumble::RendererManagerConfiguration rendererConfig = {1.0, {SHAPE_SQUARE}};
+  grumble::RendererManagerConfiguration rendererConfig = {1.0};
 
   auto rendererManager = std::make_shared<SokolRendererManager>(
       rendererConfig, spriteManager, fontManager, application.window());

@@ -3,15 +3,12 @@ uniform vs_params {
   mat4 ortho;
 };
 
-in vec3 pos;
-in vec3 inst_pos;
-in vec4 inst_col;
-
+in vec4 pos;
 out vec4 color;
 
 void main() {
-  gl_Position = ortho * vec4(pos + inst_pos, 1.0);
-  color = inst_col;
+  gl_Position = pos;
+  color = vec4(1.0, 0.0, 0.0, 1.0);
 }
 @end
 
