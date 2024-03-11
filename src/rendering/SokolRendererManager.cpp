@@ -1,6 +1,9 @@
 
 #include "SokolRendererManager.hpp"
 #include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/fwd.hpp>
+#include <grumble/render/Shape.hpp>
 
 void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
                const char *message_or_null, uint32_t line_nr,
@@ -49,41 +52,31 @@ void SokolRendererManager::setup() {
    */
 
   const std::vector<Shape> preloadedShapes = configuration().preloadedShapes;
-  for (int i = 0; i < preloadedShapes.size(); i++) {
-    Shape shape = preloadedShapes[i];
+  Shape shape = SHAPE_SQUARE;
+  sg_buffer_desc index_buffer_desc = {};
+  index_buffer_desc.type = SG_BUFFERTYPE_INDEXBUFFER;
+  index_buffer_desc.data = SG_RANGE(shape.indices);
+  index_buffer_desc.label = fmt::format("index-shape-{}", shape.id).c_str();
 
-    sg_buffer_desc index_buffer_desc = {};
-    index_buffer_desc.type = SG_BUFFERTYPE_INDEXBUFFER;
-    index_buffer_desc.data = SG_RANGE(shape.indices);
-    index_buffer_desc.label = fmt::format("index-shape-{}", shape.id).c_str();
+  sg_buffer_desc vertex_buffer_desc = {};
+  vertex_buffer_desc.type = SG_BUFFERTYPE_VERTEXBUFFER;
+  vertex_buffer_desc.data = SG_RANGE(shape.vertices);
+  vertex_buffer_desc.label = fmt::format("vertex-shape-{}", shape.id).c_str();
 
-    sg_buffer_desc vertex_buffer_desc = {};
-    vertex_buffer_desc.type = SG_BUFFERTYPE_VERTEXBUFFER;
-    vertex_buffer_desc.data = SG_RANGE(shape.vertices);
-    vertex_buffer_desc.label = fmt::format("vertex-shape-{}", shape.id).c_str();
+  sg_buffer_desc instance_buffer_desc = {};
+  instance_buffer_desc.size = 4 * sizeof(ViewInstance);
+  instance_buffer_desc.usage = SG_USAGE_STREAM;
+  instance_buffer_desc.label =
+      fmt::format("instance-shape-{}", shape.id).c_str();
 
-    sg_buffer_desc instance_buffer_desc = {};
-    instance_buffer_desc.size = 500 * sizeof(ViewInstance);
-    instance_buffer_desc.usage = SG_USAGE_STREAM;
-    instance_buffer_desc.label =
-        fmt::format("instance-shape-{}", shape.id).c_str();
+  _state.bindings.index_buffer = sg_make_buffer(&index_buffer_desc);
+  _state.bindings.vertex_buffers[0] = sg_make_buffer(&vertex_buffer_desc);
+  _state.bindings.vertex_buffers[1] = sg_make_buffer(&instance_buffer_desc);
 
-    _state.bindings.vertex_buffers[0] = sg_make_buffer(&vertex_buffer_desc);
-    _state.bindings.vertex_buffers[1] = sg_make_buffer(&instance_buffer_desc);
-    _state.bindings.index_buffer = sg_make_buffer(&index_buffer_desc);
-  }
-
-  _state.instances[0].color = COLOR_RED;
-  _state.instances[0].position = {0.0f, 0.0f, 0.0f};
-
-  _state.instances[1].color = COLOR_GREEN;
-  _state.instances[1].position = {0.0f, 0.0f, 0.0f};
-
-  _state.instances[2].color = COLOR_BLUE;
-  _state.instances[2].position = {0.0f, 0.0f, 0.0f};
-
-  _state.instances[3].color = COLOR_WHITE;
-  _state.instances[3].position = {0.0f, 0.0f, 0.0f};
+  _state.instances[0] = {{100, 0, 0}, COLOR_RED};
+  _state.instances[1] = {{100, 100, 0}, COLOR_GREEN};
+  _state.instances[2] = {{200, 200, 0}, COLOR_BLUE};
+  _state.instances[3] = {{300, 300, 0}, COLOR_WHITE};
 
   // setting the initial instance data
   sg_range range = {};
@@ -133,14 +126,12 @@ void SokolRendererManager::prepareFrame() {
 
 void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
                                       grumble::Renderer::shared_ptr renderer) {
+
   int cur_width, cur_height;
   SDL_GetWindowSize(_sdlWindow, &cur_width, &cur_height);
   auto ortho = glm::ortho(0.0f, (float)cur_width, (float)cur_height, 0.0f, 0.0f,
                           1000.0f);
-  vs_params_t params = {{ortho[0][0], ortho[0][1], ortho[0][2], ortho[0][3],
-                         ortho[1][0], ortho[1][1], ortho[1][2], ortho[1][3],
-                         ortho[2][0], ortho[2][1], ortho[2][2], ortho[2][3],
-                         ortho[3][0], ortho[3][1], ortho[3][2], ortho[3][3]}};
+  vs_params_t params = {to_float_arr(ortho)};
 
   sg_apply_bindings(&_state.bindings);
   sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, SG_RANGE(params));

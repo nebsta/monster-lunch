@@ -46,7 +46,7 @@ if os.path.isdir(SHADER_GEN_PATH):
 os.mkdir(SHADER_GEN_PATH)
 
 # generating the shader files
-subprocess.run([
+result = subprocess.run([
   "./tool/sokol-shdc",
   "-i",
   "res/view.glsl",
@@ -56,7 +56,13 @@ subprocess.run([
   "glsl330"
 ])
 
-# enerating the cmake files
+print(f"RESULT: {result}")
+
+if result.returncode != 0:
+  print("Error with shader compilation")
+  exit(1)
+
+# Generating the cmake files
 os.chdir("build")
 subprocess.run([
   "cmake", 

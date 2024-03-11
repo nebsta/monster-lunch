@@ -2,6 +2,7 @@
 #include "../rendering/SokolState.hpp"
 #include "../rendering/_gen_shader/shader_view.h"
 #include "../rendering/sokol.hpp"
+#include "../utils/SokolUtils.hpp"
 #include "instance/ViewInstance.hpp"
 #include <SDL.h>
 #include <SDL_video.h>
