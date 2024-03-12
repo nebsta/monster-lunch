@@ -1,10 +1,12 @@
 #include "SDLApplication.hpp"
+#include <SDL_events.h>
 #include <SDL_video.h>
 #include <glm/gtx/string_cast.hpp>
 #include <grumble/core/Object.hpp>
 #include <grumble/logging/LogCategory.hpp>
 
-SDLApplication::SDLApplication() : grumble::Object("sdl_application") {}
+SDLApplication::SDLApplication(grumble::InputManager::shared_ptr inputManager)
+    : grumble::Object("sdl_application"), _inputManager(inputManager) {}
 
 SDLApplication::~SDLApplication() {}
 
@@ -55,6 +57,14 @@ bool SDLApplication::handleInput() {
         Sint32 height = e.window.data2;
         logInfo("Window size changed w: {} h: {}", width, height);
       }
+    } else if (e.type == SDL_KEYDOWN) {
+      auto name = SDL_GetKeyName(e.key.keysym.sym);
+      auto inputCode = SDL2Utils::SDL2_Keycode_to_InputCode(e.key.keysym.sym);
+      _inputManager->activateInput(inputCode);
+    } else if (e.type == SDL_KEYUP) {
+      auto name = SDL_GetKeyName(e.key.keysym.sym);
+      auto inputCode = SDL2Utils::SDL2_Keycode_to_InputCode(e.key.keysym.sym);
+      _inputManager->deactivateInput(inputCode);
     }
   }
   return terminate;
@@ -71,7 +81,7 @@ HMM_Vec2 SDLApplication::screenSize() const {
   return {(float)cur_width, (float)cur_height};
 }
 
-grumble::LogCategory SDLApplication::logCategory() {
+grumble::LogCategory SDLApplication::logCategory() const {
   return grumble::LogCategory::core;
 }
 

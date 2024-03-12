@@ -13,7 +13,10 @@
 #include <memory>
 
 int main() {
-  auto application = std::make_shared<SDLApplication>();
+  // input manager
+  auto inputManager = std::make_shared<grumble::InputManager>();
+
+  auto application = std::make_shared<SDLApplication>(inputManager);
   application->setup();
 
   // file manager
@@ -35,8 +38,8 @@ int main() {
   auto rendererManager = std::make_shared<SokolRendererManager>(
       rendererConfig, spriteManager, fontManager, application);
 
-  auto game =
-      grumble::Game(rendererManager, fileManager, spriteManager, fontManager);
+  auto game = grumble::Game(rendererManager, fileManager, spriteManager,
+                            fontManager, inputManager);
   game.setup();
   game.rootView()->renderer()->setTint(COLOR_RED);
   game.setScreenSize(application->screenSize());
