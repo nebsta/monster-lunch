@@ -4,15 +4,14 @@
 
 @vs vs
 uniform vs_params {
-  mat4 model;
-  mat4 ortho;
+  mat4 mvp;
 };
 
 in vec3 pos;
 out vec4 color;
 
 void main() {
-  gl_Position = ortho * model * vec4(pos, 1.0);
+  gl_Position = mvp * vec4(pos, 1.0);
   color = vec4(1.0, 0.0, 0.0, 1.0);
 }
 @end

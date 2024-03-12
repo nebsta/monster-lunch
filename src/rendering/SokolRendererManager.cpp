@@ -26,6 +26,7 @@ SokolRendererManager::SokolRendererManager(
   _sg_desc.logger = logger;
 
   _state = {};
+  _state.cameraOffset = 0.0f;
 }
 
 SokolRendererManager::~SokolRendererManager() {}
@@ -108,13 +109,16 @@ void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
   sg_apply_bindings(&_state.bindings);
 
   vs_params_t params;
-  HMM_Mat4 ortho =
-      HMM_Orthographic_LH_NO(0.0f, cur_width, cur_height, 0.0f, -1.0f, 1.0f);
+  HMM_Mat4 ortho = HMM_Orthographic_LH_NO(0.0f, cur_width, cur_height, 0.0f,
+                                          -100.0f, 100.0f);
+
+  _state.cameraOffset += 0.01f;
+  HMM_Mat4 view = HMM_LookAt_LH({_state.cameraOffset, 0.0f, -6.0f},
+                                {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f});
 
   auto scale = HMM_Scale({100.0f, 100.0f, 1.0f});
 
-  params.ortho = ortho;
-  params.model = scale;
+  params.mvp = HMM_MulM4(HMM_MulM4(ortho, view), scale);
   sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, SG_RANGE(params));
   sg_draw(0, 6, 1);
 }
