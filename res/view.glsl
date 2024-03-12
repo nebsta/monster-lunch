@@ -1,4 +1,4 @@
-@header #include "../../utils/HandmadeMath.h"
+@header #include <grumble/util/HandmadeMath.h>
 
 @ctype mat4 HMM_Mat4
 

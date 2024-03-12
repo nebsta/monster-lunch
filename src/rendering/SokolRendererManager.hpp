@@ -2,7 +2,6 @@
 #include "../rendering/SokolState.hpp"
 #include "../rendering/_gen_shader/shader_view.h"
 #include "../rendering/sokol.hpp"
-#include "../utils/HandmadeMath.h"
 #include "instance/ViewInstance.hpp"
 #include "shapes.hpp"
 #include <SDL.h>
@@ -16,6 +15,7 @@
 #include <grumble/render/RendererManagerConfiguration.hpp>
 #include <grumble/sprite/SpriteManager.hpp>
 #include <grumble/ui/Transform.hpp>
+#include <grumble/util/HandmadeMath.h>
 #include <memory>
 
 class SokolRendererManager : public grumble::RendererManager {

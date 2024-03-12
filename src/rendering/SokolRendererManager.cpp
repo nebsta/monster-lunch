@@ -135,19 +135,10 @@ void SokolRendererManager::prepareFrame() {
 void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
                                       grumble::Renderer::shared_ptr renderer) {
 
-  int cur_width, cur_height;
-  SDL_GetWindowSize(_sdlWindow, &cur_width, &cur_height);
-
   sg_apply_bindings(&_state.bindings);
 
   vs_params_t params;
-  HMM_Mat4 ortho = HMM_Orthographic_LH_NO(0.0f, cur_width, cur_height, 0.0f,
-                                          -100.0f, 100.0f);
-
-  HMM_Mat4 view = HMM_LookAt_LH({0.0f, 0.0f, -99.0f}, {0.0f, 0.0f, 0.0f},
-                                {0.0f, 1.0f, 0.0f});
-
-  params.pv = HMM_MulM4(ortho, view);
+  params.pv = projectionViewMatrix();
   sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, SG_RANGE(params));
   sg_draw(0, 6, 400);
 }

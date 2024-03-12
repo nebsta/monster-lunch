@@ -1,12 +1,14 @@
 #include "SDLApplication.hpp"
 #include <SDL_video.h>
+#include <glm/gtx/string_cast.hpp>
+#include <grumble/core/Object.hpp>
+#include <grumble/logging/LogCategory.hpp>
 
-SDLApplication::SDLApplication() {}
+SDLApplication::SDLApplication() : grumble::Object("sdl_application") {}
 
 SDLApplication::~SDLApplication() {}
 
 void SDLApplication::setup() {
-
   Uint32 windowFlags =
       SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
   Uint32 sdlFlags = SDL_INIT_VIDEO;
@@ -41,7 +43,7 @@ void SDLApplication::setup() {
   SDL_GL_MakeCurrent(_window, _context);
 }
 
-bool SDLApplication::handleInput() const {
+bool SDLApplication::handleInput() {
   SDL_Event e;
   bool terminate = false;
   while (SDL_PollEvent(&e)) {
@@ -51,8 +53,7 @@ bool SDLApplication::handleInput() const {
       if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
         Sint32 width = e.window.data1;
         Sint32 height = e.window.data2;
-        glm::vec2 size = glm::vec2(width, height);
-        grumble::Logger::debug("Resizing window " + glm::to_string(size));
+        logInfo("Window size changed w: {} h: {}", width, height);
       }
     }
   }
@@ -62,6 +63,16 @@ bool SDLApplication::handleInput() const {
 void SDLApplication::teardown() {
   SDL_DestroyWindow(_window);
   SDL_Quit();
+}
+
+HMM_Vec2 SDLApplication::screenSize() const {
+  int cur_width, cur_height;
+  SDL_GetWindowSize(_window, &cur_width, &cur_height);
+  return {(float)cur_width, (float)cur_height};
+}
+
+grumble::LogCategory SDLApplication::logCategory() {
+  return grumble::LogCategory::core;
 }
 
 SDL_Window *SDLApplication::window() const { return _window; }

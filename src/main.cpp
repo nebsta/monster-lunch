@@ -39,12 +39,14 @@ int main() {
       grumble::Game(rendererManager, fileManager, spriteManager, fontManager);
   game.setup();
   game.rootView()->renderer()->setTint(COLOR_RED);
+  game.setScreenSize(application.screenSize());
 
   // main rendering loop
   while (true) {
     if (application.handleInput()) {
       break;
     }
+    game.setScreenSize(application.screenSize());
     game.render();
   }
 
