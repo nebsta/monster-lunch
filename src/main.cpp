@@ -49,6 +49,17 @@ int main() {
     if (application->handleInput()) {
       break;
     }
+
+    if (inputManager->isInputActive(grumble::InputCode::ArrowLeft)) {
+      game.moveCameraPosition({-1.0f, 0.0f});
+    } else if (inputManager->isInputActive(grumble::InputCode::ArrowRight)) {
+      game.moveCameraPosition({1.0f, 0.0f});
+    } else if (inputManager->isInputActive(grumble::InputCode::ArrowUp)) {
+      game.moveCameraPosition({0.0f, 1.0f});
+    } else if (inputManager->isInputActive(grumble::InputCode::ArrowDown)) {
+      game.moveCameraPosition({0.0f, -1.0f});
+    }
+
     game.setScreenSize(application->screenSize());
     game.render();
   }
