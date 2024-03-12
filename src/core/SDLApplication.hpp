@@ -7,8 +7,11 @@
 #include <grumble/logging/LogCategory.hpp>
 #include <grumble/logging/Logger.hpp>
 #include <grumble/util/HandmadeMath.h>
+#include <memory>
 class SDLApplication : public grumble::Object {
 public:
+  typedef std::shared_ptr<SDLApplication> shared_ptr;
+
   SDLApplication();
   ~SDLApplication();
 

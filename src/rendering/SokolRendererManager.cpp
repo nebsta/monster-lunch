@@ -18,9 +18,10 @@ void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
 SokolRendererManager::SokolRendererManager(
     grumble::RendererManagerConfiguration configuration,
     grumble::SpriteManager::shared_ptr spriteManager,
-    grumble::FontManager::shared_ptr fontMananger, SDL_Window *sdlWindow)
+    grumble::FontManager::shared_ptr fontMananger,
+    SDLApplication::shared_ptr sdlApplication)
     : _spriteManager(spriteManager), _fontManager(fontMananger),
-      _sdlWindow(sdlWindow), grumble::RendererManager(configuration) {
+      _sdlApplication(sdlApplication), grumble::RendererManager(configuration) {
 
   sg_logger logger = {};
   logger.func = sokol_log;
@@ -125,10 +126,8 @@ void SokolRendererManager::setup() {
 void SokolRendererManager::teardown() { sg_shutdown(); }
 
 void SokolRendererManager::prepareFrame() {
-  int cur_width, cur_height;
-  SDL_GetWindowSize(_sdlWindow, &cur_width, &cur_height);
-
-  sg_begin_default_pass(_state.pass_action, cur_width, cur_height);
+  HMM_Vec2 size = _sdlApplication->screenSize();
+  sg_begin_default_pass(_state.pass_action, size.Width, size.Height);
   sg_apply_pipeline(_state.pipeline);
 }
 
@@ -154,5 +153,5 @@ void SokolRendererManager::renderLabel(
 void SokolRendererManager::commitFrame() {
   sg_end_pass();
   sg_commit();
-  SDL_GL_SwapWindow(_sdlWindow);
+  SDL_GL_SwapWindow(_sdlApplication->window());
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "../core/SDLApplication.hpp"
 #include "../rendering/SokolState.hpp"
 #include "../rendering/_gen_shader/shader_view.h"
 #include "../rendering/sokol.hpp"
@@ -25,7 +26,7 @@ public:
   SokolRendererManager(grumble::RendererManagerConfiguration configuration,
                        grumble::SpriteManager::shared_ptr spriteManager,
                        grumble::FontManager::shared_ptr fontManager,
-                       SDL_Window *_sdlWindow);
+                       SDLApplication::shared_ptr sdlApplication);
   ~SokolRendererManager() override;
 
   void prepareFrame() override;
@@ -43,7 +44,7 @@ public:
 private:
   grumble::SpriteManager::shared_ptr _spriteManager;
   grumble::FontManager::shared_ptr _fontManager;
-  SDL_Window *_sdlWindow;
+  SDLApplication::shared_ptr _sdlApplication;
 
   SokolState _state;
   sg_desc _sg_desc;

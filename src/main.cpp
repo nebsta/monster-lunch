@@ -13,8 +13,8 @@
 #include <memory>
 
 int main() {
-  SDLApplication application;
-  application.setup();
+  auto application = std::make_shared<SDLApplication>();
+  application->setup();
 
   // file manager
   grumble::FileManagerConfiguration fileManangerConf = {"/", "/"};
@@ -33,24 +33,24 @@ int main() {
   grumble::RendererManagerConfiguration rendererConfig = {1.0};
 
   auto rendererManager = std::make_shared<SokolRendererManager>(
-      rendererConfig, spriteManager, fontManager, application.window());
+      rendererConfig, spriteManager, fontManager, application);
 
   auto game =
       grumble::Game(rendererManager, fileManager, spriteManager, fontManager);
   game.setup();
   game.rootView()->renderer()->setTint(COLOR_RED);
-  game.setScreenSize(application.screenSize());
+  game.setScreenSize(application->screenSize());
 
   // main rendering loop
   while (true) {
-    if (application.handleInput()) {
+    if (application->handleInput()) {
       break;
     }
-    game.setScreenSize(application.screenSize());
+    game.setScreenSize(application->screenSize());
     game.render();
   }
 
-  application.teardown();
+  application->teardown();
   game.teardown();
   return 0;
 }
