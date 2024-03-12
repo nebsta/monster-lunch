@@ -1,6 +1,5 @@
 #include "SDLApplication.hpp"
 #include <SDL_video.h>
-#include <memory>
 
 SDLApplication::SDLApplication() {}
 
@@ -22,7 +21,7 @@ void SDLApplication::setup() {
 
   // setting up the window
   _window = SDL_CreateWindow("Monster Lunch", SDL_WINDOWPOS_CENTERED,
-                             SDL_WINDOWPOS_CENTERED, 680, 480, windowFlags);
+                             SDL_WINDOWPOS_CENTERED, 500, 500, windowFlags);
   if (!_window) {
     grumble::Logger::error("Error when trying to make SDL window");
     return;

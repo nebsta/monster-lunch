@@ -1,10 +1,13 @@
 
 #include "SokolRendererManager.hpp"
+#include "_gen_shader/shader_view.h"
+#include "instance/ViewInstance.hpp"
 #include "shapes.hpp"
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/fwd.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <grumble/util/ColorConstants.hpp>
 
 void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
                const char *message_or_null, uint32_t line_nr,
@@ -26,7 +29,6 @@ SokolRendererManager::SokolRendererManager(
   _sg_desc.logger = logger;
 
   _state = {};
-  _state.cameraOffset = 0.0f;
 }
 
 SokolRendererManager::~SokolRendererManager() {}
@@ -47,18 +49,17 @@ void SokolRendererManager::setup() {
   sg_setup(&_sg_desc);
   assert(sg_isvalid());
 
-  /* Coordinate space
-   *     1
-   * -1     1
-   *    -1
-   */
-
   float vertices[] = QUAD_VERTICES;
   sg_buffer_desc vertex_buffer_desc = {};
   vertex_buffer_desc.type = SG_BUFFERTYPE_VERTEXBUFFER;
   vertex_buffer_desc.data = SG_RANGE(vertices);
   vertex_buffer_desc.label = fmt::format("vertex-shape-{}", 0).c_str();
   _state.bindings.vertex_buffers[0] = sg_make_buffer(&vertex_buffer_desc);
+
+  _state.bindings.vertex_buffers[1] =
+      sg_make_buffer((sg_buffer_desc){.size = 400 * sizeof(ViewInstance),
+                                      .usage = SG_USAGE_STREAM,
+                                      .label = "instance-shape-0"});
 
   uint16_t indices[] = QUAD_INDICES;
   sg_buffer_desc index_buffer_desc = {};
@@ -75,8 +76,20 @@ void SokolRendererManager::setup() {
   pipeline_desc.index_type = SG_INDEXTYPE_UINT16;
 
   sg_vertex_layout_state layout = {};
+  layout.buffers[1].step_func = SG_VERTEXSTEP_PER_INSTANCE;
   layout.attrs[ATTR_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
   layout.attrs[ATTR_vs_pos].buffer_index = 0;
+
+  layout.attrs[ATTR_vs_inst_mod_colx].format = SG_VERTEXFORMAT_FLOAT4;
+  layout.attrs[ATTR_vs_inst_mod_colx].buffer_index = 1;
+  layout.attrs[ATTR_vs_inst_mod_coly].format = SG_VERTEXFORMAT_FLOAT4;
+  layout.attrs[ATTR_vs_inst_mod_coly].buffer_index = 1;
+  layout.attrs[ATTR_vs_inst_mod_colz].format = SG_VERTEXFORMAT_FLOAT4;
+  layout.attrs[ATTR_vs_inst_mod_colz].buffer_index = 1;
+  layout.attrs[ATTR_vs_inst_mod_colw].format = SG_VERTEXFORMAT_FLOAT4;
+  layout.attrs[ATTR_vs_inst_mod_colw].buffer_index = 1;
+  layout.attrs[ATTR_vs_inst_tint].format = SG_VERTEXFORMAT_FLOAT4;
+  layout.attrs[ATTR_vs_inst_tint].buffer_index = 1;
 
   pipeline_desc.layout = layout;
   _state.pipeline = sg_make_pipeline(&pipeline_desc);
@@ -88,6 +101,25 @@ void SokolRendererManager::setup() {
   color_action.clear_value = {0.0f, 0.0f, 0.0f, 1.0f};
   action.colors[0] = color_action;
   _state.pass_action = action;
+
+  HMM_Mat4 base_scale = HMM_Scale({25.0f, 25.0f, 1.0f});
+  for (int i = 0; i < 20; i++) {
+    for (int j = 0; j < 20; j++) {
+      int instance_index = (i * 20) + j;
+      float x = j * 25.0f;
+      float y = i * 25.0f;
+      HMM_Mat4 m = HMM_MulM4(HMM_Translate({x, y, 0.0f}), base_scale);
+      _state.instances[instance_index].tint = COLOR_RANDOM;
+      _state.instances[instance_index].colx = m.Columns[0];
+      _state.instances[instance_index].coly = m.Columns[1];
+      _state.instances[instance_index].colz = m.Columns[2];
+      _state.instances[instance_index].colw = m.Columns[3];
+    }
+  }
+
+  sg_update_buffer(
+      _state.bindings.vertex_buffers[1],
+      (sg_range){.ptr = _state.instances, .size = 400 * sizeof(ViewInstance)});
 }
 
 void SokolRendererManager::teardown() { sg_shutdown(); }
@@ -112,15 +144,12 @@ void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
   HMM_Mat4 ortho = HMM_Orthographic_LH_NO(0.0f, cur_width, cur_height, 0.0f,
                                           -100.0f, 100.0f);
 
-  _state.cameraOffset += 0.01f;
-  HMM_Mat4 view = HMM_LookAt_LH({_state.cameraOffset, 0.0f, -6.0f},
-                                {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f});
+  HMM_Mat4 view = HMM_LookAt_LH({0.0f, 0.0f, -99.0f}, {0.0f, 0.0f, 0.0f},
+                                {0.0f, 1.0f, 0.0f});
 
-  auto scale = HMM_Scale({100.0f, 100.0f, 1.0f});
-
-  params.mvp = HMM_MulM4(HMM_MulM4(ortho, view), scale);
+  params.pv = HMM_MulM4(ortho, view);
   sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, SG_RANGE(params));
-  sg_draw(0, 6, 1);
+  sg_draw(0, 6, 400);
 }
 
 void SokolRendererManager::renderImageView(

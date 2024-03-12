@@ -1,7 +1,9 @@
 #pragma once
-#include <glm/mat4x4.hpp>
-#include <glm/vec3.hpp>
+#include "../../utils/HandmadeMath.h"
 struct ViewInstance {
-  glm::vec3 position;
-  glm::vec3 color;
+  HMM_Vec4 colx;
+  HMM_Vec4 coly;
+  HMM_Vec4 colz;
+  HMM_Vec4 colw;
+  HMM_Vec4 tint;
 };
