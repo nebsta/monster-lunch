@@ -28,6 +28,8 @@ public:
       return grumble::InputCode::ArrowDown;
     } else if (keycode == SDLK_UP) {
       return grumble::InputCode::ArrowUp;
+    } else if (keycode == SDLK_d) {
+      return grumble::InputCode::D;
     }
     return grumble::InputCode::Unknown;
   }

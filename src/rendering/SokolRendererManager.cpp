@@ -4,17 +4,19 @@
 void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
                const char *message_or_null, uint32_t line_nr,
                const char *filename_or_null, void *user_data) {
-  std::cout << log_item_id << ":" << message_or_null << std::endl;
+
+  grumble::Logger::info(fmt::format("{}: {}", log_item_id, message_or_null));
 }
 
 SokolRendererManager::SokolRendererManager(
     grumble::RendererManagerConfiguration configuration,
     grumble::SpriteManager::shared_ptr spriteManager,
     grumble::FontManager::shared_ptr fontMananger,
+    grumble::InputManager::shared_ptr inputManager,
     SDLApplication::shared_ptr sdlApplication)
     : _spriteManager(spriteManager), _fontManager(fontMananger),
-      _sdlApplication(sdlApplication), _debugMenuVisible(false),
-      grumble::RendererManager(configuration) {
+      _sdlApplication(sdlApplication), _inputManager(inputManager),
+      _debugMenuVisible(false), grumble::RendererManager(configuration) {
 
   sg_logger logger = {};
   logger.func = sokol_log;
@@ -157,20 +159,17 @@ void SokolRendererManager::renderLabel(
     grumble::TextRenderer::shared_ptr renderer) {}
 
 void SokolRendererManager::buildDebugMenu() {
-  static float f = 0.0f;
-  ImGui::Text("Hello, world!");
-  if (ImGui::Button("Test Window")) {
-    _debugMenuVisible = true;
+  if (_inputManager->isInputTriggered(grumble::InputCode::D)) {
+    _debugMenuVisible = !_debugMenuVisible;
   }
+
+  if (!_debugMenuVisible) {
+    return;
+  }
+
+  ImGui::Text("Debug");
   ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
               1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
-  // 3. Show the ImGui test window. Most of the sample code is in
-  // ImGui::ShowDemoWindow()
-  if (_debugMenuVisible) {
-    ImGui::SetNextWindowPos(ImVec2(460, 20), ImGuiCond_FirstUseEver);
-    ImGui::ShowDemoWindow();
-  }
 }
 
 void SokolRendererManager::commitFrame() {

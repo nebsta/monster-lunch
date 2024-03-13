@@ -18,7 +18,7 @@
 #include <memory>
 
 #define FRAME_RATE 60
-#define CAMERA_SPEED 1
+#define CAMERA_SPEED 2
 #define FIXED_DELTA_TIME 0.01f
 
 HMM_Vec2 handleCameraMovement(grumble::InputManager::shared_ptr inputManager,
@@ -70,7 +70,7 @@ int main() {
   grumble::RendererManagerConfiguration rendererConfig = {1.0};
 
   auto rendererManager = std::make_shared<SokolRendererManager>(
-      rendererConfig, spriteManager, fontManager, application);
+      rendererConfig, spriteManager, fontManager, inputManager, application);
 
   auto game = grumble::Game(rendererManager, fileManager, spriteManager,
                             fontManager, inputManager);
@@ -103,6 +103,7 @@ int main() {
     SDL_Delay(remainingFrameTime);
 
     game.render();
+    game.reset();
   }
 
   application->teardown();
