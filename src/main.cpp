@@ -78,6 +78,12 @@ int main() {
   game.rootView()->renderer()->setTint(COLOR_RED);
   game.setScreenSize(application->screenSize());
 
+  auto subview = game.viewFactory()->createView();
+  subview->transform()->setLocalPosition({0.0f, 0.0f});
+  subview->transform()->setSize({100.0f, 100.0f});
+  subview->renderer()->setTint({1.0f, 0.0f, 0.0f, 1.0f});
+  game.rootView()->addChild(subview);
+
   // main rendering loop
   Uint32 lastFrameTime = SDL_GetTicks64();
   while (true) {

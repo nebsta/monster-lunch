@@ -117,11 +117,16 @@ void SokolRendererManager::prepareFrame() {
   buildDebugMenu();
   sg_begin_default_pass(_state.pass_action, size.Width, size.Height);
   sg_apply_pipeline(_state.pipeline);
+  sg_apply_bindings(&_state.bindings);
+
+  // updating the uniforms
+  vs_params_t params;
+  params.pv = projectionViewMatrix();
+  sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, SG_RANGE(params));
 }
 
 void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
                                       grumble::Renderer::shared_ptr renderer) {
-  sg_apply_bindings(&_state.bindings);
 
   HMM_Mat4 modelMatrix = transform->modelMatrix(1.0f);
   uint32_t instanceId = renderer->instanceId();
@@ -131,19 +136,6 @@ void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
   _state.instances[instanceId].coly = modelMatrix.Columns[1];
   _state.instances[instanceId].colz = modelMatrix.Columns[2];
   _state.instances[instanceId].colw = modelMatrix.Columns[3];
-
-  sg_update_buffer(_state.bindings.vertex_buffers[1],
-                   (sg_range){.ptr = _state.instances,
-                              .size = MAX_INSTANCES * sizeof(ViewInstance)});
-
-  // updating the uniforms
-  vs_params_t params;
-  params.pv = projectionViewMatrix();
-  sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, SG_RANGE(params));
-
-  // rendering
-  sg_draw(0, 6, MAX_INSTANCES);
-  simgui_render();
 }
 
 void SokolRendererManager::renderImageView(
@@ -169,6 +161,14 @@ void SokolRendererManager::buildDebugMenu() {
 }
 
 void SokolRendererManager::commitFrame() {
+  sg_update_buffer(_state.bindings.vertex_buffers[1],
+                   (sg_range){.ptr = _state.instances,
+                              .size = MAX_INSTANCES * sizeof(ViewInstance)});
+
+  // rendering
+  sg_draw(0, 6, MAX_INSTANCES);
+  simgui_render();
+
   sg_end_pass();
   sg_commit();
   SDL_GL_SwapWindow(_sdlApplication->window());
