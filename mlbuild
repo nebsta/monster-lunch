@@ -56,7 +56,15 @@ result = subprocess.run([
   "glsl330"
 ])
 
-print(f"RESULT: {result}")
+result = subprocess.run([
+  "./tool/sokol-shdc",
+  "-i",
+  "res/debug.glsl",
+  "-o",
+  f"{SHADER_GEN_PATH}/shader_debug.h",
+  "-l",
+  "glsl330"
+])
 
 if result.returncode != 0:
   print("Error with shader compilation")

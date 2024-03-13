@@ -11,7 +11,7 @@ void combine_to_mat4(in vec4 col1, in vec4 col2, in vec4 col3, in vec4 col4, out
 }
 @end
 
-@vs vs
+@vs view_vs
 uniform vs_params {
   mat4 pv;
 };
@@ -35,7 +35,7 @@ void main() {
 }
 @end
 
-@fs fs
+@fs view_fs
 in vec4 color;
 out vec4 frag_color;
 
@@ -44,4 +44,4 @@ void main() {
 }
 @end
 
-@program view vs fs
+@program view view_vs view_fs

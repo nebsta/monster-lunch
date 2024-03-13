@@ -44,32 +44,42 @@ void SokolRendererManager::setup() {
   assert(sg_isvalid());
 
   setupViewBindings();
+  setupDebugGridBindings();
 
-  sg_shader shader = sg_make_shader(view_shader_desc(sg_query_backend()));
+  sg_shader view_shader = sg_make_shader(view_shader_desc(sg_query_backend()));
 
   sg_pipeline_desc pipeline_desc = {};
-  pipeline_desc.shader = shader;
+  pipeline_desc.shader = view_shader;
   pipeline_desc.label = "main-pipeline";
   pipeline_desc.index_type = SG_INDEXTYPE_UINT16;
 
   // setup vertex buffer layout
   sg_vertex_layout_state layout = {};
   layout.buffers[1].step_func = SG_VERTEXSTEP_PER_INSTANCE;
-  layout.attrs[ATTR_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
-  layout.attrs[ATTR_vs_pos].buffer_index = 0;
-  layout.attrs[ATTR_vs_inst_mod_colx].format = SG_VERTEXFORMAT_FLOAT4;
-  layout.attrs[ATTR_vs_inst_mod_colx].buffer_index = 1;
-  layout.attrs[ATTR_vs_inst_mod_coly].format = SG_VERTEXFORMAT_FLOAT4;
-  layout.attrs[ATTR_vs_inst_mod_coly].buffer_index = 1;
-  layout.attrs[ATTR_vs_inst_mod_colz].format = SG_VERTEXFORMAT_FLOAT4;
-  layout.attrs[ATTR_vs_inst_mod_colz].buffer_index = 1;
-  layout.attrs[ATTR_vs_inst_mod_colw].format = SG_VERTEXFORMAT_FLOAT4;
-  layout.attrs[ATTR_vs_inst_mod_colw].buffer_index = 1;
-  layout.attrs[ATTR_vs_inst_tint].format = SG_VERTEXFORMAT_FLOAT4;
-  layout.attrs[ATTR_vs_inst_tint].buffer_index = 1;
+  layout.attrs[ATTR_view_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
+  layout.attrs[ATTR_view_vs_pos].buffer_index = 0;
+  layout.attrs[ATTR_view_vs_inst_mod_colx].format = SG_VERTEXFORMAT_FLOAT4;
+  layout.attrs[ATTR_view_vs_inst_mod_colx].buffer_index = 1;
+  layout.attrs[ATTR_view_vs_inst_mod_coly].format = SG_VERTEXFORMAT_FLOAT4;
+  layout.attrs[ATTR_view_vs_inst_mod_coly].buffer_index = 1;
+  layout.attrs[ATTR_view_vs_inst_mod_colz].format = SG_VERTEXFORMAT_FLOAT4;
+  layout.attrs[ATTR_view_vs_inst_mod_colz].buffer_index = 1;
+  layout.attrs[ATTR_view_vs_inst_mod_colw].format = SG_VERTEXFORMAT_FLOAT4;
+  layout.attrs[ATTR_view_vs_inst_mod_colw].buffer_index = 1;
+  layout.attrs[ATTR_view_vs_inst_tint].format = SG_VERTEXFORMAT_FLOAT4;
+  layout.attrs[ATTR_view_vs_inst_tint].buffer_index = 1;
 
   pipeline_desc.layout = layout;
   _state.pipeline = sg_make_pipeline(&pipeline_desc);
+
+  sg_shader debug_shader =
+      sg_make_shader(debug_shader_desc(sg_query_backend()));
+  _state.debug_pipeline = sg_make_pipeline(
+      (sg_pipeline_desc){.shader = debug_shader,
+                         .layout = layout,
+                         .primitive_type = SG_PRIMITIVETYPE_LINES,
+                         .index_type = SG_INDEXTYPE_UINT16,
+                         .label = "debug-pipeline"});
 
   // a pass action to clear framebuffer to black
   _state.pass_action =
@@ -110,11 +120,22 @@ void SokolRendererManager::setupDebugGridBindings() {
 
       );
 
+  _state.debug_grid_bindings.vertex_buffers[1] =
+      sg_make_buffer((sg_buffer_desc){.size = sizeof(ViewInstance),
+                                      .usage = SG_USAGE_STREAM,
+                                      .label = "debug-grid-instance"});
+
   uint16_t indices[] = GRID_INDICES;
   _state.debug_grid_bindings.index_buffer =
       sg_make_buffer((sg_buffer_desc){.type = SG_BUFFERTYPE_INDEXBUFFER,
                                       .data = SG_RANGE(indices),
                                       .label = "debug-grid-indices"});
+
+  _state.debug_grid_instance.tint = {1.0f, 1.0f, 0.0f, 1.0f};
+
+  sg_update_buffer(_state.debug_grid_bindings.vertex_buffers[1],
+                   (sg_range){.ptr = &_state.debug_grid_instance,
+                              .size = sizeof(ViewInstance)});
 }
 
 void SokolRendererManager::teardown() {
@@ -142,12 +163,13 @@ void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
 
   HMM_Mat4 modelMatrix = transform->modelMatrix(1.0f);
   uint32_t instanceId = renderer->instanceId();
-  _state.instances[instanceId].tint = {renderer->tint().r, renderer->tint().g,
-                                       renderer->tint().b, renderer->tint().a};
-  _state.instances[instanceId].colx = modelMatrix.Columns[0];
-  _state.instances[instanceId].coly = modelMatrix.Columns[1];
-  _state.instances[instanceId].colz = modelMatrix.Columns[2];
-  _state.instances[instanceId].colw = modelMatrix.Columns[3];
+  _state.view_instances[instanceId].tint = {
+      renderer->tint().r, renderer->tint().g, renderer->tint().b,
+      renderer->tint().a};
+  _state.view_instances[instanceId].colx = modelMatrix.Columns[0];
+  _state.view_instances[instanceId].coly = modelMatrix.Columns[1];
+  _state.view_instances[instanceId].colz = modelMatrix.Columns[2];
+  _state.view_instances[instanceId].colw = modelMatrix.Columns[3];
 }
 
 void SokolRendererManager::renderImageView(
@@ -181,11 +203,16 @@ void SokolRendererManager::buildDebugMenu() {
 
 void SokolRendererManager::commitFrame() {
   sg_update_buffer(_state.view_bindings.vertex_buffers[1],
-                   (sg_range){.ptr = _state.instances,
+                   (sg_range){.ptr = _state.view_instances,
                               .size = MAX_INSTANCES * sizeof(ViewInstance)});
 
   // rendering
   sg_draw(0, 6, MAX_INSTANCES);
+
+  sg_apply_pipeline(_state.debug_pipeline);
+  sg_apply_bindings(&_state.debug_grid_bindings);
+  sg_draw(0, 12, 1);
+
   simgui_render();
 
   sg_end_pass();

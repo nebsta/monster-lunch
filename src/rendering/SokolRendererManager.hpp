@@ -4,6 +4,7 @@
 #include "../rendering/sokol.hpp"
 #include "Shapes.hpp"
 #include "ViewInstance.hpp"
+#include "_gen_shader/shader_debug.h"
 #include "_gen_shader/shader_view.h"
 #include <SDL.h>
 #include <SDL_video.h>
