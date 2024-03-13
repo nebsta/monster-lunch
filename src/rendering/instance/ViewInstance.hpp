@@ -1,7 +1,7 @@
 #pragma once
 #include <grumble/util/HandmadeMath.h>
 
-#define MAX_INSTANCES 500
+#define MAX_VIEW_INSTANCES 500
 
 struct ViewInstance {
   HMM_Vec4 colx;
@@ -9,8 +9,4 @@ struct ViewInstance {
   HMM_Vec4 colz;
   HMM_Vec4 colw;
   HMM_Vec4 tint;
-};
-
-struct DebugLineInstance {
-  float x;
 };

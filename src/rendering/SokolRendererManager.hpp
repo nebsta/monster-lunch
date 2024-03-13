@@ -3,7 +3,6 @@
 #include "../rendering/SokolState.hpp"
 #include "../rendering/sokol.hpp"
 #include "Shapes.hpp"
-#include "ViewInstance.hpp"
 #include "_gen_shader/shader_debug.h"
 #include "_gen_shader/shader_view.h"
 #include <SDL.h>
@@ -51,6 +50,7 @@ private:
 
   void setupViewBindings();
   void setupDebugGridBindings();
+  void updateDebugGridInstances();
 
   SokolState _state;
   bool _debugMenuVisible;
