@@ -13,7 +13,8 @@ SokolRendererManager::SokolRendererManager(
     grumble::FontManager::shared_ptr fontMananger,
     SDLApplication::shared_ptr sdlApplication)
     : _spriteManager(spriteManager), _fontManager(fontMananger),
-      _sdlApplication(sdlApplication), grumble::RendererManager(configuration) {
+      _sdlApplication(sdlApplication), _debugMenuVisible(false),
+      grumble::RendererManager(configuration) {
 
   sg_logger logger = {};
   logger.func = sokol_log;
@@ -113,12 +114,22 @@ void SokolRendererManager::setup() {
   sg_update_buffer(
       _state.bindings.vertex_buffers[1],
       (sg_range){.ptr = _state.instances, .size = 400 * sizeof(ViewInstance)});
+
+  // setting up imgui
+  simgui_desc_t simgui_desc = {};
+  simgui_desc.logger.func = sokol_log;
+  simgui_setup(simgui_desc);
 }
 
-void SokolRendererManager::teardown() { sg_shutdown(); }
+void SokolRendererManager::teardown() {
+  simgui_shutdown();
+  sg_shutdown();
+}
 
 void SokolRendererManager::prepareFrame() {
   HMM_Vec2 size = _sdlApplication->screenSize();
+  simgui_new_frame({(int)size.Width, (int)size.Height, 0.01, 1.0f});
+  buildDebugMenu();
   sg_begin_default_pass(_state.pass_action, size.Width, size.Height);
   sg_apply_pipeline(_state.pipeline);
 }
@@ -126,12 +137,14 @@ void SokolRendererManager::prepareFrame() {
 void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
                                       grumble::Renderer::shared_ptr renderer) {
 
+  HMM_Vec2 size = _sdlApplication->screenSize();
   sg_apply_bindings(&_state.bindings);
 
   vs_params_t params;
   params.pv = projectionViewMatrix();
   sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, SG_RANGE(params));
   sg_draw(0, 6, 400);
+  simgui_render();
 }
 
 void SokolRendererManager::renderImageView(
@@ -141,6 +154,23 @@ void SokolRendererManager::renderImageView(
 void SokolRendererManager::renderLabel(
     grumble::Transform::shared_ptr transform,
     grumble::TextRenderer::shared_ptr renderer) {}
+
+void SokolRendererManager::buildDebugMenu() {
+  static float f = 0.0f;
+  ImGui::Text("Hello, world!");
+  if (ImGui::Button("Test Window")) {
+    _debugMenuVisible = true;
+  }
+  ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
+              1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+  // 3. Show the ImGui test window. Most of the sample code is in
+  // ImGui::ShowDemoWindow()
+  if (_debugMenuVisible) {
+    ImGui::SetNextWindowPos(ImVec2(460, 20), ImGuiCond_FirstUseEver);
+    ImGui::ShowDemoWindow();
+  }
+}
 
 void SokolRendererManager::commitFrame() {
   sg_end_pass();

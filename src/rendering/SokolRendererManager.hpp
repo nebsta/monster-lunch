@@ -48,4 +48,7 @@ private:
 
   SokolState _state;
   sg_desc _sg_desc;
+  bool _debugMenuVisible;
+
+  void buildDebugMenu();
 };
