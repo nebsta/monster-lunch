@@ -128,7 +128,8 @@ void SokolRendererManager::teardown() {
 
 void SokolRendererManager::prepareFrame() {
   HMM_Vec2 size = _sdlApplication->screenSize();
-  simgui_new_frame({(int)size.Width, (int)size.Height, 0.01, 1.0f});
+  simgui_new_frame(
+      {(int)size.Width, (int)size.Height, ImGui::GetIO().DeltaTime});
   buildDebugMenu();
   sg_begin_default_pass(_state.pass_action, size.Width, size.Height);
   sg_apply_pipeline(_state.pipeline);

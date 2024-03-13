@@ -1,5 +1,7 @@
 
 #include "core/SDLApplication.hpp"
+#include "core/SDLApplicationConfiguration.hpp"
+#include "input/SDLInputManager.hpp"
 #include "rendering/SokolRendererManager.hpp"
 #include <SDL_timer.h>
 #include <grumble/core/Game.hpp>
@@ -41,11 +43,14 @@ HMM_Vec2 handleCameraMovement(grumble::InputManager::shared_ptr inputManager,
   return movement;
 }
 
+void sendImguiInputs(grumble::InputManager::shared_ptr inputManager) {}
+
 int main() {
   // input manager
-  auto inputManager = std::make_shared<grumble::InputManager>();
+  auto inputManager = std::make_shared<SDLInputManager>();
 
-  auto application = std::make_shared<SDLApplication>(inputManager);
+  SDLApplicationConfiguration sdlAppConf = {{1024, 1024}};
+  auto application = std::make_shared<SDLApplication>(sdlAppConf);
   application->setup();
 
   // file manager
@@ -81,7 +86,7 @@ int main() {
     lastFrameTime = currentFrameTime;
 
     // handling any input
-    if (application->handleInput()) {
+    if (game.input()) {
       break;
     }
 

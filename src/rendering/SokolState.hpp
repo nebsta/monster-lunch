@@ -1,6 +1,6 @@
 #pragma once
 
-#include "instance/ViewInstance.hpp"
+#include "ViewInstance.hpp"
 #include "sokol.hpp"
 struct SokolState {
   sg_pipeline pipeline;

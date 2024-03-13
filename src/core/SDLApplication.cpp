@@ -1,12 +1,7 @@
 #include "SDLApplication.hpp"
-#include <SDL_events.h>
-#include <SDL_video.h>
-#include <glm/gtx/string_cast.hpp>
-#include <grumble/core/Object.hpp>
-#include <grumble/logging/LogCategory.hpp>
 
-SDLApplication::SDLApplication(grumble::InputManager::shared_ptr inputManager)
-    : grumble::Object("sdl_application"), _inputManager(inputManager) {}
+SDLApplication::SDLApplication(SDLApplicationConfiguration configuration)
+    : _configuration(configuration), grumble::Object("sdl_application") {}
 
 SDLApplication::~SDLApplication() {}
 
@@ -24,8 +19,10 @@ void SDLApplication::setup() {
   }
 
   // setting up the window
-  _window = SDL_CreateWindow("Monster Lunch", SDL_WINDOWPOS_CENTERED,
-                             SDL_WINDOWPOS_CENTERED, 500, 500, windowFlags);
+  _window = SDL_CreateWindow(
+      "Monster Lunch", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+      _configuration.startingScreenSize.Width,
+      _configuration.startingScreenSize.Height, windowFlags);
   if (!_window) {
     grumble::Logger::error("Error when trying to make SDL window");
     return;
@@ -43,31 +40,6 @@ void SDLApplication::setup() {
     return;
   }
   SDL_GL_MakeCurrent(_window, _context);
-}
-
-bool SDLApplication::handleInput() {
-  SDL_Event e;
-  bool terminate = false;
-  while (SDL_PollEvent(&e)) {
-    if (e.type == SDL_QUIT) {
-      terminate = true;
-    } else if (e.type == SDL_WINDOWEVENT) {
-      if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
-        Sint32 width = e.window.data1;
-        Sint32 height = e.window.data2;
-        logInfo("Window size changed w: {} h: {}", width, height);
-      }
-    } else if (e.type == SDL_KEYDOWN) {
-      auto name = SDL_GetKeyName(e.key.keysym.sym);
-      auto inputCode = SDL2Utils::SDL2_Keycode_to_InputCode(e.key.keysym.sym);
-      _inputManager->activateInput(inputCode);
-    } else if (e.type == SDL_KEYUP) {
-      auto name = SDL_GetKeyName(e.key.keysym.sym);
-      auto inputCode = SDL2Utils::SDL2_Keycode_to_InputCode(e.key.keysym.sym);
-      _inputManager->deactivateInput(inputCode);
-    }
-  }
-  return terminate;
 }
 
 void SDLApplication::teardown() {

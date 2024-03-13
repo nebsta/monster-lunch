@@ -1,6 +1,9 @@
 #pragma once
 
+#include "../utils/SDL2Utils.hpp"
+#include "SDLApplicationConfiguration.hpp"
 #include <SDL.h>
+#include <SDL_events.h>
 #include <SDL_video.h>
 #include <glm/gtx/string_cast.hpp>
 #include <grumble/core/Object.hpp>
@@ -9,13 +12,11 @@
 #include <grumble/logging/Logger.hpp>
 #include <grumble/util/HandmadeMath.h>
 #include <memory>
-
-#include "../utils/SDL2Utils.hpp"
 class SDLApplication : public grumble::Object {
 public:
   typedef std::shared_ptr<SDLApplication> shared_ptr;
 
-  SDLApplication(grumble::InputManager::shared_ptr inputManager);
+  SDLApplication(SDLApplicationConfiguration configuration);
   ~SDLApplication();
 
   void setup();
@@ -30,7 +31,7 @@ protected:
   grumble::LogCategory logCategory() const override;
 
 private:
-  grumble::InputManager::shared_ptr _inputManager;
+  SDLApplicationConfiguration _configuration;
   SDL_Window *_window;
   SDL_GLContext _context;
 };
