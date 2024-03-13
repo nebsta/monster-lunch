@@ -1,5 +1,8 @@
 #pragma once
 #include <grumble/util/HandmadeMath.h>
+
+#define MAX_INSTANCES 500
+
 struct ViewInstance {
   HMM_Vec4 colx;
   HMM_Vec4 coly;

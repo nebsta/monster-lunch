@@ -1,5 +1,6 @@
 
 #include "SokolRendererManager.hpp"
+#include "ViewInstance.hpp"
 
 void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
                const char *message_or_null, uint32_t line_nr,
@@ -34,10 +35,10 @@ void SokolRendererManager::setup() {
   // loading glad
   int version = gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
   if (version == 0) {
-    grumble::Logger::error("Error when loading glad");
+    logError("Error when loading glad");
     return;
   }
-  grumble::Logger::debug("Glad GL Loader Version: " + std::to_string(version));
+  logDebug("Glad GL Loader Version: " + std::to_string(version));
 
   SDL_GL_SetSwapInterval(-1);
 
@@ -52,10 +53,10 @@ void SokolRendererManager::setup() {
   vertex_buffer_desc.label = fmt::format("vertex-shape-{}", 0).c_str();
   _state.bindings.vertex_buffers[0] = sg_make_buffer(&vertex_buffer_desc);
 
-  _state.bindings.vertex_buffers[1] =
-      sg_make_buffer((sg_buffer_desc){.size = 400 * sizeof(ViewInstance),
-                                      .usage = SG_USAGE_STREAM,
-                                      .label = "instance-shape-0"});
+  _state.bindings.vertex_buffers[1] = sg_make_buffer(
+      (sg_buffer_desc){.size = MAX_INSTANCES * sizeof(ViewInstance),
+                       .usage = SG_USAGE_STREAM,
+                       .label = "instance-shape-0"});
 
   uint16_t indices[] = QUAD_INDICES;
   sg_buffer_desc index_buffer_desc = {};
@@ -113,9 +114,9 @@ void SokolRendererManager::setup() {
     }
   }
 
-  sg_update_buffer(
-      _state.bindings.vertex_buffers[1],
-      (sg_range){.ptr = _state.instances, .size = 400 * sizeof(ViewInstance)});
+  sg_update_buffer(_state.bindings.vertex_buffers[1],
+                   (sg_range){.ptr = _state.instances,
+                              .size = MAX_INSTANCES * sizeof(ViewInstance)});
 
   // setting up imgui
   simgui_desc_t simgui_desc = {};
@@ -146,7 +147,7 @@ void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
   vs_params_t params;
   params.pv = projectionViewMatrix();
   sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, SG_RANGE(params));
-  sg_draw(0, 6, 400);
+  sg_draw(0, 6, MAX_INSTANCES);
   simgui_render();
 }
 
