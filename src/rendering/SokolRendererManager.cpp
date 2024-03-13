@@ -1,6 +1,8 @@
 
 #include "SokolRendererManager.hpp"
 #include "ViewInstance.hpp"
+#include <fmt/core.h>
+#include <imgui.h>
 
 void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
                const char *message_or_null, uint32_t line_nr,
@@ -158,6 +160,13 @@ void SokolRendererManager::buildDebugMenu() {
   ImGui::Text("Debug");
   ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
               1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+  std::string toggleGridOnText = debugState()->gridVisible() ? "On" : "Off";
+  std::string toggleGridButtonLabel =
+      fmt::format("Toggle Grid ({})", toggleGridOnText);
+  if (ImGui::Button(toggleGridButtonLabel.c_str())) {
+    debugState()->toggleGridVisible();
+  }
 }
 
 void SokolRendererManager::commitFrame() {
