@@ -209,9 +209,11 @@ void SokolRendererManager::commitFrame() {
   // rendering
   sg_draw(0, 6, MAX_INSTANCES);
 
-  sg_apply_pipeline(_state.debug_pipeline);
-  sg_apply_bindings(&_state.debug_grid_bindings);
-  sg_draw(0, 12, 1);
+  if (debugState()->gridVisible()) {
+    sg_apply_pipeline(_state.debug_pipeline);
+    sg_apply_bindings(&_state.debug_grid_bindings);
+    sg_draw(0, 38, 1);
+  }
 
   simgui_render();
 

@@ -10,3 +10,7 @@ struct ViewInstance {
   HMM_Vec4 colw;
   HMM_Vec4 tint;
 };
+
+struct DebugLineInstance {
+  float x;
+};
