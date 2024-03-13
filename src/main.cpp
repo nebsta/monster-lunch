@@ -3,6 +3,7 @@
 #include "rendering/SokolRendererManager.hpp"
 #include <grumble/core/Game.hpp>
 #include <grumble/font/FontManagerConfiguration.hpp>
+#include <grumble/input/InputManager.hpp>
 #include <grumble/io/FileManager.hpp>
 #include <grumble/io/FileManagerConfiguration.hpp>
 #include <grumble/logging/Logger.hpp>
@@ -10,7 +11,28 @@
 #include <grumble/sprite/SpriteManager.hpp>
 #include <grumble/sprite/SpriteManagerConfiguration.hpp>
 #include <grumble/ui/View.hpp>
+#include <grumble/util/HandmadeMath.h>
 #include <memory>
+
+HMM_Vec2 handleCameraMovement(grumble::InputManager::shared_ptr inputManager) {
+  HMM_Vec2 movement = {0.0f, 0.0f};
+  if (inputManager->isInputActive(grumble::InputCode::ArrowLeft)) {
+    movement += {-1.0f, 0.0f};
+  }
+
+  if (inputManager->isInputActive(grumble::InputCode::ArrowRight)) {
+    movement += {1.0f, 0.0f};
+  }
+
+  if (inputManager->isInputActive(grumble::InputCode::ArrowUp)) {
+    movement += {0.0f, -1.0f};
+  }
+
+  if (inputManager->isInputActive(grumble::InputCode::ArrowDown)) {
+    movement += {0.0f, 1.0f};
+  }
+  return movement;
+}
 
 int main() {
   // input manager
@@ -50,15 +72,8 @@ int main() {
       break;
     }
 
-    if (inputManager->isInputActive(grumble::InputCode::ArrowLeft)) {
-      game.moveCameraPosition({-1.0f, 0.0f});
-    } else if (inputManager->isInputActive(grumble::InputCode::ArrowRight)) {
-      game.moveCameraPosition({1.0f, 0.0f});
-    } else if (inputManager->isInputActive(grumble::InputCode::ArrowUp)) {
-      game.moveCameraPosition({0.0f, 1.0f});
-    } else if (inputManager->isInputActive(grumble::InputCode::ArrowDown)) {
-      game.moveCameraPosition({0.0f, -1.0f});
-    }
+    HMM_Vec2 movement = handleCameraMovement(inputManager);
+    game.moveCameraPosition(movement);
 
     game.setScreenSize(application->screenSize());
     game.render();
