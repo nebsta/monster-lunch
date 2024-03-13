@@ -46,8 +46,6 @@ HMM_Vec2 handleCameraMovement(grumble::InputManager::shared_ptr inputManager,
 void sendImguiInputs(grumble::InputManager::shared_ptr inputManager) {}
 
 int main() {
-  // input manager
-  auto inputManager = std::make_shared<SDLInputManager>();
 
   SDLApplicationConfiguration sdlAppConf = {{1024, 1024}};
   auto application = std::make_shared<SDLApplication>(sdlAppConf);
@@ -68,6 +66,9 @@ int main() {
       std::make_shared<grumble::FontManager>(fontConfig, fileManager);
 
   grumble::RendererManagerConfiguration rendererConfig = {1.0};
+
+  // input manager
+  auto inputManager = std::make_shared<SDLInputManager>();
 
   auto rendererManager = std::make_shared<SokolRendererManager>(
       rendererConfig, spriteManager, fontManager, inputManager, application);

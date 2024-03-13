@@ -4,5 +4,5 @@
 
 struct DebugLineInstance {
   int orientation; // 0 horizontal, 1 vertical
-  int offset;
+  float offset;
 };

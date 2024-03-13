@@ -7,9 +7,9 @@ out vec4 color;
 
 void main() {
   vec3 offset_pos = vec3(pos.x, pos.y + inst_off, pos.z);
-  if (inst_ori == 1) { // vertical
-    offset_pos = vec3(pos.y, pos.x, pos.z);
-  }
+  // if (inst_ori == 1) { // vertical
+    // offset_pos = vec3(pos.y, pos.x, pos.z);
+  // }
 
   gl_Position = vec4(offset_pos, 1.0);
   color = vec4(1.0f, 0.0f, 1.0f, 1.0f);
