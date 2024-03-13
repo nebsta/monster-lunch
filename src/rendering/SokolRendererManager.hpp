@@ -48,8 +48,10 @@ private:
   grumble::InputManager::shared_ptr _inputManager;
   SDLApplication::shared_ptr _sdlApplication;
 
+  void setupViewBindings();
+  void setupDebugGridBindings();
+
   SokolState _state;
-  sg_desc _sg_desc;
   bool _debugMenuVisible;
 
   void buildDebugMenu();

@@ -1,5 +1,6 @@
 
 #include "SokolRendererManager.hpp"
+#include "Shapes.hpp"
 #include "ViewInstance.hpp"
 #include <fmt/core.h>
 #include <imgui.h>
@@ -21,12 +22,6 @@ SokolRendererManager::SokolRendererManager(
       _sdlApplication(sdlApplication), _inputManager(inputManager),
       _debugMenuVisible(false), grumble::RendererManager(configuration) {
 
-  sg_logger logger = {};
-  logger.func = sokol_log;
-
-  _sg_desc = {};
-  _sg_desc.logger = logger;
-
   _state = {};
 }
 
@@ -45,27 +40,10 @@ void SokolRendererManager::setup() {
   SDL_GL_SetSwapInterval(-1);
 
   // setting up sokol
-  sg_setup(&_sg_desc);
+  sg_setup((sg_desc){.logger = (sg_logger){.func = sokol_log}});
   assert(sg_isvalid());
 
-  float vertices[] = QUAD_VERTICES;
-  sg_buffer_desc vertex_buffer_desc = {};
-  vertex_buffer_desc.type = SG_BUFFERTYPE_VERTEXBUFFER;
-  vertex_buffer_desc.data = SG_RANGE(vertices);
-  vertex_buffer_desc.label = fmt::format("vertex-shape-{}", 0).c_str();
-  _state.bindings.vertex_buffers[0] = sg_make_buffer(&vertex_buffer_desc);
-
-  _state.bindings.vertex_buffers[1] = sg_make_buffer(
-      (sg_buffer_desc){.size = MAX_INSTANCES * sizeof(ViewInstance),
-                       .usage = SG_USAGE_STREAM,
-                       .label = "instance-shape-0"});
-
-  uint16_t indices[] = QUAD_INDICES;
-  sg_buffer_desc index_buffer_desc = {};
-  index_buffer_desc.type = SG_BUFFERTYPE_INDEXBUFFER;
-  index_buffer_desc.data = SG_RANGE(indices);
-  index_buffer_desc.label = fmt::format("index-shape-{}", 0).c_str();
-  _state.bindings.index_buffer = sg_make_buffer(&index_buffer_desc);
+  setupViewBindings();
 
   sg_shader shader = sg_make_shader(view_shader_desc(sg_query_backend()));
 
@@ -74,11 +52,11 @@ void SokolRendererManager::setup() {
   pipeline_desc.label = "main-pipeline";
   pipeline_desc.index_type = SG_INDEXTYPE_UINT16;
 
+  // setup vertex buffer layout
   sg_vertex_layout_state layout = {};
   layout.buffers[1].step_func = SG_VERTEXSTEP_PER_INSTANCE;
   layout.attrs[ATTR_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
   layout.attrs[ATTR_vs_pos].buffer_index = 0;
-
   layout.attrs[ATTR_vs_inst_mod_colx].format = SG_VERTEXFORMAT_FLOAT4;
   layout.attrs[ATTR_vs_inst_mod_colx].buffer_index = 1;
   layout.attrs[ATTR_vs_inst_mod_coly].format = SG_VERTEXFORMAT_FLOAT4;
@@ -94,17 +72,49 @@ void SokolRendererManager::setup() {
   _state.pipeline = sg_make_pipeline(&pipeline_desc);
 
   // a pass action to clear framebuffer to black
-  sg_pass_action action = {};
-  sg_color_attachment_action color_action = {};
-  color_action.load_action = SG_LOADACTION_CLEAR;
-  color_action.clear_value = {0.0f, 0.0f, 0.0f, 1.0f};
-  action.colors[0] = color_action;
-  _state.pass_action = action;
+  _state.pass_action =
+      (sg_pass_action){.colors = {{.load_action = SG_LOADACTION_CLEAR,
+                                   .clear_value = {0.0f, 0.0f, 0.0f, 1.0f}}}
+
+      };
 
   // setting up imgui
-  simgui_desc_t simgui_desc = {};
-  simgui_desc.logger.func = sokol_log;
-  simgui_setup(simgui_desc);
+  simgui_setup((simgui_desc_t){.logger = {.func = sokol_log}});
+}
+
+void SokolRendererManager::setupViewBindings() {
+  float vertices[] = QUAD_VERTICES;
+  _state.view_bindings.vertex_buffers[0] =
+      sg_make_buffer((sg_buffer_desc){.type = SG_BUFFERTYPE_VERTEXBUFFER,
+                                      .data = SG_RANGE(vertices),
+                                      .label = "view-vertices"});
+
+  _state.view_bindings.vertex_buffers[1] = sg_make_buffer(
+      (sg_buffer_desc){.size = MAX_INSTANCES * sizeof(ViewInstance),
+                       .usage = SG_USAGE_STREAM,
+                       .label = "view-instances"});
+
+  uint16_t indices[] = QUAD_INDICES;
+  _state.view_bindings.index_buffer =
+      sg_make_buffer((sg_buffer_desc){.type = SG_BUFFERTYPE_INDEXBUFFER,
+                                      .data = SG_RANGE(indices),
+                                      .label = "view-indices"});
+}
+
+void SokolRendererManager::setupDebugGridBindings() {
+  float vertices[] = GRID_VERTICES;
+  _state.debug_grid_bindings.vertex_buffers[0] =
+      sg_make_buffer((sg_buffer_desc){.type = SG_BUFFERTYPE_VERTEXBUFFER,
+                                      .data = SG_RANGE(vertices),
+                                      .label = "debug-grid-vertices"}
+
+      );
+
+  uint16_t indices[] = GRID_INDICES;
+  _state.debug_grid_bindings.index_buffer =
+      sg_make_buffer((sg_buffer_desc){.type = SG_BUFFERTYPE_INDEXBUFFER,
+                                      .data = SG_RANGE(indices),
+                                      .label = "debug-grid-indices"});
 }
 
 void SokolRendererManager::teardown() {
@@ -119,7 +129,7 @@ void SokolRendererManager::prepareFrame() {
   buildDebugMenu();
   sg_begin_default_pass(_state.pass_action, size.Width, size.Height);
   sg_apply_pipeline(_state.pipeline);
-  sg_apply_bindings(&_state.bindings);
+  sg_apply_bindings(&_state.view_bindings);
 
   // updating the uniforms
   vs_params_t params;
@@ -170,7 +180,7 @@ void SokolRendererManager::buildDebugMenu() {
 }
 
 void SokolRendererManager::commitFrame() {
-  sg_update_buffer(_state.bindings.vertex_buffers[1],
+  sg_update_buffer(_state.view_bindings.vertex_buffers[1],
                    (sg_range){.ptr = _state.instances,
                               .size = MAX_INSTANCES * sizeof(ViewInstance)});
 
