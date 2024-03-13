@@ -1,6 +1,7 @@
 
 #include "core/SDLApplication.hpp"
 #include "rendering/SokolRendererManager.hpp"
+#include <SDL_timer.h>
 #include <grumble/core/Game.hpp>
 #include <grumble/font/FontManagerConfiguration.hpp>
 #include <grumble/input/InputManager.hpp>
@@ -14,22 +15,28 @@
 #include <grumble/util/HandmadeMath.h>
 #include <memory>
 
-HMM_Vec2 handleCameraMovement(grumble::InputManager::shared_ptr inputManager) {
+#define FRAME_RATE 60
+#define CAMERA_SPEED 1
+#define FIXED_DELTA_TIME 0.01f
+
+HMM_Vec2 handleCameraMovement(grumble::InputManager::shared_ptr inputManager,
+                              float dt) {
   HMM_Vec2 movement = {0.0f, 0.0f};
+  float distance = dt * CAMERA_SPEED;
   if (inputManager->isInputActive(grumble::InputCode::ArrowLeft)) {
-    movement += {-1.0f, 0.0f};
+    movement += {-distance, 0.0f};
   }
 
   if (inputManager->isInputActive(grumble::InputCode::ArrowRight)) {
-    movement += {1.0f, 0.0f};
+    movement += {distance, 0.0f};
   }
 
   if (inputManager->isInputActive(grumble::InputCode::ArrowUp)) {
-    movement += {0.0f, -1.0f};
+    movement += {0.0f, -distance};
   }
 
   if (inputManager->isInputActive(grumble::InputCode::ArrowDown)) {
-    movement += {0.0f, 1.0f};
+    movement += {0.0f, distance};
   }
   return movement;
 }
@@ -67,15 +74,29 @@ int main() {
   game.setScreenSize(application->screenSize());
 
   // main rendering loop
+  Uint32 lastFrameTime = SDL_GetTicks64();
   while (true) {
+    Uint32 currentFrameTime = SDL_GetTicks64();
+    Uint32 frameTime = currentFrameTime - lastFrameTime;
+    lastFrameTime = currentFrameTime;
+
+    // handling any input
     if (application->handleInput()) {
       break;
     }
 
-    HMM_Vec2 movement = handleCameraMovement(inputManager);
-    game.moveCameraPosition(movement);
+    // update the game as many time as what will fit in the reminaing frame time
+    float remainingFrameTime = frameTime;
+    while (remainingFrameTime >= FIXED_DELTA_TIME) {
+      game.update(FIXED_DELTA_TIME);
+      HMM_Vec2 movement = handleCameraMovement(inputManager, FIXED_DELTA_TIME);
+      game.moveCameraPosition(movement);
+      remainingFrameTime -= FIXED_DELTA_TIME;
+    }
 
-    game.setScreenSize(application->screenSize());
+    // delay if there is any remaining frame time we can't fit into the dt
+    SDL_Delay(remainingFrameTime);
+
     game.render();
   }
 
