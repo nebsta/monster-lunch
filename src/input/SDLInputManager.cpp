@@ -13,14 +13,22 @@ bool SDLInputManager::update() {
     if (e.type == SDL_QUIT) {
       terminate = true;
       break;
-    } else if (e.type == SDL_KEYDOWN) {
-      auto name = SDL_GetKeyName(e.key.keysym.sym);
+    }
+
+    if (e.type == SDL_KEYDOWN) {
       auto inputCode = SDL2Utils::SDL2_Keycode_to_InputCode(e.key.keysym.sym);
       activateInput(inputCode);
     } else if (e.type == SDL_KEYUP) {
-      auto name = SDL_GetKeyName(e.key.keysym.sym);
       auto inputCode = SDL2Utils::SDL2_Keycode_to_InputCode(e.key.keysym.sym);
       deactivateInput(inputCode);
+    } else if (e.type == SDL_MOUSEBUTTONDOWN) {
+      activateInput(grumble::InputCode::MouseLeft);
+      simgui_add_mouse_button_event(0, true);
+    } else if (e.type == SDL_MOUSEBUTTONUP) {
+      deactivateInput(grumble::InputCode::MouseLeft);
+      simgui_add_mouse_button_event(0, false);
+    } else if (e.type == SDL_MOUSEMOTION) {
+      simgui_add_mouse_pos_event(e.motion.x, e.motion.y);
     }
   }
   return terminate;
