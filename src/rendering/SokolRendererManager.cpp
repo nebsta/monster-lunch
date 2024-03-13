@@ -99,25 +99,6 @@ void SokolRendererManager::setup() {
   action.colors[0] = color_action;
   _state.pass_action = action;
 
-  HMM_Mat4 base_scale = HMM_Scale({25.0f, 25.0f, 1.0f});
-  for (int i = 0; i < 20; i++) {
-    for (int j = 0; j < 20; j++) {
-      int instance_index = (i * 20) + j;
-      float x = j * 25.0f;
-      float y = i * 25.0f;
-      HMM_Mat4 m = HMM_MulM4(HMM_Translate({x, y, 0.0f}), base_scale);
-      _state.instances[instance_index].tint = COLOR_RANDOM;
-      _state.instances[instance_index].colx = m.Columns[0];
-      _state.instances[instance_index].coly = m.Columns[1];
-      _state.instances[instance_index].colz = m.Columns[2];
-      _state.instances[instance_index].colw = m.Columns[3];
-    }
-  }
-
-  sg_update_buffer(_state.bindings.vertex_buffers[1],
-                   (sg_range){.ptr = _state.instances,
-                              .size = MAX_INSTANCES * sizeof(ViewInstance)});
-
   // setting up imgui
   simgui_desc_t simgui_desc = {};
   simgui_desc.logger.func = sokol_log;
@@ -140,13 +121,27 @@ void SokolRendererManager::prepareFrame() {
 
 void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
                                       grumble::Renderer::shared_ptr renderer) {
-
-  HMM_Vec2 size = _sdlApplication->screenSize();
   sg_apply_bindings(&_state.bindings);
 
+  HMM_Mat4 modelMatrix = transform->modelMatrix(1.0f);
+  uint32_t instanceId = renderer->instanceId();
+  _state.instances[instanceId].tint = {renderer->tint().r, renderer->tint().g,
+                                       renderer->tint().b, renderer->tint().a};
+  _state.instances[instanceId].colx = modelMatrix.Columns[0];
+  _state.instances[instanceId].coly = modelMatrix.Columns[1];
+  _state.instances[instanceId].colz = modelMatrix.Columns[2];
+  _state.instances[instanceId].colw = modelMatrix.Columns[3];
+
+  sg_update_buffer(_state.bindings.vertex_buffers[1],
+                   (sg_range){.ptr = _state.instances,
+                              .size = MAX_INSTANCES * sizeof(ViewInstance)});
+
+  // updating the uniforms
   vs_params_t params;
   params.pv = projectionViewMatrix();
   sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, SG_RANGE(params));
+
+  // rendering
   sg_draw(0, 6, MAX_INSTANCES);
   simgui_render();
 }
