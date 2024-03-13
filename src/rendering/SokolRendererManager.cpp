@@ -1,13 +1,5 @@
 
 #include "SokolRendererManager.hpp"
-#include "_gen_shader/shader_view.h"
-#include "instance/ViewInstance.hpp"
-#include "shapes.hpp"
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/fwd.hpp>
-#include <glm/gtx/string_cast.hpp>
-#include <grumble/util/ColorConstants.hpp>
 
 void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
                const char *message_or_null, uint32_t line_nr,

@@ -3,8 +3,8 @@
 #include "../rendering/SokolState.hpp"
 #include "../rendering/_gen_shader/shader_view.h"
 #include "../rendering/sokol.hpp"
+#include "Shapes.hpp"
 #include "instance/ViewInstance.hpp"
-#include "shapes.hpp"
 #include <SDL.h>
 #include <SDL_video.h>
 #include <fmt/core.h>
