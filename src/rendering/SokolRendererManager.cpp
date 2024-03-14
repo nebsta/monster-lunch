@@ -148,22 +148,27 @@ void SokolRendererManager::updateDebugGridInstances() {
 
   switch (debugState()->gridResolution()) {
   case grumble::GridResolution::Small:
-    _state.debug_line_instance_count = 20;
+    _state.debug_line_instance_count = 40;
     offset = 0.1f;
     break;
   case grumble::GridResolution::Medium:
     offset = 0.2f;
-    _state.debug_line_instance_count = 10;
+    _state.debug_line_instance_count = 20;
     break;
   case grumble::GridResolution::Large:
     offset = 0.25f;
-    _state.debug_line_instance_count = 8;
+    _state.debug_line_instance_count = 16;
     break;
   }
 
-  for (int i = 0; i < _state.debug_line_instance_count; i++) {
+  int offset_index = 0;
+  for (int i = 0; i < _state.debug_line_instance_count; i += 2) {
+    float inst_off = offset * (offset_index + 1);
     _state.debug_grid_instances[i].orientation = 0;
-    _state.debug_grid_instances[i].offset = offset * (i + 1);
+    _state.debug_grid_instances[i].offset = inst_off;
+    _state.debug_grid_instances[i + 1].orientation = 1;
+    _state.debug_grid_instances[i + 1].offset = inst_off;
+    offset_index++;
   }
 
   sg_update_buffer(
