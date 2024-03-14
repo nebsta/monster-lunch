@@ -1,5 +1,7 @@
 
 #include "SokolRendererManager.hpp"
+#include <grumble/debug/GridResolution.hpp>
+#include <imgui.h>
 
 void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
                const char *message_or_null, uint32_t line_nr,
@@ -160,9 +162,6 @@ void SokolRendererManager::updateDebugGridInstances() {
   for (int i = 0; i < iterations; i++) {
     _state.debug_grid_instances[i].orientation = 0;
     _state.debug_grid_instances[i].offset = runningOffset;
-
-    // _state.debug_grid_instances[i + 1].offset = runningOffset;
-    // _state.debug_grid_instances[i + 1].orientation = 1;
     runningOffset += offset;
   }
 
@@ -227,11 +226,33 @@ void SokolRendererManager::buildDebugMenu() {
   ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
               1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
-  std::string toggleGridOnText = debugState()->gridVisible() ? "On" : "Off";
-  std::string toggleGridButtonLabel =
-      fmt::format("Toggle Grid ({})", toggleGridOnText);
-  if (ImGui::Button(toggleGridButtonLabel.c_str())) {
-    debugState()->toggleGridVisible();
+  // setting up the debug grid menu
+  if (ImGui::CollapsingHeader("Debug Grid")) {
+    std ::string toggleGridOnText = debugState()->gridVisible() ? "On" : "Off";
+    std::string toggleGridButtonLabel =
+        fmt::format("Toggle Grid ({})", toggleGridOnText);
+    if (ImGui::Button(toggleGridButtonLabel.c_str())) {
+      debugState()->toggleGridVisible();
+    }
+
+    ImGui::Spacing();
+
+    ImGui::Text("Grid Resolution");
+
+    if (ImGui::RadioButton("Small", debugState()->gridResolution() ==
+                                        grumble::GridResolution::Small)) {
+      debugState()->setGridResolution(grumble::GridResolution::Small);
+    }
+
+    if (ImGui::RadioButton("Medium", debugState()->gridResolution() ==
+                                         grumble::GridResolution::Medium)) {
+      debugState()->setGridResolution(grumble::GridResolution::Medium);
+    }
+
+    if (ImGui::RadioButton("Large", debugState()->gridResolution() ==
+                                        grumble::GridResolution::Large)) {
+      debugState()->setGridResolution(grumble::GridResolution::Large);
+    }
   }
 }
 
