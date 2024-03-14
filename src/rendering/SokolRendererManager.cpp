@@ -144,25 +144,26 @@ void SokolRendererManager::setupDebugGridBindings() {
 }
 
 void SokolRendererManager::updateDebugGridInstances() {
-  float offset;
-  int iterations;
+  float offset = 0.1f;
+
   switch (debugState()->gridResolution()) {
   case grumble::GridResolution::Small:
+    _state.debug_line_instance_count = 10;
     offset = 0.1f;
-    iterations = 10;
+    break;
   case grumble::GridResolution::Medium:
     offset = 0.2f;
-    iterations = 10;
+    _state.debug_line_instance_count = 5;
+    break;
   case grumble::GridResolution::Large:
     offset = 0.25f;
-    iterations = 8;
+    _state.debug_line_instance_count = 4;
+    break;
   }
 
-  float runningOffset = offset;
-  for (int i = 0; i < iterations; i++) {
+  for (int i = 0; i < _state.debug_line_instance_count; i++) {
     _state.debug_grid_instances[i].orientation = 0;
-    _state.debug_grid_instances[i].offset = runningOffset;
-    runningOffset += offset;
+    _state.debug_grid_instances[i].offset = offset * (i + 1);
   }
 
   sg_update_buffer(
@@ -268,7 +269,8 @@ void SokolRendererManager::commitFrame() {
   if (debugState()->gridVisible()) {
     sg_apply_pipeline(_state.debug_pipeline);
     sg_apply_bindings(&_state.debug_grid_bindings);
-    sg_draw(0, 2, MAX_DEBUG_LINE_INSTANCES);
+    updateDebugGridInstances();
+    sg_draw(0, 2, _state.debug_line_instance_count);
   }
 
   simgui_render();

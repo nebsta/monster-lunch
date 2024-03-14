@@ -15,4 +15,5 @@ struct SokolState {
   sg_pipeline debug_pipeline;
   sg_bindings debug_grid_bindings;
   DebugLineInstance debug_grid_instances[MAX_DEBUG_LINE_INSTANCES];
+  int debug_line_instance_count;
 };
