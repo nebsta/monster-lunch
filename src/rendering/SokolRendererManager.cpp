@@ -112,29 +112,18 @@ void SokolRendererManager::setupViewBindings() {
   float vertices[] = QUAD_VERTICES;
   uint16_t indices[] = QUAD_INDICES;
 
-  _state.view_bindings.vertex_buffers[0] =
-      SokolFactory::createVertexBuffer(SG_RANGE(vertices), "view");
-
-  _state.view_bindings.vertex_buffers[1] = SokolFactory::createInstanceBuffer(
-      MAX_VIEW_INSTANCES, sizeof(ViewInstance), "view");
-
-  _state.view_bindings.index_buffer =
-      SokolFactory::createIndexBuffer(SG_RANGE(indices), "view");
+  _state.view_bindings = SokolFactory::createBindings(
+      SG_RANGE(vertices), SG_RANGE(indices), MAX_VIEW_INSTANCES,
+      sizeof(ViewInstance), "view");
 }
 
 void SokolRendererManager::setupDebugGridBindings() {
   float vertices[] = HORIZONTAL_LINE;
   uint16_t indices[] = {0, 1};
 
-  _state.debug_grid_bindings.vertex_buffers[0] =
-      SokolFactory::createVertexBuffer(SG_RANGE(vertices), "debug-grid");
-
-  _state.debug_grid_bindings.vertex_buffers[1] =
-      SokolFactory::createInstanceBuffer(
-          MAX_DEBUG_LINE_INSTANCES, sizeof(DebugLineInstance), "debug-grid");
-
-  _state.debug_grid_bindings.index_buffer =
-      SokolFactory::createIndexBuffer(SG_RANGE(indices), "debug-grid");
+  _state.debug_grid_bindings = SokolFactory::createBindings(
+      SG_RANGE(vertices), SG_RANGE(indices), MAX_DEBUG_LINE_INSTANCES,
+      sizeof(DebugLineInstance), "debug-grid");
 }
 
 void SokolRendererManager::updateDebugGridInstances() {

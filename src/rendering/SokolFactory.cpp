@@ -24,3 +24,15 @@ sg_buffer SokolFactory::createInstanceBuffer(int instanceCount,
                        .usage = SG_USAGE_STREAM,
                        .label = fmt::format("{}-instances", label).c_str()});
 }
+
+sg_bindings SokolFactory::createBindings(sg_range vertices, sg_range indices,
+                                         int instanceCount, size_t instanceSize,
+                                         std::string label) {
+  sg_bindings bindings = {};
+  bindings.vertex_buffers[0] =
+      SokolFactory::createVertexBuffer(vertices, label);
+  bindings.vertex_buffers[1] =
+      SokolFactory::createInstanceBuffer(instanceCount, instanceSize, label);
+  bindings.index_buffer = SokolFactory::createIndexBuffer(indices, label);
+  return bindings;
+}
