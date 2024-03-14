@@ -23,7 +23,7 @@ SokolRendererManager::SokolRendererManager(
     SDLApplication::shared_ptr sdlApplication)
     : _spriteManager(spriteManager), _fontManager(fontMananger),
       _sdlApplication(sdlApplication), _inputManager(inputManager),
-      _debugMenuVisible(false), grumble::RendererManager(configuration) {
+      grumble::RendererManager(configuration) {
 
   _state = {};
 }
@@ -95,7 +95,6 @@ void SokolRendererManager::setup() {
   debug_pipeline_desc.primitive_type = SG_PRIMITIVETYPE_LINES;
   debug_pipeline_desc.layout = debug_layout;
   _state.debug_pipeline = sg_make_pipeline(debug_pipeline_desc);
-  updateDebugGridInstances();
 
   // a pass action to clear framebuffer to black
   _state.pass_action =
@@ -126,10 +125,50 @@ void SokolRendererManager::setupDebugGridBindings() {
       sizeof(DebugLineInstance), "debug-grid");
 }
 
-void SokolRendererManager::updateDebugGridInstances() {
+void SokolRendererManager::teardown() {
+  simgui_shutdown();
+  sg_shutdown();
+}
+
+void SokolRendererManager::prepareMainLayer() {
+  HMM_Vec2 size = _sdlApplication->screenSize();
+  sg_begin_default_pass(_state.pass_action, size.Width, size.Height);
+  sg_apply_pipeline(_state.pipeline);
+  sg_apply_bindings(&_state.view_bindings);
+
+  // updating the uniforms
+  view_vs_uni_t view_uni;
+  view_uni.pv = projectionViewMatrix();
+  sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_view_vs_uni, SG_RANGE(view_uni));
+}
+
+void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view) {
+
+  HMM_Mat4 modelMatrix = view->transform()->modelMatrix(1.0f);
+  uint32_t instanceId = view->renderer()->instanceId();
+  _state.view_instances[instanceId].tint = {
+      view->renderer()->tint().r, view->renderer()->tint().g,
+      view->renderer()->tint().b, view->renderer()->tint().a};
+  _state.view_instances[instanceId].colx = modelMatrix.Columns[0];
+  _state.view_instances[instanceId].coly = modelMatrix.Columns[1];
+  _state.view_instances[instanceId].colz = modelMatrix.Columns[2];
+  _state.view_instances[instanceId].colw = modelMatrix.Columns[3];
+}
+
+void SokolRendererManager::drawMainLayer() {
+  sg_update_buffer(
+      _state.view_bindings.vertex_buffers[1],
+      (sg_range){.ptr = _state.view_instances,
+                 .size = MAX_VIEW_INSTANCES * sizeof(ViewInstance)});
+
+  sg_draw(0, 6, MAX_VIEW_INSTANCES);
+}
+
+void SokolRendererManager::drawDebugGrid(
+    grumble::DebugState::shared_ptr debugState) {
   float offset = 0.1f;
 
-  switch (debugState()->gridResolution()) {
+  switch (debugState->gridResolution()) {
   case grumble::GridResolution::Small:
     _state.debug_line_instance_count = 40;
     offset = 0.1f;
@@ -154,62 +193,21 @@ void SokolRendererManager::updateDebugGridInstances() {
     offset_index++;
   }
 
+  sg_apply_pipeline(_state.debug_pipeline);
+  sg_apply_bindings(&_state.debug_grid_bindings);
   sg_update_buffer(
       _state.debug_grid_bindings.vertex_buffers[1],
       (sg_range){.ptr = _state.debug_grid_instances,
                  .size = MAX_DEBUG_LINE_INSTANCES * sizeof(DebugLineInstance)});
+
+  sg_draw(0, 2, _state.debug_line_instance_count);
 }
 
-void SokolRendererManager::teardown() {
-  simgui_shutdown();
-  sg_shutdown();
-}
-
-void SokolRendererManager::prepareFrame() {
+void SokolRendererManager::drawDebugMenu(
+    grumble::DebugState::shared_ptr debugState) {
   HMM_Vec2 size = _sdlApplication->screenSize();
   simgui_new_frame(
       {(int)size.Width, (int)size.Height, ImGui::GetIO().DeltaTime});
-  buildDebugMenu();
-  sg_begin_default_pass(_state.pass_action, size.Width, size.Height);
-  sg_apply_pipeline(_state.pipeline);
-  sg_apply_bindings(&_state.view_bindings);
-
-  // updating the uniforms
-  view_vs_uni_t view_uni;
-  view_uni.pv = projectionViewMatrix();
-  sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_view_vs_uni, SG_RANGE(view_uni));
-}
-
-void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
-                                      grumble::Renderer::shared_ptr renderer) {
-
-  HMM_Mat4 modelMatrix = transform->modelMatrix(1.0f);
-  uint32_t instanceId = renderer->instanceId();
-  _state.view_instances[instanceId].tint = {
-      renderer->tint().r, renderer->tint().g, renderer->tint().b,
-      renderer->tint().a};
-  _state.view_instances[instanceId].colx = modelMatrix.Columns[0];
-  _state.view_instances[instanceId].coly = modelMatrix.Columns[1];
-  _state.view_instances[instanceId].colz = modelMatrix.Columns[2];
-  _state.view_instances[instanceId].colw = modelMatrix.Columns[3];
-}
-
-void SokolRendererManager::renderImageView(
-    grumble::Transform::shared_ptr transform,
-    grumble::ImageRenderer::shared_ptr renderer) {}
-
-void SokolRendererManager::renderLabel(
-    grumble::Transform::shared_ptr transform,
-    grumble::TextRenderer::shared_ptr renderer) {}
-
-void SokolRendererManager::buildDebugMenu() {
-  if (_inputManager->isInputTriggered(grumble::InputCode::D)) {
-    _debugMenuVisible = !_debugMenuVisible;
-  }
-
-  if (!_debugMenuVisible) {
-    return;
-  }
 
   ImGui::Text("Debug");
   ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
@@ -217,53 +215,36 @@ void SokolRendererManager::buildDebugMenu() {
 
   // setting up the debug grid menu
   if (ImGui::CollapsingHeader("Debug Grid")) {
-    std ::string toggleGridOnText = debugState()->gridVisible() ? "On" : "Off";
+    std ::string toggleGridOnText = debugState->gridVisible() ? "On" : "Off";
     std::string toggleGridButtonLabel =
         fmt::format("Toggle Grid ({})", toggleGridOnText);
     if (ImGui::Button(toggleGridButtonLabel.c_str())) {
-      debugState()->toggleGridVisible();
+      debugState->toggleGridVisible();
     }
 
     ImGui::Spacing();
 
     ImGui::Text("Grid Resolution");
 
-    if (ImGui::RadioButton("Small", debugState()->gridResolution() ==
+    if (ImGui::RadioButton("Small", debugState->gridResolution() ==
                                         grumble::GridResolution::Small)) {
-      debugState()->setGridResolution(grumble::GridResolution::Small);
+      debugState->setGridResolution(grumble::GridResolution::Small);
     }
 
-    if (ImGui::RadioButton("Medium", debugState()->gridResolution() ==
+    if (ImGui::RadioButton("Medium", debugState->gridResolution() ==
                                          grumble::GridResolution::Medium)) {
-      debugState()->setGridResolution(grumble::GridResolution::Medium);
+      debugState->setGridResolution(grumble::GridResolution::Medium);
     }
 
-    if (ImGui::RadioButton("Large", debugState()->gridResolution() ==
+    if (ImGui::RadioButton("Large", debugState->gridResolution() ==
                                         grumble::GridResolution::Large)) {
-      debugState()->setGridResolution(grumble::GridResolution::Large);
+      debugState->setGridResolution(grumble::GridResolution::Large);
     }
   }
+  simgui_render();
 }
 
 void SokolRendererManager::commitFrame() {
-  sg_update_buffer(
-      _state.view_bindings.vertex_buffers[1],
-      (sg_range){.ptr = _state.view_instances,
-                 .size = MAX_VIEW_INSTANCES * sizeof(ViewInstance)});
-
-  // rendering
-  sg_draw(0, 6, MAX_VIEW_INSTANCES);
-
-  if (debugState()->gridVisible()) {
-    sg_apply_pipeline(_state.debug_pipeline);
-    sg_apply_bindings(&_state.debug_grid_bindings);
-
-    updateDebugGridInstances();
-    sg_draw(0, 2, _state.debug_line_instance_count);
-  }
-
-  simgui_render();
-
   sg_end_pass();
   sg_commit();
   SDL_GL_SwapWindow(_sdlApplication->window());

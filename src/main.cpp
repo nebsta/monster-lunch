@@ -76,14 +76,17 @@ int main() {
   auto game = grumble::Game(rendererManager, fileManager, spriteManager,
                             fontManager, inputManager);
   game.setup();
-  game.rootView()->renderer()->setTint(COLOR_RED);
+  grumble::View::shared_ptr mainView = game.viewFactory()->createView();
+  mainView->renderer()->setTint(COLOR_RED);
+  mainView->transform()->setSize({100.0f, 100.0f});
   game.setScreenSize(application->screenSize());
+  game.getViewLayer(0)->addView(mainView);
 
   auto subview = game.viewFactory()->createView();
   subview->transform()->setLocalPosition({0.0f, 0.0f});
   subview->transform()->setSize({100.0f, 100.0f});
   subview->renderer()->setTint({0.0f, 1.0f, 0.0f, 1.0f});
-  game.rootView()->addChild(subview);
+  // game.rootView()->addChild(subview);
 
   // main rendering loop
   Uint32 lastFrameTime = SDL_GetTicks64();

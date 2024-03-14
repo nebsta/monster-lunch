@@ -31,17 +31,17 @@ public:
                        SDLApplication::shared_ptr sdlApplication);
   ~SokolRendererManager() override;
 
-  void prepareFrame() override;
-  void renderView(grumble::Transform::shared_ptr transform,
-                  grumble::Renderer::shared_ptr renderer) override;
-  void renderImageView(grumble::Transform::shared_ptr transform,
-                       grumble::ImageRenderer::shared_ptr renderer) override;
-  void renderLabel(grumble::Transform::shared_ptr transform,
-                   grumble::TextRenderer::shared_ptr renderer) override;
-  void commitFrame() override;
-
   void setup() override;
   void teardown() override;
+
+protected:
+  void prepareMainLayer() override;
+  void updateBuffer(grumble::View::shared_ptr view) override;
+  void drawMainLayer() override;
+
+  void drawDebugGrid(grumble::DebugState::shared_ptr) override;
+  void drawDebugMenu(grumble::DebugState::shared_ptr) override;
+  void commitFrame() override;
 
 private:
   grumble::SpriteManager::shared_ptr _spriteManager;
@@ -51,10 +51,6 @@ private:
 
   void setupViewBindings();
   void setupDebugGridBindings();
-  void updateDebugGridInstances();
 
   SokolState _state;
-  bool _debugMenuVisible;
-
-  void buildDebugMenu();
 };
