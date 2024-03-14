@@ -12,7 +12,7 @@ void combine_to_mat4(in vec4 col1, in vec4 col2, in vec4 col3, in vec4 col4, out
 @end
 
 @vs view_vs
-uniform vs_params {
+uniform view_vs_uni {
   mat4 pv;
 };
 

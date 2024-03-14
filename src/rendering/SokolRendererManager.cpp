@@ -1,5 +1,7 @@
 
 #include "SokolRendererManager.hpp"
+#include "_gen_shader/shader_debug.h"
+#include "_gen_shader/shader_view.h"
 #include <grumble/debug/GridResolution.hpp>
 #include <imgui.h>
 
@@ -192,9 +194,9 @@ void SokolRendererManager::prepareFrame() {
   sg_apply_bindings(&_state.view_bindings);
 
   // updating the uniforms
-  vs_params_t params;
-  params.pv = projectionViewMatrix();
-  sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_vs_params, SG_RANGE(params));
+  view_vs_uni_t view_uni;
+  view_uni.pv = projectionViewMatrix();
+  sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_view_vs_uni, SG_RANGE(view_uni));
 }
 
 void SokolRendererManager::renderView(grumble::Transform::shared_ptr transform,
@@ -274,6 +276,7 @@ void SokolRendererManager::commitFrame() {
   if (debugState()->gridVisible()) {
     sg_apply_pipeline(_state.debug_pipeline);
     sg_apply_bindings(&_state.debug_grid_bindings);
+
     updateDebugGridInstances();
     sg_draw(0, 2, _state.debug_line_instance_count);
   }

@@ -1,3 +1,7 @@
+@header #include <grumble/util/HandmadeMath.h>
+
+@ctype mat4 HMM_Mat4
+
 @vs debug_vs
 
 in int inst_ori;
