@@ -170,16 +170,16 @@ void SokolRendererManager::drawDebugGrid(
 
   switch (debugState->gridResolution()) {
   case grumble::GridResolution::Small:
-    _state.debug_line_instance_count = 40;
+    _state.debug_line_instance_count = 39;
     offset = 0.1f;
     break;
   case grumble::GridResolution::Medium:
     offset = 0.2f;
-    _state.debug_line_instance_count = 20;
+    _state.debug_line_instance_count = 19;
     break;
   case grumble::GridResolution::Large:
     offset = 0.25f;
-    _state.debug_line_instance_count = 16;
+    _state.debug_line_instance_count = 15;
     break;
   }
 
@@ -195,10 +195,10 @@ void SokolRendererManager::drawDebugGrid(
 
   sg_apply_pipeline(_state.debug_pipeline);
   sg_apply_bindings(&_state.debug_grid_bindings);
-  sg_update_buffer(
-      _state.debug_grid_bindings.vertex_buffers[1],
-      (sg_range){.ptr = _state.debug_grid_instances,
-                 .size = MAX_DEBUG_LINE_INSTANCES * sizeof(DebugLineInstance)});
+  sg_update_buffer(_state.debug_grid_bindings.vertex_buffers[1],
+                   (sg_range){.ptr = _state.debug_grid_instances,
+                              .size = _state.debug_line_instance_count *
+                                      sizeof(DebugLineInstance)});
 
   sg_draw(0, 2, _state.debug_line_instance_count);
 }
