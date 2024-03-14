@@ -136,6 +136,8 @@ void SokolRendererManager::prepareMainLayer() {
   sg_apply_pipeline(_state.pipeline);
   sg_apply_bindings(&_state.view_bindings);
 
+  setScreenSize({size.Width, size.Height});
+
   // updating the uniforms
   view_vs_uni_t view_uni;
   view_uni.pv = projectionViewMatrix();
