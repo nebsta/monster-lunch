@@ -1,7 +1,9 @@
 
 #include "SokolRendererManager.hpp"
+#include "SokolFactory.hpp"
 #include "_gen_shader/shader_debug.h"
 #include "_gen_shader/shader_view.h"
+#include "instance/ViewInstance.hpp"
 #include <grumble/debug/GridResolution.hpp>
 #include <imgui.h>
 
@@ -107,21 +109,16 @@ void SokolRendererManager::setup() {
 
 void SokolRendererManager::setupViewBindings() {
   float vertices[] = QUAD_VERTICES;
-  _state.view_bindings.vertex_buffers[0] =
-      sg_make_buffer((sg_buffer_desc){.type = SG_BUFFERTYPE_VERTEXBUFFER,
-                                      .data = SG_RANGE(vertices),
-                                      .label = "view-vertices"});
-
-  _state.view_bindings.vertex_buffers[1] = sg_make_buffer(
-      (sg_buffer_desc){.size = MAX_VIEW_INSTANCES * sizeof(ViewInstance),
-                       .usage = SG_USAGE_STREAM,
-                       .label = "view-instances"});
-
   uint16_t indices[] = QUAD_INDICES;
+
+  _state.view_bindings.vertex_buffers[0] =
+      SokolFactory::createVertexBuffer(SG_RANGE(vertices), "view");
+
+  _state.view_bindings.vertex_buffers[1] = SokolFactory::createInstanceBuffer(
+      MAX_VIEW_INSTANCES, sizeof(ViewInstance), "view");
+
   _state.view_bindings.index_buffer =
-      sg_make_buffer((sg_buffer_desc){.type = SG_BUFFERTYPE_INDEXBUFFER,
-                                      .data = SG_RANGE(indices),
-                                      .label = "view-indices"});
+      SokolFactory::createIndexBuffer(SG_RANGE(indices), "view");
 }
 
 void SokolRendererManager::setupDebugGridBindings() {
