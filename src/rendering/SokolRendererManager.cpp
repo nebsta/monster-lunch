@@ -163,26 +163,37 @@ void SokolRendererManager::drawMainLayer() {
 
 void SokolRendererManager::drawDebugGrid(
     grumble::DebugState::shared_ptr debugState) {
+  HMM_Vec2 size = _sdlApplication->screenSize();
+  float gridUnit;
   float offset = 0.1f;
 
   switch (debugState->gridResolution()) {
   case grumble::GridResolution::Small:
-    _state.debug_line_instance_count = 39;
+    _state.debug_line_instance_count = 40;
+    gridUnit = size.Width / 20;
     offset = 0.1f;
     break;
   case grumble::GridResolution::Medium:
-    offset = 0.2f;
     _state.debug_line_instance_count = 19;
+    offset = 0.2f;
+    gridUnit = size.Width / 10;
     break;
   case grumble::GridResolution::Large:
-    offset = 0.25f;
     _state.debug_line_instance_count = 15;
+    offset = 0.25f;
+    gridUnit = size.Width / 4;
     break;
   }
 
+  float moduloX = (int)cameraPos().X % (int)gridUnit;
+  float moduloY = (int)cameraPos().Y % (int)gridUnit;
+
+  float gridOffsetX = -((moduloX / gridUnit) * 0.1f);
+  float gridOffsetY = ((moduloY / gridUnit) * 0.1f);
+  logDebug("Grid offset: {}, {}", gridOffsetX, gridOffsetY);
   int offset_index = 0;
   for (int i = 0; i < _state.debug_line_instance_count; i += 2) {
-    float inst_off = offset * (offset_index + 1);
+    float inst_off = offset * offset_index;
     _state.debug_grid_instances[i].orientation = 0;
     _state.debug_grid_instances[i].offset = inst_off;
     _state.debug_grid_instances[i + 1].orientation = 1;
@@ -192,6 +203,10 @@ void SokolRendererManager::drawDebugGrid(
 
   sg_apply_pipeline(_state.debug_pipeline);
   sg_apply_bindings(&_state.debug_grid_bindings);
+
+  debug_vs_uni_t debug_uni = {{gridOffsetX, gridOffsetY}};
+  sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_debug_vs_uni, SG_RANGE(debug_uni));
+
   sg_update_buffer(_state.debug_grid_bindings.vertex_buffers[1],
                    (sg_range){.ptr = _state.debug_grid_instances,
                               .size = _state.debug_line_instance_count *
@@ -209,6 +224,9 @@ void SokolRendererManager::drawDebugMenu(
   ImGui::Text("Debug");
   ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
               1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+  ImGui::Text("Screen Size: %.2f, %.2f", size.Width, size.Height);
+  ImGui::Text("Camera Position: %.2f, %.2f", cameraPos().X, cameraPos().Y);
 
   // setting up the debug grid menu
   if (ImGui::CollapsingHeader("Debug Grid")) {

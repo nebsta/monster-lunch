@@ -1,8 +1,7 @@
-@header #include <grumble/util/HandmadeMath.h>
-
-@ctype mat4 HMM_Mat4
-
 @vs debug_vs
+uniform debug_vs_uni {
+  vec2 off;
+};
 
 in int inst_ori;
 in float inst_off;
@@ -15,6 +14,7 @@ void main() {
     offset_pos = vec3(offset_pos.y, offset_pos.x, pos.z);
   }
 
+  offset_pos = vec3(offset_pos.x + off.x, offset_pos.y + off.y, offset_pos.z);
   gl_Position = vec4(offset_pos, 1.0);
   color = vec4(1.0f, 0.0f, 1.0f, 1.0f);
 }
