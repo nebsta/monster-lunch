@@ -13,8 +13,10 @@ void main() {
   if (inst_ori == 1) { // vertical
     offset_pos = vec3(offset_pos.y, offset_pos.x, pos.z);
   }
-
   offset_pos = vec3(offset_pos.x + off.x, offset_pos.y + off.y, offset_pos.z);
+  float norm_pos_x = 2 * (offset_pos.x/2.0f - floor(0.5f + offset_pos.x/2.0f));
+  // float norm_pos_y = 2 * (offset_pos.y/2.0f - floor(0.5f + offset_pos.y/2.0f));
+  offset_pos = vec3(norm_pos_x, offset_pos.y, offset_pos.z);
   gl_Position = vec4(offset_pos, 1.0);
   color = vec4(1.0f, 0.0f, 1.0f, 1.0f);
 }
