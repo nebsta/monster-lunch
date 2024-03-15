@@ -169,19 +169,19 @@ void SokolRendererManager::drawDebugGrid(
 
   switch (debugState->gridResolution()) {
   case grumble::GridResolution::Small:
-    _state.debug_line_instance_count = 42;
-    gridUnit = size.Width / 20.0f;
-    offset = 0.1f;
+    _state.debug_line_instance_count = 84;
+    gridUnit = size.Width / 40.0f;
+    offset = 0.05f;
     break;
   case grumble::GridResolution::Medium:
+    _state.debug_line_instance_count = 42;
+    offset = 0.1f;
+    gridUnit = size.Width / 20.0f;
+    break;
+  case grumble::GridResolution::Large:
     _state.debug_line_instance_count = 20;
     offset = 0.2f;
     gridUnit = size.Width / 10.0f;
-    break;
-  case grumble::GridResolution::Large:
-    _state.debug_line_instance_count = 16;
-    offset = 0.25f;
-    gridUnit = size.Width / 4.0f;
     break;
   }
 
