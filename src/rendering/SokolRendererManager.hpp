@@ -1,11 +1,6 @@
 #pragma once
 #include "../core/SDLApplication.hpp"
 #include "../rendering/SokolState.hpp"
-#include "../rendering/sokol.hpp"
-#include "Shapes.hpp"
-#include "SokolFactory.hpp"
-#include "_gen_shader/shader_debug.h"
-#include "_gen_shader/shader_view.h"
 #include <SDL.h>
 #include <SDL_video.h>
 #include <fmt/core.h>
@@ -20,6 +15,7 @@
 #include <grumble/ui/Transform.hpp>
 #include <grumble/util/HandmadeMath.h>
 #include <memory>
+
 class SokolRendererManager : public grumble::RendererManager {
 public:
   typedef std::shared_ptr<SokolRendererManager> shared_ptr;

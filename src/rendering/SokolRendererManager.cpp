@@ -1,12 +1,9 @@
-
 #include "SokolRendererManager.hpp"
+#include "../rendering/sokol.hpp"
+#include "Shapes.hpp"
 #include "SokolFactory.hpp"
 #include "_gen_shader/shader_debug.h"
 #include "_gen_shader/shader_view.h"
-#include "instance/DebugLineInstance.hpp"
-#include "instance/ViewInstance.hpp"
-#include <grumble/debug/GridResolution.hpp>
-#include <imgui.h>
 
 void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
                const char *message_or_null, uint32_t line_nr,
@@ -24,7 +21,6 @@ SokolRendererManager::SokolRendererManager(
     : _spriteManager(spriteManager), _fontManager(fontMananger),
       _sdlApplication(sdlApplication), _inputManager(inputManager),
       grumble::RendererManager(configuration) {
-
   _state = {};
 }
 
