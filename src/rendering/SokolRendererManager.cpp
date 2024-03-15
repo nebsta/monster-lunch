@@ -141,7 +141,6 @@ void SokolRendererManager::prepareMainLayer() {
 }
 
 void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view) {
-
   HMM_Mat4 modelMatrix = view->transform()->modelMatrix(1.0f);
   uint32_t instanceId = view->renderer()->instanceId();
   _state.view_instances[instanceId].tint = {
