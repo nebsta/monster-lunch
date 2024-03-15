@@ -24,7 +24,6 @@ in vec4 inst_mod_colw;
 in vec4 inst_tint;
 out vec4 color;
 
-
 @include_block mat_utils
 
 void main() {

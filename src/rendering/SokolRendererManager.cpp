@@ -187,8 +187,6 @@ void SokolRendererManager::drawDebugGrid(
 
   float gridOffsetX = -(cameraPos().X / (size.Width / 2.0f));
   float gridOffsetY = (cameraPos().Y / (size.Height / 2.0f));
-
-  logDebug("Grid offset: {}, {}", gridOffsetX, gridOffsetY);
   int offset_index = 0;
   for (int i = 0; i < _state.debug_line_instance_count; i += 2) {
     float inst_off = offset * offset_index;

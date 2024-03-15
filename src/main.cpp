@@ -76,7 +76,6 @@ int main() {
   auto game = grumble::Game(rendererManager, fileManager, spriteManager,
                             fontManager, inputManager);
   game.setup();
-  game.debugState()->setGridVisible(true);
   grumble::View::shared_ptr mainView = game.viewFactory()->createView();
   mainView->renderer()->setTint(COLOR_RED);
 
