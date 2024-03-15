@@ -174,12 +174,12 @@ void SokolRendererManager::drawDebugGrid(
     offset = 0.1f;
     break;
   case grumble::GridResolution::Medium:
-    _state.debug_line_instance_count = 19;
+    _state.debug_line_instance_count = 20;
     offset = 0.2f;
     gridUnit = size.Width / 10.0f;
     break;
   case grumble::GridResolution::Large:
-    _state.debug_line_instance_count = 15;
+    _state.debug_line_instance_count = 16;
     offset = 0.25f;
     gridUnit = size.Width / 4.0f;
     break;

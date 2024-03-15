@@ -18,10 +18,10 @@ void main() {
 
   if (inst_ori == 0) { // horizontal
     float norm_pos_y = 2 * (offset_pos.y/2.0f - floor(0.5f + offset_pos.y/2.0f));
-    offset_pos = vec3(offset_pos.x, norm_pos_y, offset_pos.z);
+    offset_pos = vec3(pos.x, norm_pos_y, offset_pos.z);
   } else { // vertical
     float norm_pos_x = 2 * (offset_pos.x/2.0f - floor(0.5f + offset_pos.x/2.0f));
-    offset_pos = vec3(norm_pos_x, offset_pos.y, offset_pos.z);
+    offset_pos = vec3(norm_pos_x, pos.x, offset_pos.z);
   }
 
   gl_Position = vec4(offset_pos, 1.0);
