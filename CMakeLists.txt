@@ -9,7 +9,7 @@ find_package(glad REQUIRED)
 find_package(sokol REQUIRED)
 find_package(imgui REQUIRED)
 
-add_executable(ml src/main.cpp src/rendering/sokol.cpp src/core/SDLApplication.cpp src/rendering/SokolRendererManager.cpp src/input/SDLInputManager.cpp src/rendering/SokolFactory.cpp)
+add_executable(ml src/main.cpp src/rendering/sokol.cpp src/core/SDLApplication.cpp src/rendering/SokolRendererManager.cpp src/input/SDLInputManager.cpp src/rendering/SokolFactory.cpp src/core/CameraMovementSystem.cpp)
 target_link_libraries(ml grumble::grumble)
 target_link_libraries(ml SDL2::SDL2)
 target_link_libraries(ml sokol::sokol)

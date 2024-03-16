@@ -1,4 +1,5 @@
 
+#include "core/CameraMovementSystem.hpp"
 #include "core/SDLApplication.hpp"
 #include "core/SDLApplicationConfiguration.hpp"
 #include "input/SDLInputManager.hpp"
@@ -18,30 +19,7 @@
 #include <memory>
 
 #define FRAME_RATE 60
-#define CAMERA_SPEED 2
 #define FIXED_DELTA_TIME 0.01f
-
-HMM_Vec2 handleCameraMovement(grumble::InputManager::shared_ptr inputManager,
-                              float dt) {
-  HMM_Vec2 movement = {0.0f, 0.0f};
-  float distance = dt * CAMERA_SPEED;
-  if (inputManager->isInputActive(grumble::InputCode::ArrowLeft)) {
-    movement += {-distance, 0.0f};
-  }
-
-  if (inputManager->isInputActive(grumble::InputCode::ArrowRight)) {
-    movement += {distance, 0.0f};
-  }
-
-  if (inputManager->isInputActive(grumble::InputCode::ArrowUp)) {
-    movement += {0.0f, -distance};
-  }
-
-  if (inputManager->isInputActive(grumble::InputCode::ArrowDown)) {
-    movement += {0.0f, distance};
-  }
-  return movement;
-}
 
 void sendImguiInputs(grumble::InputManager::shared_ptr inputManager) {}
 
@@ -84,6 +62,10 @@ int main() {
   game.setScreenSize(application->screenSize());
   game.getViewLayer(0)->addView(mainView);
 
+  grumble::System::unique_ptr cameraSystem =
+      std::make_unique<CameraMovementSystem>(inputManager, game.camera());
+  game.registerSystem(std::move(cameraSystem));
+
   // auto subview = game.viewFactory()->createView();
   // subview->transform()->setLocalPosition({0.0f, 0.0f});
   // subview->transform()->setSize({100.0f, 100.0f});
@@ -106,8 +88,6 @@ int main() {
     float remainingFrameTime = frameTime;
     while (remainingFrameTime >= FIXED_DELTA_TIME) {
       game.update(FIXED_DELTA_TIME);
-      HMM_Vec2 movement = handleCameraMovement(inputManager, FIXED_DELTA_TIME);
-      game.moveCameraPosition(movement);
       remainingFrameTime -= FIXED_DELTA_TIME;
     }
 
