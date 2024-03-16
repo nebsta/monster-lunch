@@ -42,6 +42,12 @@ void SokolRendererManager::setup() {
   sg_setup((sg_desc){.logger = (sg_logger){.func = sokol_log}});
   assert(sg_isvalid());
 
+  // setup sokol-debugtext
+  sdtx_setup((sdtx_desc_t){
+      .fonts = {sdtx_font_kc853()},
+      .logger = {.func = sokol_log},
+  });
+
   setupViewBindings();
 
   // setting up the buffer layout for the view pipeline
@@ -122,6 +128,7 @@ void SokolRendererManager::setupDebugGridBindings() {
 }
 
 void SokolRendererManager::teardown() {
+  sdtx_shutdown();
   simgui_shutdown();
   sg_shutdown();
 }
@@ -214,6 +221,21 @@ void SokolRendererManager::drawDebugGrid(
 void SokolRendererManager::drawDebugMenu(
     grumble::DebugState::shared_ptr debugState) {
   HMM_Vec2 size = _sdlApplication->screenSize();
+  sdtx_canvas(size.Width * 0.5f, size.Height * 0.5f);
+  sdtx_origin(0.0f, 2.0f);
+  sdtx_home();
+  sdtx_font(0);
+  sdtx_color3b(0xf4, 0x43, 0x36);
+  sdtx_puts("TESTING");
+  for (int c = 32; c < 256; c++) {
+    sdtx_putc(c);
+    if (((c + 1) & 63) == 0) {
+      sdtx_crlf();
+    }
+  }
+  sdtx_crlf();
+  sdtx_draw();
+
   simgui_new_frame(
       {(int)size.Width, (int)size.Height, ImGui::GetIO().DeltaTime});
 
@@ -252,6 +274,7 @@ void SokolRendererManager::drawDebugMenu(
       debugState->setGridResolution(grumble::GridResolution::Large);
     }
   }
+
   simgui_render();
 }
 
