@@ -68,7 +68,7 @@ int main() {
 
   // main rendering loop
   Uint32 lastFrameTimeMs = SDL_GetTicks64();
-  Uint32 lagMs = 0.0f;
+  Uint32 lagMs = 0;
   while (true) {
     Uint32 currentFrameTimeMs = SDL_GetTicks64();
     Uint32 frameTimeMs = currentFrameTimeMs - lastFrameTimeMs;
@@ -82,27 +82,30 @@ int main() {
 
     // update the game as many time as what will fit in the reminaing frame time
     float updateTimeMs = 0.0f;
-    float remainingFrameTimeMs;
     while (lagMs >= FIXED_DELTA_TIME_MS) {
       game.update(FIXED_DELTA_TIME_MS);
       lagMs -= FIXED_DELTA_TIME_MS;
       updateTimeMs += FIXED_DELTA_TIME_MS;
     }
 
-    game.debugState()->submitFrameStats(
-        (grumble::FrameStats){.totalFrameTime = (float)frameTimeMs,
-                              .updateFrameTime = (float)updateTimeMs,
-                              .remainingFrameTime = remainingFrameTimeMs});
-
     // delay if there is any remaining frame time we can't fit into the dt
+    Uint32 renderTimeStartMs = SDL_GetTicks64();
     game.render();
     game.reset();
+    Uint32 renderTimeMs = SDL_GetTicks64() - renderTimeStartMs;
 
     Uint32 frameDuration = SDL_GetTicks64() - currentFrameTimeMs;
     Uint32 frameDelay = MS_PER_FRAME - frameDuration;
     if (frameDelay > 0) {
       SDL_Delay(MS_PER_FRAME);
     }
+
+    game.debugState()->submitFrameStats(
+        (grumble::FrameStats){.frameTimeMs = (float)frameTimeMs,
+                              .updateTimeMs = updateTimeMs,
+                              .renderTimeMs = (float)renderTimeMs,
+                              .frameLagMs = (float)lagMs,
+                              .frameDelayMs = (float)frameDelay});
   }
 
   application->teardown();

@@ -35,10 +35,10 @@ void ImGuiDebugView::drawGeneralTab(HMM_Vec2 screenSize, HMM_Vec2 cameraPos,
 
     auto values = state->frameStatsHistory();
     auto index = state->frameStatsIndex();
-    std::string overlay = fmt::format("avg: {}", state->averageFrameTime());
-    ImGui::Text("Total Frame Time (Ms)");
-    ImGui::PlotLines("", &values[0].totalFrameTime, FRAME_STATS_WINDOW_SIZE,
-                     index, overlay.c_str(), 0.0f, 20.0f, ImVec2(0, 80.0f),
+    std::string overlay = fmt::format("avg: {}", state->averageFrameTimeMs());
+    ImGui::Text("Frame Time (Ms)");
+    ImGui::PlotLines("", &values[0].frameTimeMs, FRAME_STATS_WINDOW_SIZE, index,
+                     overlay.c_str(), 0.0f, 20.0f, ImVec2(0, 80.0f),
                      sizeof(grumble::FrameStats));
 
     ImGui::EndTabItem();

@@ -225,9 +225,26 @@ void SokolRendererManager::drawDebugStats(
   sdtx_home();
   sdtx_font(0);
   sdtx_color3b(0xf4, 0x43, 0x36);
-  sdtx_puts(fmt::format("Avg Frame Time(ms): {:.0f}", state->averageFrameTime())
+  sdtx_puts(
+      fmt::format("Avg Frame Time(ms): {:.0f}", state->averageFrameTimeMs())
+          .c_str());
+  sdtx_crlf();
+  sdtx_puts(
+      fmt::format("Avg Update Time(ms): {:.0f}", state->averageUpdateTimeMs())
+          .c_str());
+  sdtx_crlf();
+  sdtx_puts(
+      fmt::format("Avg Render Time(ms): {:.0f}", state->averageRenderTimeMs())
+          .c_str());
+  sdtx_crlf();
+  sdtx_puts(fmt::format("Avg Frame Lag(ms): {:.0f}", state->averageFrameLagMs())
                 .c_str());
   sdtx_crlf();
+  sdtx_puts(
+      fmt::format("Avg Frame Delay(ms): {:.0f}", state->averageFrameDelayMs())
+          .c_str());
+  sdtx_crlf();
+
   sdtx_puts(fmt::format("Average FPS: {:.0f}", state->averageFPS()).c_str());
   sdtx_crlf();
 
