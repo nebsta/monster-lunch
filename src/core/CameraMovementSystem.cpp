@@ -9,22 +9,21 @@ CameraMovementSystem::CameraMovementSystem(
 CameraMovementSystem::~CameraMovementSystem() {}
 
 void CameraMovementSystem::update(double dt) {
-  HMM_Vec2 movement = {0.0f, 0.0f};
-  float distance = dt * CAMERA_SPEED;
+  HMM_Vec2 velocity = {0.0f, 0.0f};
   if (_inputManager->isInputActive(grumble::InputCode::ArrowLeft)) {
-    movement += {-distance, 0.0f};
+    velocity += {-1.0f, 0.0f};
   }
 
   if (_inputManager->isInputActive(grumble::InputCode::ArrowRight)) {
-    movement += {distance, 0.0f};
+    velocity += {1.0f, 0.0f};
   }
 
   if (_inputManager->isInputActive(grumble::InputCode::ArrowUp)) {
-    movement += {0.0f, -distance};
+    velocity += {0.0f, -1.0f};
   }
 
   if (_inputManager->isInputActive(grumble::InputCode::ArrowDown)) {
-    movement += {0.0f, distance};
+    velocity += {0.0f, 1.0f};
   }
-  _camera->setPosition(_camera->position() + movement);
+  _camera->setVelocity(velocity);
 }
