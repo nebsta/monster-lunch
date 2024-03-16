@@ -168,13 +168,12 @@ void SokolRendererManager::drawMainLayer() {
   sg_draw(0, 6, MAX_VIEW_INSTANCES);
 }
 
-void SokolRendererManager::drawDebugGrid(
-    grumble::DebugState::shared_ptr debugState) {
+void SokolRendererManager::drawDebugGrid(grumble::GridResolution resolution) {
   HMM_Vec2 size = _sdlApplication->screenSize();
   float gridUnit;
   float offset = 0.1f;
 
-  switch (debugState->gridResolution()) {
+  switch (resolution) {
   case grumble::GridResolution::Small:
     _state.debug_line_instance_count = 84;
     gridUnit = size.Width / 40.0f;
@@ -218,8 +217,8 @@ void SokolRendererManager::drawDebugGrid(
   sg_draw(0, 2, _state.debug_line_instance_count);
 }
 
-void SokolRendererManager::drawDebugMenu(
-    grumble::DebugState::shared_ptr debugState) {
+void SokolRendererManager::drawFrameStats(grumble::FrameStats stats) {
+
   HMM_Vec2 size = _sdlApplication->screenSize();
   sdtx_canvas(size.Width * 0.5f, size.Height * 0.5f);
   sdtx_origin(0.0f, 2.0f);
@@ -235,14 +234,15 @@ void SokolRendererManager::drawDebugMenu(
   }
   sdtx_crlf();
   sdtx_draw();
+}
 
+void SokolRendererManager::drawDebugMenu(
+    grumble::DebugState::shared_ptr debugState) {
+  HMM_Vec2 size = _sdlApplication->screenSize();
   simgui_new_frame(
       {(int)size.Width, (int)size.Height, ImGui::GetIO().DeltaTime});
 
   ImGui::Text("Debug");
-  ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
-              1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
   ImGui::Text("Screen Size: %.2f, %.2f", size.Width, size.Height);
   ImGui::Text("Camera Position: %.2f, %.2f", cameraPos().X, cameraPos().Y);
 

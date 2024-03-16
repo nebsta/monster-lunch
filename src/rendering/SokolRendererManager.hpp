@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_video.h>
 #include <fmt/core.h>
+#include <grumble/debug/FrameStats.hpp>
 #include <grumble/font/FontManager.hpp>
 #include <grumble/input/InputManager.hpp>
 #include <grumble/logging/Logger.hpp>
@@ -36,7 +37,8 @@ protected:
   void updateBuffer(grumble::View::shared_ptr view) override;
   void drawMainLayer() override;
 
-  void drawDebugGrid(grumble::DebugState::shared_ptr) override;
+  void drawDebugGrid(grumble::GridResolution resolution) override;
+  void drawFrameStats(grumble::FrameStats stats) override;
   void drawDebugMenu(grumble::DebugState::shared_ptr) override;
   void commitFrame() override;
 
