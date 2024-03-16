@@ -19,7 +19,7 @@
 #include <memory>
 
 #define FRAME_RATE 60
-#define FIXED_DELTA_TIME 0.01f
+#define FIXED_DELTA_TIME_MS 10.0f
 
 void sendImguiInputs(grumble::InputManager::shared_ptr inputManager) {}
 
@@ -73,11 +73,11 @@ int main() {
   // game.rootView()->addChild(subview);
 
   // main rendering loop
-  Uint32 lastFrameTime = SDL_GetTicks64();
+  Uint32 lastFrameTimeMs = SDL_GetTicks64();
   while (true) {
-    Uint32 currentFrameTime = SDL_GetTicks64();
-    Uint32 frameTime = currentFrameTime - lastFrameTime;
-    lastFrameTime = currentFrameTime;
+    Uint32 currentFrameTimeMs = SDL_GetTicks64();
+    Uint32 frameTimeMs = currentFrameTimeMs - lastFrameTimeMs;
+    lastFrameTimeMs = currentFrameTimeMs;
 
     // handling any input
     if (game.input()) {
@@ -85,14 +85,21 @@ int main() {
     }
 
     // update the game as many time as what will fit in the reminaing frame time
-    float remainingFrameTime = frameTime;
-    while (remainingFrameTime >= FIXED_DELTA_TIME) {
-      game.update(FIXED_DELTA_TIME);
-      remainingFrameTime -= FIXED_DELTA_TIME;
+    float remainingFrameTimeMs = frameTimeMs;
+    float updateTimeMs = 0.0f;
+    while (remainingFrameTimeMs >= FIXED_DELTA_TIME_MS) {
+      game.update(FIXED_DELTA_TIME_MS);
+      remainingFrameTimeMs -= FIXED_DELTA_TIME_MS;
+      updateTimeMs += FIXED_DELTA_TIME_MS;
     }
 
+    game.debugState()->submitFrameStats(
+        (grumble::FrameStats){.totalFrameTime = (float)frameTimeMs,
+                              .updateFrameTime = (float)updateTimeMs,
+                              .remainingFrameTime = remainingFrameTimeMs});
+
     // delay if there is any remaining frame time we can't fit into the dt
-    SDL_Delay(remainingFrameTime);
+    SDL_Delay(remainingFrameTimeMs);
 
     game.render();
     game.reset();

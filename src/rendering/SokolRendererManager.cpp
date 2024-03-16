@@ -224,8 +224,17 @@ void SokolRendererManager::drawFrameStats(grumble::FrameStats stats) {
   sdtx_home();
   sdtx_font(0);
   sdtx_color3b(0xf4, 0x43, 0x36);
-  sdtx_puts(fmt::format("Frame Time: {:.2f}", stats.totalFrameTime).c_str());
+  sdtx_puts(
+      fmt::format("Frame Time(ms): {:.0f}", stats.totalFrameTime).c_str());
   sdtx_crlf();
+  sdtx_puts(
+      fmt::format("Update Time(ms): {:.0f}", stats.updateFrameTime).c_str());
+  sdtx_crlf();
+  sdtx_puts(
+      fmt::format("Remaining Frame Time(ms): {:.0f}", stats.remainingFrameTime)
+          .c_str());
+  sdtx_crlf();
+
   sdtx_draw();
 }
 
