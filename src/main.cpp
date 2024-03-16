@@ -18,8 +18,8 @@
 #include <grumble/util/HandmadeMath.h>
 #include <memory>
 
-#define FRAME_RATE 60
 #define FIXED_DELTA_TIME_MS 10.0f
+#define MS_PER_FRAME 16.0f
 
 void sendImguiInputs(grumble::InputManager::shared_ptr inputManager) {}
 
@@ -66,18 +66,14 @@ int main() {
       std::make_unique<CameraMovementSystem>(inputManager, game.camera());
   game.registerSystem(std::move(cameraSystem));
 
-  // auto subview = game.viewFactory()->createView();
-  // subview->transform()->setLocalPosition({0.0f, 0.0f});
-  // subview->transform()->setSize({100.0f, 100.0f});
-  // subview->renderer()->setTint({0.0f, 1.0f, 0.0f, 1.0f});
-  // game.rootView()->addChild(subview);
-
   // main rendering loop
   Uint32 lastFrameTimeMs = SDL_GetTicks64();
+  Uint32 lagMs = 0.0f;
   while (true) {
     Uint32 currentFrameTimeMs = SDL_GetTicks64();
     Uint32 frameTimeMs = currentFrameTimeMs - lastFrameTimeMs;
     lastFrameTimeMs = currentFrameTimeMs;
+    lagMs += frameTimeMs;
 
     // handling any input
     if (game.input()) {
@@ -85,11 +81,11 @@ int main() {
     }
 
     // update the game as many time as what will fit in the reminaing frame time
-    float remainingFrameTimeMs = frameTimeMs;
     float updateTimeMs = 0.0f;
-    while (remainingFrameTimeMs >= FIXED_DELTA_TIME_MS) {
+    float remainingFrameTimeMs;
+    while (lagMs >= FIXED_DELTA_TIME_MS) {
       game.update(FIXED_DELTA_TIME_MS);
-      remainingFrameTimeMs -= FIXED_DELTA_TIME_MS;
+      lagMs -= FIXED_DELTA_TIME_MS;
       updateTimeMs += FIXED_DELTA_TIME_MS;
     }
 
@@ -99,10 +95,10 @@ int main() {
                               .remainingFrameTime = remainingFrameTimeMs});
 
     // delay if there is any remaining frame time we can't fit into the dt
-    SDL_Delay(remainingFrameTimeMs);
-
     game.render();
     game.reset();
+
+    SDL_Delay(MS_PER_FRAME);
   }
 
   application->teardown();

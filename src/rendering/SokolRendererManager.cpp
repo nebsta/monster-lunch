@@ -217,22 +217,18 @@ void SokolRendererManager::drawDebugGrid(grumble::GridResolution resolution) {
   sg_draw(0, 2, _state.debug_line_instance_count);
 }
 
-void SokolRendererManager::drawFrameStats(grumble::FrameStats stats) {
+void SokolRendererManager::drawDebugStats(
+    grumble::DebugState::shared_ptr state) {
   HMM_Vec2 size = _sdlApplication->screenSize();
   sdtx_canvas(size.Width * 0.5f, size.Height * 0.5f);
   sdtx_origin(2.0f, 2.0f);
   sdtx_home();
   sdtx_font(0);
   sdtx_color3b(0xf4, 0x43, 0x36);
-  sdtx_puts(
-      fmt::format("Frame Time(ms): {:.0f}", stats.totalFrameTime).c_str());
+  sdtx_puts(fmt::format("Avg Frame Time(ms): {:.0f}", state->averageFrameTime())
+                .c_str());
   sdtx_crlf();
-  sdtx_puts(
-      fmt::format("Update Time(ms): {:.0f}", stats.updateFrameTime).c_str());
-  sdtx_crlf();
-  sdtx_puts(
-      fmt::format("Remaining Frame Time(ms): {:.0f}", stats.remainingFrameTime)
-          .c_str());
+  sdtx_puts(fmt::format("Average FPS: {:.0f}", state->averageFPS()).c_str());
   sdtx_crlf();
 
   sdtx_draw();

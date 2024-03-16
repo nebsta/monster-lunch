@@ -39,8 +39,8 @@ protected:
   void drawMainLayer() override;
 
   void drawDebugGrid(grumble::GridResolution resolution) override;
-  void drawFrameStats(grumble::FrameStats stats) override;
-  void drawDebugMenu(grumble::DebugState::shared_ptr) override;
+  void drawDebugStats(grumble::DebugState::shared_ptr state) override;
+  void drawDebugMenu(grumble::DebugState::shared_ptr state) override;
   void commitFrame() override;
 
 private:

@@ -26,12 +26,21 @@ void ImGuiDebugView::drawGeneralTab(HMM_Vec2 screenSize, HMM_Vec2 cameraPos,
     ImGui::Text("Screen Size: %.2f, %.2f", screenSize.Width, screenSize.Height);
     ImGui::Text("Camera Position: %.2f, %.2f", cameraPos.X, cameraPos.Y);
 
-    std ::string toggleStatsText = state->frameStatsVisible() ? "On" : "Off";
+    std ::string toggleStatsText = state->debugStatsVisible() ? "On" : "Off";
     std::string toggleFrameStatsButtonLabel =
         fmt::format("Toggle Frame Stats ({})", toggleStatsText);
     if (ImGui::Button(toggleFrameStatsButtonLabel.c_str())) {
-      state->toggleFrameStatsVisible();
+      state->toggleDebugStatsVisible();
     }
+
+    auto values = state->frameStatsHistory();
+    auto index = state->frameStatsIndex();
+    std::string overlay = fmt::format("avg: {}", state->averageFrameTime());
+    ImGui::Text("Total Frame Time (Ms)");
+    ImGui::PlotLines("", &values[0].totalFrameTime, FRAME_STATS_WINDOW_SIZE,
+                     index, overlay.c_str(), 0.0f, 20.0f, ImVec2(0, 80.0f),
+                     sizeof(grumble::FrameStats));
+
     ImGui::EndTabItem();
   }
 }
