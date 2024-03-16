@@ -10,4 +10,7 @@ public:
                    grumble::DebugState::shared_ptr state);
 
 private:
+  static void drawGeneralTab(HMM_Vec2 screenSize, HMM_Vec2 cameraPos,
+                             grumble::DebugState::shared_ptr state);
+  static void drawGridTab(grumble::DebugState::shared_ptr state);
 };
