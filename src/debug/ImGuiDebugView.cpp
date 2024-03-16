@@ -5,8 +5,6 @@ void ImGuiDebugView::draw(HMM_Vec2 screenSize, HMM_Vec2 cameraPos,
   simgui_new_frame({(int)screenSize.Width, (int)screenSize.Height,
                     ImGui::GetIO().DeltaTime});
 
-  ImGui::Text("Debug");
-
   ImGui::Spacing();
 
   if (ImGui::BeginTabBar("Main")) {
@@ -14,6 +12,9 @@ void ImGuiDebugView::draw(HMM_Vec2 screenSize, HMM_Vec2 cameraPos,
     drawGeneralTab(screenSize, cameraPos, state);
 
     drawGridTab(state);
+
+    drawLoggerTab();
+
     ImGui::EndTabBar();
   }
 
@@ -42,6 +43,52 @@ void ImGuiDebugView::drawGeneralTab(HMM_Vec2 screenSize, HMM_Vec2 cameraPos,
                      sizeof(grumble::FrameStats));
 
     ImGui::EndTabItem();
+  }
+}
+
+void ImGuiDebugView::drawLoggerTab() {
+  if (ImGui::BeginTabItem("Logging")) {
+
+    ImGui::Text("Level");
+    grumble::LogLevel logLevel = grumble::Logger::activeLogLevel();
+
+    if (ImGui::RadioButton("Error", logLevel == grumble::LogLevel::error)) {
+      grumble::Logger::setActiveLogLevel(grumble::LogLevel::error);
+    }
+
+    if (ImGui::RadioButton("Warn", logLevel == grumble::LogLevel::warn)) {
+      grumble::Logger::setActiveLogLevel(grumble::LogLevel::warn);
+    }
+
+    if (ImGui::RadioButton("Info", logLevel == grumble::LogLevel::info)) {
+      grumble::Logger::setActiveLogLevel(grumble::LogLevel::info);
+    }
+
+    if (ImGui::RadioButton("Debug", logLevel == grumble::LogLevel::debug)) {
+      grumble::Logger::setActiveLogLevel(grumble::LogLevel::debug);
+    }
+    ImGui::Spacing();
+
+    ImGui::Text("Categories");
+    drawLogCategoryButton(grumble::LogCategory::core);
+    drawLogCategoryButton(grumble::LogCategory::font);
+    drawLogCategoryButton(grumble::LogCategory::input);
+    drawLogCategoryButton(grumble::LogCategory::io);
+    drawLogCategoryButton(grumble::LogCategory::rendering);
+    drawLogCategoryButton(grumble::LogCategory::sprite);
+    drawLogCategoryButton(grumble::LogCategory::ui);
+    ImGui::EndTabItem();
+  }
+}
+
+void ImGuiDebugView::drawLogCategoryButton(grumble::LogCategory category) {
+  bool isDisabled = grumble::Logger::logCategoryDisabled(category);
+
+  std::string name = grumble::Logger::logCategoryName(category);
+  std::string toggleText = isDisabled ? "off" : "on";
+  std::string buttonText = fmt::format("{} ({})", name, toggleText);
+  if (ImGui::Button(buttonText.c_str())) {
+    grumble::Logger::toggleLogCategory(category);
   }
 }
 
