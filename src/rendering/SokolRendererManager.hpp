@@ -27,10 +27,11 @@ public:
                        SDLApplication::shared_ptr sdlApplication);
   ~SokolRendererManager() override;
 
-  void setup() override;
   void teardown() override;
 
 protected:
+  void setup() override;
+
   void prepareMainLayer() override;
   void updateBuffer(grumble::View::shared_ptr view) override;
   void drawMainLayer() override;
