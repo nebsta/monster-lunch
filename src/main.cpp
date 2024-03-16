@@ -19,7 +19,7 @@
 #include <memory>
 
 #define FIXED_DELTA_TIME_MS 10.0f
-#define MS_PER_FRAME 16.0f
+#define MS_PER_FRAME 12.0f
 
 void sendImguiInputs(grumble::InputManager::shared_ptr inputManager) {}
 
@@ -98,7 +98,11 @@ int main() {
     game.render();
     game.reset();
 
-    SDL_Delay(MS_PER_FRAME);
+    Uint32 frameDuration = SDL_GetTicks64() - currentFrameTimeMs;
+    Uint32 frameDelay = MS_PER_FRAME - frameDuration;
+    if (frameDelay > 0) {
+      SDL_Delay(MS_PER_FRAME);
+    }
   }
 
   application->teardown();
