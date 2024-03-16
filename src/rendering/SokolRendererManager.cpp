@@ -218,20 +218,13 @@ void SokolRendererManager::drawDebugGrid(grumble::GridResolution resolution) {
 }
 
 void SokolRendererManager::drawFrameStats(grumble::FrameStats stats) {
-
   HMM_Vec2 size = _sdlApplication->screenSize();
   sdtx_canvas(size.Width * 0.5f, size.Height * 0.5f);
-  sdtx_origin(0.0f, 2.0f);
+  sdtx_origin(2.0f, 2.0f);
   sdtx_home();
   sdtx_font(0);
   sdtx_color3b(0xf4, 0x43, 0x36);
-  sdtx_puts("TESTING");
-  for (int c = 32; c < 256; c++) {
-    sdtx_putc(c);
-    if (((c + 1) & 63) == 0) {
-      sdtx_crlf();
-    }
-  }
+  sdtx_puts(fmt::format("Frame Time: {:.2f}", stats.totalFrameTime).c_str());
   sdtx_crlf();
   sdtx_draw();
 }
@@ -246,11 +239,20 @@ void SokolRendererManager::drawDebugMenu(
   ImGui::Text("Screen Size: %.2f, %.2f", size.Width, size.Height);
   ImGui::Text("Camera Position: %.2f, %.2f", cameraPos().X, cameraPos().Y);
 
+  std ::string toggleStatsText = debugState->frameStatsVisible() ? "On" : "Off";
+  std::string toggleFrameStatsButtonLabel =
+      fmt::format("Toggle Frame Stats ({})", toggleStatsText);
+  if (ImGui::Button(toggleFrameStatsButtonLabel.c_str())) {
+    debugState->toggleFrameStatsVisible();
+  }
+
+  ImGui::Spacing();
+
   // setting up the debug grid menu
   if (ImGui::CollapsingHeader("Debug Grid")) {
-    std ::string toggleGridOnText = debugState->gridVisible() ? "On" : "Off";
+    std ::string toggleGridText = debugState->gridVisible() ? "On" : "Off";
     std::string toggleGridButtonLabel =
-        fmt::format("Toggle Grid ({})", toggleGridOnText);
+        fmt::format("Toggle Grid ({})", toggleGridText);
     if (ImGui::Button(toggleGridButtonLabel.c_str())) {
       debugState->toggleGridVisible();
     }
