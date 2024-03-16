@@ -1,5 +1,6 @@
 #pragma once
 #include "../core/SDLApplication.hpp"
+#include "../debug/ImGuiDebugView.hpp"
 #include "../rendering/SokolState.hpp"
 #include <SDL.h>
 #include <SDL_video.h>

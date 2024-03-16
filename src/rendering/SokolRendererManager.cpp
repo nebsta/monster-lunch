@@ -241,52 +241,7 @@ void SokolRendererManager::drawFrameStats(grumble::FrameStats stats) {
 void SokolRendererManager::drawDebugMenu(
     grumble::DebugState::shared_ptr debugState) {
   HMM_Vec2 size = _sdlApplication->screenSize();
-  simgui_new_frame(
-      {(int)size.Width, (int)size.Height, ImGui::GetIO().DeltaTime});
-
-  ImGui::Text("Debug");
-  ImGui::Text("Screen Size: %.2f, %.2f", size.Width, size.Height);
-  ImGui::Text("Camera Position: %.2f, %.2f", cameraPos().X, cameraPos().Y);
-
-  std ::string toggleStatsText = debugState->frameStatsVisible() ? "On" : "Off";
-  std::string toggleFrameStatsButtonLabel =
-      fmt::format("Toggle Frame Stats ({})", toggleStatsText);
-  if (ImGui::Button(toggleFrameStatsButtonLabel.c_str())) {
-    debugState->toggleFrameStatsVisible();
-  }
-
-  ImGui::Spacing();
-
-  // setting up the debug grid menu
-  if (ImGui::CollapsingHeader("Debug Grid")) {
-    std ::string toggleGridText = debugState->gridVisible() ? "On" : "Off";
-    std::string toggleGridButtonLabel =
-        fmt::format("Toggle Grid ({})", toggleGridText);
-    if (ImGui::Button(toggleGridButtonLabel.c_str())) {
-      debugState->toggleGridVisible();
-    }
-
-    ImGui::Spacing();
-
-    ImGui::Text("Grid Resolution");
-
-    if (ImGui::RadioButton("Small", debugState->gridResolution() ==
-                                        grumble::GridResolution::Small)) {
-      debugState->setGridResolution(grumble::GridResolution::Small);
-    }
-
-    if (ImGui::RadioButton("Medium", debugState->gridResolution() ==
-                                         grumble::GridResolution::Medium)) {
-      debugState->setGridResolution(grumble::GridResolution::Medium);
-    }
-
-    if (ImGui::RadioButton("Large", debugState->gridResolution() ==
-                                        grumble::GridResolution::Large)) {
-      debugState->setGridResolution(grumble::GridResolution::Large);
-    }
-  }
-
-  simgui_render();
+  ImGuiDebugView::draw(size, cameraPos(), debugState);
 }
 
 void SokolRendererManager::commitFrame() {
