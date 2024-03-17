@@ -1,6 +1,5 @@
 #pragma once
 #include "../core/SDLApplication.hpp"
-#include "../debug/ImGuiDebugView.hpp"
 #include "../rendering/SokolState.hpp"
 #include <SDL.h>
 #include <SDL_video.h>
@@ -34,13 +33,13 @@ public:
 protected:
   void setup() override;
 
-  void prepareMainLayer() override;
-  void updateBuffer(grumble::View::shared_ptr view) override;
+  void prepareMainLayer(double t) override;
+  void updateBuffer(grumble::View::shared_ptr view, double t) override;
   void drawMainLayer() override;
 
-  void drawDebugGrid(grumble::GridResolution resolution) override;
+  void drawDebugGrid(grumble::GridResolution resolution, double t) override;
   void drawDebugStats(grumble::DebugState::shared_ptr state) override;
-  void drawDebugMenu(grumble::DebugState::shared_ptr state) override;
+  void drawDebugMenu(grumble::DebugState::shared_ptr state, double t) override;
   void commitFrame() override;
 
 private:

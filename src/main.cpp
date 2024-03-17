@@ -66,7 +66,7 @@ int main() {
       std::make_unique<CameraMovementSystem>(inputManager, game.camera());
   game.registerSystem(std::move(cameraSystem));
 
-  // main rendering loop
+  // main loop
   Uint32 lastFrameTimeMs = SDL_GetTicks64();
   Uint32 lagMs = 0;
   while (true) {
@@ -80,7 +80,7 @@ int main() {
       break;
     }
 
-    // update the game as many time as what will fit in the reminaing frame time
+    // update the game as many time as what will fit in the remaining frame time
     float updateTimeMs = 0.0f;
     while (lagMs >= FIXED_DELTA_TIME_MS) {
       game.update(FIXED_DELTA_TIME_MS);
@@ -88,18 +88,24 @@ int main() {
       updateTimeMs += FIXED_DELTA_TIME_MS;
     }
 
-    // delay if there is any remaining frame time we can't fit into the dt
+    // calculate the interpolation factor for the render
+    double t = lagMs / FIXED_DELTA_TIME_MS;
+
+    // render the frame
     Uint32 renderTimeStartMs = SDL_GetTicks64();
-    game.render();
-    game.reset();
+    game.render(t);
     Uint32 renderTimeMs = SDL_GetTicks64() - renderTimeStartMs;
 
+    game.reset();
+
+    // delay the next frame if we have time left over
     Uint32 frameDuration = SDL_GetTicks64() - currentFrameTimeMs;
     Uint32 frameDelay = MS_PER_FRAME - frameDuration;
     if (frameDelay > 0) {
       SDL_Delay(MS_PER_FRAME);
     }
 
+    // submit the frame stats
     game.debugState()->submitFrameStats(
         (grumble::FrameStats){.frameTimeMs = (float)frameTimeMs,
                               .updateTimeMs = updateTimeMs,

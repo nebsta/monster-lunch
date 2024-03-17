@@ -1,4 +1,5 @@
 #include "SokolRendererManager.hpp"
+#include "../debug/ImGuiDebugView.hpp"
 #include "../rendering/sokol.hpp"
 #include "Shapes.hpp"
 #include "SokolFactory.hpp"
@@ -133,7 +134,7 @@ void SokolRendererManager::teardown() {
   sg_shutdown();
 }
 
-void SokolRendererManager::prepareMainLayer() {
+void SokolRendererManager::prepareMainLayer(double t) {
   HMM_Vec2 size = _sdlApplication->screenSize();
   sg_begin_default_pass(_state.pass_action, size.Width, size.Height);
   sg_apply_pipeline(_state.pipeline);
@@ -143,11 +144,12 @@ void SokolRendererManager::prepareMainLayer() {
 
   // updating the uniforms
   view_vs_uni_t view_uni;
-  view_uni.pv = projectionViewMatrix();
+  view_uni.pv = projectionViewMatrix(t);
   sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_view_vs_uni, SG_RANGE(view_uni));
 }
 
-void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view) {
+void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view,
+                                        double t) {
   HMM_Mat4 modelMatrix = view->transform()->modelMatrix(1.0f);
   uint32_t instanceId = view->renderer()->instanceId();
   _state.view_instances[instanceId].tint = {
@@ -168,7 +170,8 @@ void SokolRendererManager::drawMainLayer() {
   sg_draw(0, 6, MAX_VIEW_INSTANCES);
 }
 
-void SokolRendererManager::drawDebugGrid(grumble::GridResolution resolution) {
+void SokolRendererManager::drawDebugGrid(grumble::GridResolution resolution,
+                                         double t) {
   HMM_Vec2 size = _sdlApplication->screenSize();
   float gridUnit;
   float offset = 0.1f;
@@ -191,8 +194,8 @@ void SokolRendererManager::drawDebugGrid(grumble::GridResolution resolution) {
     break;
   }
 
-  float gridOffsetX = -(cameraPos().X / (size.Width / 2.0f));
-  float gridOffsetY = (cameraPos().Y / (size.Height / 2.0f));
+  float gridOffsetX = -(cameraPos(t).X / (size.Width / 2.0f));
+  float gridOffsetY = (cameraPos(t).Y / (size.Height / 2.0f));
   int offset_index = 0;
   for (int i = 0; i < _state.debug_line_instance_count; i += 2) {
     float inst_off = offset * offset_index;
@@ -252,9 +255,9 @@ void SokolRendererManager::drawDebugStats(
 }
 
 void SokolRendererManager::drawDebugMenu(
-    grumble::DebugState::shared_ptr debugState) {
+    grumble::DebugState::shared_ptr debugState, double t) {
   HMM_Vec2 size = _sdlApplication->screenSize();
-  ImGuiDebugView::draw(size, cameraPos(), debugState);
+  ImGuiDebugView::draw(size, cameraPos(t), debugState);
 }
 
 void SokolRendererManager::commitFrame() {
