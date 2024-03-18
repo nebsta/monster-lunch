@@ -25,9 +25,6 @@
 void sendImguiInputs(grumble::InputManager::shared_ptr inputManager) {}
 
 int main() {
-
-  Atlas::Main.idle_down;
-
   SDLApplicationConfiguration sdlAppConf = {{1024, 1024}};
   auto application = std::make_shared<SDLApplication>(sdlAppConf);
   application->setup();

@@ -4,8 +4,10 @@ from jinja2 import Environment, FileSystemLoader
 import os
 import json
 
+root_path = os.path.dirname(os.path.abspath(__file__))
+env_path = f"{root_path}/../templates"
 
-with open("../res/images/main.json") as file:
+with open(f"{root_path}/../res/images/main.json") as file:
   data = json.load(file)
   atlas = {}
   atlas["name"] = "Main"
@@ -27,10 +29,10 @@ with open("../res/images/main.json") as file:
 
   atlas["sprites"] = sprites
 
-  environment = Environment(loader=FileSystemLoader("./templates"))
+  environment = Environment(loader=FileSystemLoader(env_path))
   template = environment.get_template("sprite_atlas_template.jinga")
 
-  path = "../src/sprite/_gen_MainAtlas.hpp"
+  path = f"{root_path}/../src/sprite/_gen_MainAtlas.hpp"
   with open(path, mode="w", encoding="utf-8") as file:
     file.write(template.render(atlas))
 
