@@ -10,7 +10,7 @@ env_path = f"{root_path}/../templates"
 with open(f"{root_path}/../res/images/main.json") as file:
   data = json.load(file)
   atlas = {}
-  atlas["name"] = "Main"
+  atlas["name"] = "main"
   sprites = []
   for sprite_data in data["frames"]:
     frame = sprite_data["frame"]
