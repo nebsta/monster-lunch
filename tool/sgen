@@ -1,0 +1,36 @@
+#!/usr/bin/python3
+
+from jinja2 import Environment, FileSystemLoader
+import os
+import json
+
+
+with open("../res/images/main.json") as file:
+  data = json.load(file)
+  atlas = {}
+  atlas["name"] = "Main"
+  sprites = []
+  for sprite_data in data["frames"]:
+    frame = sprite_data["frame"]
+    sprite = {
+      "name": sprite_data["filename"][:-4],
+      "tlx": frame["x"],
+      "tly": frame["y"],
+      "trx" : frame["x"] + frame["w"],
+      "try" : frame["y"],
+      "blx" : frame["x"],
+      "bly" : frame["y"] + frame["h"],
+      "brx" : frame["x"] + frame["w"],
+      "bry" : frame["y"] + frame["h"]
+    }
+    sprites.append(sprite)
+
+  atlas["sprites"] = sprites
+
+  environment = Environment(loader=FileSystemLoader("./templates"))
+  template = environment.get_template("sprite_atlas_template.jinga")
+
+  path = "../src/sprite/_gen_MainAtlas.hpp"
+  with open(path, mode="w", encoding="utf-8") as file:
+    file.write(template.render(atlas))
+

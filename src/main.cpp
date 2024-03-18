@@ -4,6 +4,7 @@
 #include "core/SDLApplicationConfiguration.hpp"
 #include "input/SDLInputManager.hpp"
 #include "rendering/SokolRendererManager.hpp"
+#include "sprite/_gen_MainAtlas.hpp"
 #include <SDL_timer.h>
 #include <grumble/core/Game.hpp>
 #include <grumble/font/FontManagerConfiguration.hpp>
@@ -24,6 +25,8 @@
 void sendImguiInputs(grumble::InputManager::shared_ptr inputManager) {}
 
 int main() {
+
+  Atlas::Main.idle_down;
 
   SDLApplicationConfiguration sdlAppConf = {{1024, 1024}};
   auto application = std::make_shared<SDLApplication>(sdlAppConf);

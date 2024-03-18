@@ -8,7 +8,6 @@
 #include <grumble/font/FontManager.hpp>
 #include <grumble/input/InputManager.hpp>
 #include <grumble/logging/Logger.hpp>
-#include <grumble/render/ImageRenderer.hpp>
 #include <grumble/render/Renderer.hpp>
 #include <grumble/render/RendererManager.hpp>
 #include <grumble/render/RendererManagerConfiguration.hpp>

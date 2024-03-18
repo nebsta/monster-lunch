@@ -1,0 +1,29 @@
+// clang-format off
+#pragma once
+
+#include <string>
+#include <grumble/sprite/SpriteDefinition.hpp>
+
+namespace Atlas {
+  struct {{ name }}AtlasDefinition {
+    std::string name;
+    {% for sprite in sprites %}
+    grumble::SpriteDefinition {{ sprite.name }};{% endfor %}
+  };
+
+  static {{ name }}AtlasDefinition {{name}} = {
+    .name = "{{name}}",
+    {% for sprite in sprites %}
+    .{{sprite.name}} = (grumble::SpriteDefinition){
+      .name = "{{sprite.name}}",
+      .region = (grumble::SpriteRegion) {
+        .tl = { {{ sprite.tlx }}.0f, {{ sprite.tly }}.0f },
+        .tr = { {{ sprite.trx }}.0f, {{ sprite.try }}.0f },
+        .bl = { {{ sprite.blx }}.0f, {{ sprite.bly }}.0f },
+        .br = { {{ sprite.brx }}.0f, {{ sprite.bry }}.0f }
+      }
+    },
+    {% endfor %}
+  };
+}
+// clang-format on

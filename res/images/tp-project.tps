@@ -124,7 +124,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename></filename>
+                <filename>main.json</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -173,40 +173,8 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../../../../Downloads/sprite/0.png</key>
-            <key type="filename">../../../../../Downloads/sprite/10.png</key>
-            <key type="filename">../../../../../Downloads/sprite/11.png</key>
-            <key type="filename">../../../../../Downloads/sprite/12.png</key>
-            <key type="filename">../../../../../Downloads/sprite/13.png</key>
-            <key type="filename">../../../../../Downloads/sprite/14.png</key>
-            <key type="filename">../../../../../Downloads/sprite/15.png</key>
-            <key type="filename">../../../../../Downloads/sprite/16.png</key>
-            <key type="filename">../../../../../Downloads/sprite/2.png</key>
-            <key type="filename">../../../../../Downloads/sprite/31.png</key>
-            <key type="filename">../../../../../Downloads/sprite/32.png</key>
-            <key type="filename">../../../../../Downloads/sprite/37.png</key>
-            <key type="filename">../../../../../Downloads/sprite/38.png</key>
-            <key type="filename">../../../../../Downloads/sprite/6.png</key>
-            <key type="filename">../../../../../Downloads/sprite/7.png</key>
-            <key type="filename">../../../../../Downloads/sprite/8.png</key>
-            <key type="filename">../../../../../Downloads/sprite/9.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,11,14,22</rect>
-                <key>scale9Paddings</key>
-                <rect>7,11,14,22</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../../../../../Downloads/sprite/1.png</key>
-            <key type="filename">../../../../../Downloads/sprite/3.png</key>
-            <key type="filename">../../../../../Downloads/sprite/4.png</key>
+            <key type="filename">sprites/idle_down.png</key>
+            <key type="filename">sprites/idle_up.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -221,23 +189,54 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../../../../Downloads/sprite/17.png</key>
-            <key type="filename">../../../../../Downloads/sprite/19.png</key>
-            <key type="filename">../../../../../Downloads/sprite/20.png</key>
-            <key type="filename">../../../../../Downloads/sprite/22.png</key>
-            <key type="filename">../../../../../Downloads/sprite/23.png</key>
-            <key type="filename">../../../../../Downloads/sprite/24.png</key>
-            <key type="filename">../../../../../Downloads/sprite/25.png</key>
-            <key type="filename">../../../../../Downloads/sprite/26.png</key>
-            <key type="filename">../../../../../Downloads/sprite/27.png</key>
-            <key type="filename">../../../../../Downloads/sprite/28.png</key>
-            <key type="filename">../../../../../Downloads/sprite/41.png</key>
-            <key type="filename">../../../../../Downloads/sprite/42.png</key>
-            <key type="filename">../../../../../Downloads/sprite/43.png</key>
-            <key type="filename">../../../../../Downloads/sprite/44.png</key>
-            <key type="filename">../../../../../Downloads/sprite/45.png</key>
-            <key type="filename">../../../../../Downloads/sprite/48.png</key>
-            <key type="filename">../../../../../Downloads/sprite/49.png</key>
+            <key type="filename">sprites/idle_left.png</key>
+            <key type="filename">sprites/idle_right.png</key>
+            <key type="filename">sprites/sit_left_3.png</key>
+            <key type="filename">sprites/sit_left_4.png</key>
+            <key type="filename">sprites/sit_right_3.png</key>
+            <key type="filename">sprites/sit_right_4.png</key>
+            <key type="filename">sprites/walk_left_2.png</key>
+            <key type="filename">sprites/walk_left_3.png</key>
+            <key type="filename">sprites/walk_left_4.png</key>
+            <key type="filename">sprites/walk_left_5.png</key>
+            <key type="filename">sprites/walk_left_6.png</key>
+            <key type="filename">sprites/walk_right_1.png</key>
+            <key type="filename">sprites/walk_right_2.png</key>
+            <key type="filename">sprites/walk_right_3.png</key>
+            <key type="filename">sprites/walk_right_4.png</key>
+            <key type="filename">sprites/walk_right_5.png</key>
+            <key type="filename">sprites/walk_right_6.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,11,14,22</rect>
+                <key>scale9Paddings</key>
+                <rect>7,11,14,22</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/phone_1.png</key>
+            <key type="filename">sprites/phone_2.png</key>
+            <key type="filename">sprites/phone_3.png</key>
+            <key type="filename">sprites/phone_4.png</key>
+            <key type="filename">sprites/phone_5.png</key>
+            <key type="filename">sprites/phone_8.png</key>
+            <key type="filename">sprites/phone_9.png</key>
+            <key type="filename">sprites/walk_down_1.png</key>
+            <key type="filename">sprites/walk_down_2.png</key>
+            <key type="filename">sprites/walk_down_3.png</key>
+            <key type="filename">sprites/walk_down_4.png</key>
+            <key type="filename">sprites/walk_down_5.png</key>
+            <key type="filename">sprites/walk_down_6.png</key>
+            <key type="filename">sprites/walk_up_1.png</key>
+            <key type="filename">sprites/walk_up_3.png</key>
+            <key type="filename">sprites/walk_up_4.png</key>
+            <key type="filename">sprites/walk_up_6.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -252,46 +251,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../../../../Downloads/sprite/18.png</key>
-            <key type="filename">../../../../../Downloads/sprite/21.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,12,16,23</rect>
-                <key>scale9Paddings</key>
-                <rect>8,12,16,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../../../../../Downloads/sprite/29.png</key>
-            <key type="filename">../../../../../Downloads/sprite/30.png</key>
-            <key type="filename">../../../../../Downloads/sprite/33.png</key>
-            <key type="filename">../../../../../Downloads/sprite/34.png</key>
-            <key type="filename">../../../../../Downloads/sprite/35.png</key>
-            <key type="filename">../../../../../Downloads/sprite/36.png</key>
-            <key type="filename">../../../../../Downloads/sprite/39.png</key>
-            <key type="filename">../../../../../Downloads/sprite/40.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,11,14,21</rect>
-                <key>scale9Paddings</key>
-                <rect>7,11,14,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../../../../../Downloads/sprite/46.png</key>
-            <key type="filename">../../../../../Downloads/sprite/47.png</key>
+            <key type="filename">sprites/phone_6.png</key>
+            <key type="filename">sprites/phone_7.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -306,7 +267,29 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../../../../Downloads/sprite/5.png</key>
+            <key type="filename">sprites/sit_left_1.png</key>
+            <key type="filename">sprites/sit_left_2.png</key>
+            <key type="filename">sprites/sit_left_5.png</key>
+            <key type="filename">sprites/sit_left_6.png</key>
+            <key type="filename">sprites/sit_right_1.png</key>
+            <key type="filename">sprites/sit_right_2.png</key>
+            <key type="filename">sprites/sit_right_5.png</key>
+            <key type="filename">sprites/sit_right_6.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,11,14,21</rect>
+                <key>scale9Paddings</key>
+                <rect>7,11,14,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/walk_left_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -318,6 +301,22 @@
                 <rect>7,11,13,22</rect>
                 <key>scale9Paddings</key>
                 <rect>7,11,13,22</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">sprites/walk_up_2.png</key>
+            <key type="filename">sprites/walk_up_5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,12,16,23</rect>
+                <key>scale9Paddings</key>
+                <rect>8,12,16,23</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -328,56 +327,7 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>../../../../../Downloads/sprite/0.png</filename>
-                    <filename>../../../../../Downloads/sprite/1.png</filename>
-                    <filename>../../../../../Downloads/sprite/10.png</filename>
-                    <filename>../../../../../Downloads/sprite/11.png</filename>
-                    <filename>../../../../../Downloads/sprite/12.png</filename>
-                    <filename>../../../../../Downloads/sprite/13.png</filename>
-                    <filename>../../../../../Downloads/sprite/14.png</filename>
-                    <filename>../../../../../Downloads/sprite/15.png</filename>
-                    <filename>../../../../../Downloads/sprite/16.png</filename>
-                    <filename>../../../../../Downloads/sprite/17.png</filename>
-                    <filename>../../../../../Downloads/sprite/18.png</filename>
-                    <filename>../../../../../Downloads/sprite/19.png</filename>
-                    <filename>../../../../../Downloads/sprite/2.png</filename>
-                    <filename>../../../../../Downloads/sprite/20.png</filename>
-                    <filename>../../../../../Downloads/sprite/21.png</filename>
-                    <filename>../../../../../Downloads/sprite/22.png</filename>
-                    <filename>../../../../../Downloads/sprite/23.png</filename>
-                    <filename>../../../../../Downloads/sprite/24.png</filename>
-                    <filename>../../../../../Downloads/sprite/25.png</filename>
-                    <filename>../../../../../Downloads/sprite/26.png</filename>
-                    <filename>../../../../../Downloads/sprite/27.png</filename>
-                    <filename>../../../../../Downloads/sprite/28.png</filename>
-                    <filename>../../../../../Downloads/sprite/29.png</filename>
-                    <filename>../../../../../Downloads/sprite/3.png</filename>
-                    <filename>../../../../../Downloads/sprite/30.png</filename>
-                    <filename>../../../../../Downloads/sprite/31.png</filename>
-                    <filename>../../../../../Downloads/sprite/32.png</filename>
-                    <filename>../../../../../Downloads/sprite/33.png</filename>
-                    <filename>../../../../../Downloads/sprite/34.png</filename>
-                    <filename>../../../../../Downloads/sprite/35.png</filename>
-                    <filename>../../../../../Downloads/sprite/36.png</filename>
-                    <filename>../../../../../Downloads/sprite/37.png</filename>
-                    <filename>../../../../../Downloads/sprite/38.png</filename>
-                    <filename>../../../../../Downloads/sprite/39.png</filename>
-                    <filename>../../../../../Downloads/sprite/4.png</filename>
-                    <filename>../../../../../Downloads/sprite/40.png</filename>
-                    <filename>../../../../../Downloads/sprite/41.png</filename>
-                    <filename>../../../../../Downloads/sprite/42.png</filename>
-                    <filename>../../../../../Downloads/sprite/43.png</filename>
-                    <filename>../../../../../Downloads/sprite/44.png</filename>
-                    <filename>../../../../../Downloads/sprite/45.png</filename>
-                    <filename>../../../../../Downloads/sprite/46.png</filename>
-                    <filename>../../../../../Downloads/sprite/47.png</filename>
-                    <filename>../../../../../Downloads/sprite/48.png</filename>
-                    <filename>../../../../../Downloads/sprite/49.png</filename>
-                    <filename>../../../../../Downloads/sprite/5.png</filename>
-                    <filename>../../../../../Downloads/sprite/6.png</filename>
-                    <filename>../../../../../Downloads/sprite/7.png</filename>
-                    <filename>../../../../../Downloads/sprite/8.png</filename>
-                    <filename>../../../../../Downloads/sprite/9.png</filename>
+                    <filename>sprites</filename>
                 </array>
             </struct>
         </map>
