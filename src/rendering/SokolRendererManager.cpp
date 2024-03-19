@@ -182,9 +182,9 @@ void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view,
                                         double t) {
   HMM_Mat4 modelMatrix = view->transform()->modelMatrix(1.0f);
   uint32_t instanceId = view->renderer()->instanceId();
-  _state.view_instances[instanceId].tint = {
-      view->renderer()->tint().r, view->renderer()->tint().g,
-      view->renderer()->tint().b, view->renderer()->tint().a};
+  // _state.view_instances[instanceId].tint = {
+  // view->renderer()->tint().r, view->renderer()->tint().g,
+  // view->renderer()->tint().b, view->renderer()->tint().a};
   _state.view_instances[instanceId].colx = modelMatrix.Columns[0];
   _state.view_instances[instanceId].coly = modelMatrix.Columns[1];
   _state.view_instances[instanceId].colz = modelMatrix.Columns[2];

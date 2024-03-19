@@ -8,5 +8,5 @@ struct ViewInstance {
   HMM_Vec4 coly;
   HMM_Vec4 colz;
   HMM_Vec4 colw;
-  HMM_Vec4 tint;
+  // HMM_Vec4 tint;
 };
