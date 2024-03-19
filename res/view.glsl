@@ -16,12 +16,15 @@ uniform view_vs_uni {
   mat4 pv;
 };
 in vec3 pos;
-in vec2 texcoord0;
+in int uv_index;
+in vec2 inst_uv0;
+in vec2 inst_uv1;
+in vec2 inst_uv2;
+in vec2 inst_uv3;
 in vec4 inst_mod_colx;
 in vec4 inst_mod_coly;
 in vec4 inst_mod_colz;
 in vec4 inst_mod_colw;
-// in vec4 inst_tint;
 out vec2 uv;
 @include_block mat_utils
 
@@ -29,7 +32,15 @@ void main() {
   mat4 m;
   combine_to_mat4(inst_mod_colx, inst_mod_coly, inst_mod_colz, inst_mod_colw, m);
   gl_Position = pv * m * vec4(pos, 1.0);
-  uv = texcoord0;
+  if (uv_index == 0) {
+    uv = inst_uv0;
+  } else if (uv_index == 1) {
+    uv = inst_uv1;
+  } else if (uv_index == 2) {
+    uv = inst_uv2;
+  } else {
+    uv = inst_uv3;
+  }
 }
 @end
 

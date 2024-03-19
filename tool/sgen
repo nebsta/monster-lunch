@@ -11,6 +11,8 @@ atlas_name = "main"
 
 with open(f"{root_path}/../res/images/main.json") as file:
   data = json.load(file)
+  atlas_w = data["meta"]["size"]["w"]
+  atlas_h = data["meta"]["size"]["h"]
   atlas = {}
   atlas["name"] = atlas_name
   sprites = []
@@ -19,14 +21,14 @@ with open(f"{root_path}/../res/images/main.json") as file:
     sprite = {
       "name": sprite_data["filename"][:-4],
       "atlas": atlas_name,
-      "tlx": frame["x"],
-      "tly": frame["y"],
-      "trx" : frame["x"] + frame["w"],
-      "try" : frame["y"],
-      "blx" : frame["x"],
-      "bly" : frame["y"] + frame["h"],
-      "brx" : frame["x"] + frame["w"],
-      "bry" : frame["y"] + frame["h"]
+      "tlx": frame["x"] / atlas_w,
+      "tly": frame["y"] / atlas_h,
+      "trx" : (frame["x"] + frame["w"]) / atlas_w,
+      "try" : frame["y"] / atlas_h,
+      "blx" : frame["x"] / atlas_w,
+      "bly" : (frame["y"] + frame["h"]) / atlas_h,
+      "brx" : (frame["x"] + frame["w"]) / atlas_w,
+      "bry" : (frame["y"] + frame["h"]) / atlas_h
     }
     sprites.append(sprite)
 

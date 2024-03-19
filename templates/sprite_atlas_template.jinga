@@ -11,10 +11,10 @@ namespace atlas {
       .name = "{{sprite.name}}",
       .atlas = "{{name}}",
       .region = (grumble::SpriteRegion) {
-        .tl = { {{ sprite.tlx }}.0f, {{ sprite.tly }}.0f },
-        .tr = { {{ sprite.trx }}.0f, {{ sprite.try }}.0f },
-        .bl = { {{ sprite.blx }}.0f, {{ sprite.bly }}.0f },
-        .br = { {{ sprite.brx }}.0f, {{ sprite.bry }}.0f }
+        .tl = { {{ sprite.tlx }}f, {{ sprite.tly }}f },
+        .tr = { {{ sprite.trx }}f, {{ sprite.try }}f },
+        .bl = { {{ sprite.blx }}f, {{ sprite.bly }}f },
+        .br = { {{ sprite.brx }}f, {{ sprite.bry }}f }
       }
     };{% endfor %}
   }

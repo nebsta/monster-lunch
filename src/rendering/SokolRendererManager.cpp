@@ -3,6 +3,7 @@
 #include "../rendering/sokol.hpp"
 #include "Shapes.hpp"
 #include "SokolFactory.hpp"
+#include "_gen_shader/shader_view.h"
 #include <grumble/io/FileManager.hpp>
 #include <memory>
 
@@ -56,8 +57,16 @@ void SokolRendererManager::setup() {
   view_layout.buffers[1].step_func = SG_VERTEXSTEP_PER_INSTANCE;
   view_layout.attrs[ATTR_view_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
   view_layout.attrs[ATTR_view_vs_pos].buffer_index = 0;
-  view_layout.attrs[ATTR_view_vs_texcoord0].format = SG_VERTEXFORMAT_FLOAT2;
-  view_layout.attrs[ATTR_view_vs_texcoord0].buffer_index = 0;
+  view_layout.attrs[ATTR_view_vs_uv_index].format = SG_VERTEXFORMAT_UBYTE4;
+  view_layout.attrs[ATTR_view_vs_uv_index].buffer_index = 0;
+  view_layout.attrs[ATTR_view_vs_inst_uv0].format = SG_VERTEXFORMAT_FLOAT2;
+  view_layout.attrs[ATTR_view_vs_inst_uv0].buffer_index = 1;
+  view_layout.attrs[ATTR_view_vs_inst_uv1].format = SG_VERTEXFORMAT_FLOAT2;
+  view_layout.attrs[ATTR_view_vs_inst_uv1].buffer_index = 1;
+  view_layout.attrs[ATTR_view_vs_inst_uv2].format = SG_VERTEXFORMAT_FLOAT2;
+  view_layout.attrs[ATTR_view_vs_inst_uv2].buffer_index = 1;
+  view_layout.attrs[ATTR_view_vs_inst_uv3].format = SG_VERTEXFORMAT_FLOAT2;
+  view_layout.attrs[ATTR_view_vs_inst_uv3].buffer_index = 1;
   view_layout.attrs[ATTR_view_vs_inst_mod_colx].format = SG_VERTEXFORMAT_FLOAT4;
   view_layout.attrs[ATTR_view_vs_inst_mod_colx].buffer_index = 1;
   view_layout.attrs[ATTR_view_vs_inst_mod_coly].format = SG_VERTEXFORMAT_FLOAT4;
@@ -66,8 +75,6 @@ void SokolRendererManager::setup() {
   view_layout.attrs[ATTR_view_vs_inst_mod_colz].buffer_index = 1;
   view_layout.attrs[ATTR_view_vs_inst_mod_colw].format = SG_VERTEXFORMAT_FLOAT4;
   view_layout.attrs[ATTR_view_vs_inst_mod_colw].buffer_index = 1;
-  // view_layout.attrs[ATTR_view_vs_inst_tint].format = SG_VERTEXFORMAT_FLOAT4;
-  // view_layout.attrs[ATTR_view_vs_inst_tint].buffer_index = 1;
 
   // setting up view pipeline
   sg_shader view_shader = sg_make_shader(view_shader_desc(sg_query_backend()));
@@ -180,9 +187,13 @@ void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view,
                                         double t) {
   HMM_Mat4 modelMatrix = view->transform()->modelMatrix(1.0f);
   uint32_t instanceId = view->renderer()->instanceId();
-  // _state.view_instances[instanceId].tint = {
-  // view->renderer()->tint().r, view->renderer()->tint().g,
-  // view->renderer()->tint().b, view->renderer()->tint().a};
+
+  grumble::SpriteDefinition sprite = view->renderer()->sprite();
+  // logInfo("Sprite: {}", sprite.toString());
+  _state.view_instances[instanceId].uv0 = sprite.region.tr;
+  _state.view_instances[instanceId].uv1 = sprite.region.tl;
+  _state.view_instances[instanceId].uv2 = sprite.region.bl;
+  _state.view_instances[instanceId].uv3 = sprite.region.br;
   _state.view_instances[instanceId].colx = modelMatrix.Columns[0];
   _state.view_instances[instanceId].coly = modelMatrix.Columns[1];
   _state.view_instances[instanceId].colz = modelMatrix.Columns[2];
