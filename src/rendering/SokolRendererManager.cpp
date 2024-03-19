@@ -3,6 +3,7 @@
 #include "../rendering/sokol.hpp"
 #include "Shapes.hpp"
 #include "SokolFactory.hpp"
+#include <grumble/io/FileManager.hpp>
 #include <memory>
 
 void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
@@ -14,13 +15,14 @@ void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
 
 SokolRendererManager::SokolRendererManager(
     grumble::RendererManagerConfiguration configuration,
+    grumble::FileManager::shared_ptr fileManager,
     grumble::SpriteManager::shared_ptr spriteManager,
     grumble::FontManager::shared_ptr fontMananger,
     grumble::InputManager::shared_ptr inputManager,
     SDLApplication::shared_ptr sdlApplication)
-    : _spriteManager(spriteManager), _fontManager(fontMananger),
-      _sdlApplication(sdlApplication), _inputManager(inputManager),
-      grumble::RendererManager(configuration) {
+    : _fileManager(fileManager), _spriteManager(spriteManager),
+      _fontManager(fontMananger), _sdlApplication(sdlApplication),
+      _inputManager(inputManager), grumble::RendererManager(configuration) {
   _state = {};
 }
 

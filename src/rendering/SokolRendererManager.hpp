@@ -7,6 +7,7 @@
 #include <grumble/debug/FrameStats.hpp>
 #include <grumble/font/FontManager.hpp>
 #include <grumble/input/InputManager.hpp>
+#include <grumble/io/FileManager.hpp>
 #include <grumble/logging/Logger.hpp>
 #include <grumble/render/Renderer.hpp>
 #include <grumble/render/RendererManager.hpp>
@@ -21,6 +22,7 @@ public:
   typedef std::shared_ptr<SokolRendererManager> shared_ptr;
 
   SokolRendererManager(grumble::RendererManagerConfiguration configuration,
+                       grumble::FileManager::shared_ptr fileManager,
                        grumble::SpriteManager::shared_ptr spriteManager,
                        grumble::FontManager::shared_ptr fontManager,
                        grumble::InputManager::shared_ptr inputManager,
@@ -42,6 +44,7 @@ protected:
   void commitFrame() override;
 
 private:
+  grumble::FileManager::shared_ptr _fileManager;
   grumble::SpriteManager::shared_ptr _spriteManager;
   grumble::FontManager::shared_ptr _fontManager;
   grumble::InputManager::shared_ptr _inputManager;
