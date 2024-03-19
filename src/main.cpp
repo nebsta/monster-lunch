@@ -63,7 +63,7 @@ int main() {
       rendererConfig, spriteManager, fontManager, inputManager, application);
 
   // setting up the main game instance
-  grumble::Logger::setActiveLogLevel(grumble::LogLevel::debug);
+  grumble::Logger::setActiveLogLevel(grumble::LogLevel::info);
   auto game = grumble::Game(rendererManager, fileManager, spriteManager,
                             fontManager, inputManager);
   game.setup();

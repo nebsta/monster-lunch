@@ -14,15 +14,16 @@ void combine_to_mat4(in vec4 col1, in vec4 col2, in vec4 col3, in vec4 col4, out
 @vs view_vs
 uniform view_vs_uni {
   mat4 pv;
-};
 
+};
+in vec2 texcoord0;
 in vec3 pos;
 in vec4 inst_mod_colx;
 in vec4 inst_mod_coly;
 in vec4 inst_mod_colz;
 in vec4 inst_mod_colw;
 in vec4 inst_tint;
-out vec4 color;
+out vec2 uv;
 
 @include_block mat_utils
 
@@ -30,16 +31,19 @@ void main() {
   mat4 m;
   combine_to_mat4(inst_mod_colx, inst_mod_coly, inst_mod_colz, inst_mod_colw, m);
   gl_Position = pv * m * vec4(pos, 1.0);
-  color = inst_tint;
+  uv = texcoord0;
 }
 @end
 
 @fs view_fs
-in vec4 color;
+uniform texture2D tex;
+uniform sampler smp;
+
+in vec2 uv;
 out vec4 frag_color;
 
 void main() {
-    frag_color = color;
+    frag_color = texture(sampler2D(tex, smp), uv);
 }
 @end
 

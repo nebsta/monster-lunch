@@ -6,7 +6,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 find_package(grumble REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(glad REQUIRED)
-find_package(sokol REQUIRED)
 find_package(imgui REQUIRED)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/res/images/main.png
@@ -15,7 +14,6 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/res/images/main.png
 add_executable(ml src/main.cpp src/rendering/sokol.cpp src/core/SDLApplication.cpp src/rendering/SokolRendererManager.cpp src/input/SDLInputManager.cpp src/rendering/SokolFactory.cpp src/core/CameraMovementSystem.cpp src/debug/ImGuiDebugView.cpp)
 target_link_libraries(ml grumble::grumble)
 target_link_libraries(ml SDL2::SDL2)
-target_link_libraries(ml sokol::sokol)
 target_link_libraries(ml glad::glad)
 target_link_libraries(ml imgui::imgui)
 

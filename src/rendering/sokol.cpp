@@ -7,8 +7,8 @@
 #define SOKOL_EXTERNAL_GL_LOADER
 #define SOKOL_GLCORE33
 #include <glad/glad.h>
-#include <sokol_gfx.h>
+#include "../sokol/sokol_gfx.h"
 #include <imgui.h>
-#include <util/sokol_imgui.h>
-#include <util/sokol_debugtext.h>
+#include "../sokol/util/sokol_imgui.h"
+#include "../sokol/util/sokol_debugtext.h"
 // clang-format on

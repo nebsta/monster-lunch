@@ -6,6 +6,7 @@
 
 class SokolFactory {
 public:
+  static sg_swapchain createSwapchain(HMM_Vec2 size);
   static sg_buffer createVertexBuffer(sg_range vertices, std::string label);
   static sg_buffer createIndexBuffer(sg_range indices, std::string label);
   static sg_buffer createInstanceBuffer(int instanceCount, size_t instanceSize,

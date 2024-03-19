@@ -1,5 +1,14 @@
 #include "SokolFactory.hpp"
 
+sg_swapchain SokolFactory::createSwapchain(HMM_Vec2 size) {
+  return (sg_swapchain){.width = (int)size.Width,
+                        .height = (int)size.Height,
+                        .color_format = SG_PIXELFORMAT_RGBA8,
+                        .gl = {
+                            .framebuffer = 0,
+                        }};
+}
+
 sg_buffer SokolFactory::createVertexBuffer(sg_range vertices,
                                            std::string label) {
   return sg_make_buffer(
