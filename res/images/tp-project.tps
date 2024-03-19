@@ -26,7 +26,7 @@
             </struct>
         </array>
         <key>allowRotation</key>
-        <true/>
+        <false/>
         <key>shapeDebug</key>
         <false/>
         <key>dpi</key>
@@ -50,7 +50,7 @@
         <key>dxtCompressionMode</key>
         <enum type="SettingsBase::DxtCompressionMode">DXT_PERCEPTUAL</enum>
         <key>ditherType</key>
-        <enum type="SettingsBase::DitherType">NearestNeighbour</enum>
+        <enum type="SettingsBase::DitherType">PngQuantLow</enum>
         <key>backgroundColor</key>
         <uint>0</uint>
         <key>libGdx</key>
@@ -100,7 +100,7 @@
             <key>sizeConstraints</key>
             <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
             <key>forceSquared</key>
-            <false/>
+            <true/>
             <key>maxRects</key>
             <struct type="AlgorithmMaxRectsSettings">
                 <key>heuristic</key>
@@ -134,7 +134,7 @@
         <key>outputFormat</key>
         <enum type="SettingsBase::OutputFormat">RGBA8888</enum>
         <key>alphaHandling</key>
-        <enum type="SettingsBase::AlphaHandling">ClearTransparentPixels</enum>
+        <enum type="SettingsBase::AlphaHandling">KeepTransparentPixels</enum>
         <key>contentProtection</key>
         <struct type="ContentProtection">
             <key>key</key>

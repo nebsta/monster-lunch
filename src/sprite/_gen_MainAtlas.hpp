@@ -11,490 +11,490 @@ namespace atlas {
       .name = "idle_down",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 323.0f, 93.0f },
-        .tr = { 355.0f, 93.0f },
-        .bl = { 323.0f, 137.0f },
-        .br = { 355.0f, 137.0f }
+        .tl = { 133.0f, 1.0f },
+        .tr = { 165.0f, 1.0f },
+        .bl = { 133.0f, 45.0f },
+        .br = { 165.0f, 45.0f }
       }
     };
     static auto idle_left = (grumble::SpriteDefinition) {
       .name = "idle_left",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 47.0f, 1.0f },
-        .tr = { 75.0f, 1.0f },
-        .bl = { 47.0f, 45.0f },
-        .br = { 75.0f, 45.0f }
+        .tl = { 65.0f, 139.0f },
+        .tr = { 93.0f, 139.0f },
+        .bl = { 65.0f, 183.0f },
+        .br = { 93.0f, 183.0f }
       }
     };
     static auto idle_right = (grumble::SpriteDefinition) {
       .name = "idle_right",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 93.0f, 1.0f },
-        .tr = { 121.0f, 1.0f },
-        .bl = { 93.0f, 45.0f },
-        .br = { 121.0f, 45.0f }
+        .tl = { 1.0f, 141.0f },
+        .tr = { 29.0f, 141.0f },
+        .bl = { 1.0f, 185.0f },
+        .br = { 29.0f, 185.0f }
       }
     };
     static auto idle_up = (grumble::SpriteDefinition) {
       .name = "idle_up",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 369.0f, 93.0f },
-        .tr = { 401.0f, 93.0f },
-        .bl = { 369.0f, 137.0f },
-        .br = { 401.0f, 137.0f }
+        .tl = { 133.0f, 47.0f },
+        .tr = { 165.0f, 47.0f },
+        .bl = { 133.0f, 91.0f },
+        .br = { 165.0f, 91.0f }
       }
     };
     static auto phone_1 = (grumble::SpriteDefinition) {
       .name = "phone_1",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 1.0f, 61.0f },
-        .tr = { 31.0f, 61.0f },
-        .bl = { 1.0f, 105.0f },
-        .br = { 31.0f, 105.0f }
+        .tl = { 1.0f, 49.0f },
+        .tr = { 31.0f, 49.0f },
+        .bl = { 1.0f, 93.0f },
+        .br = { 31.0f, 93.0f }
       }
     };
     static auto phone_2 = (grumble::SpriteDefinition) {
       .name = "phone_2",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 47.0f, 61.0f },
-        .tr = { 77.0f, 61.0f },
-        .bl = { 47.0f, 105.0f },
-        .br = { 77.0f, 105.0f }
+        .tl = { 33.0f, 49.0f },
+        .tr = { 63.0f, 49.0f },
+        .bl = { 33.0f, 93.0f },
+        .br = { 63.0f, 93.0f }
       }
     };
     static auto phone_3 = (grumble::SpriteDefinition) {
       .name = "phone_3",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 93.0f, 61.0f },
-        .tr = { 123.0f, 61.0f },
-        .bl = { 93.0f, 105.0f },
-        .br = { 123.0f, 105.0f }
+        .tl = { 65.0f, 93.0f },
+        .tr = { 95.0f, 93.0f },
+        .bl = { 65.0f, 137.0f },
+        .br = { 95.0f, 137.0f }
       }
     };
     static auto phone_4 = (grumble::SpriteDefinition) {
       .name = "phone_4",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 139.0f, 61.0f },
-        .tr = { 169.0f, 61.0f },
-        .bl = { 139.0f, 105.0f },
-        .br = { 169.0f, 105.0f }
+        .tl = { 1.0f, 95.0f },
+        .tr = { 31.0f, 95.0f },
+        .bl = { 1.0f, 139.0f },
+        .br = { 31.0f, 139.0f }
       }
     };
     static auto phone_5 = (grumble::SpriteDefinition) {
       .name = "phone_5",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 139.0f, 61.0f },
-        .tr = { 169.0f, 61.0f },
-        .bl = { 139.0f, 105.0f },
-        .br = { 169.0f, 105.0f }
+        .tl = { 1.0f, 95.0f },
+        .tr = { 31.0f, 95.0f },
+        .bl = { 1.0f, 139.0f },
+        .br = { 31.0f, 139.0f }
       }
     };
     static auto phone_6 = (grumble::SpriteDefinition) {
       .name = "phone_6",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 185.0f, 61.0f },
-        .tr = { 215.0f, 61.0f },
-        .bl = { 185.0f, 107.0f },
-        .br = { 215.0f, 107.0f }
+        .tl = { 69.0f, 1.0f },
+        .tr = { 99.0f, 1.0f },
+        .bl = { 69.0f, 47.0f },
+        .br = { 99.0f, 47.0f }
       }
     };
     static auto phone_7 = (grumble::SpriteDefinition) {
       .name = "phone_7",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 233.0f, 61.0f },
-        .tr = { 263.0f, 61.0f },
-        .bl = { 233.0f, 107.0f },
-        .br = { 263.0f, 107.0f }
+        .tl = { 101.0f, 1.0f },
+        .tr = { 131.0f, 1.0f },
+        .bl = { 101.0f, 47.0f },
+        .br = { 131.0f, 47.0f }
       }
     };
     static auto phone_8 = (grumble::SpriteDefinition) {
       .name = "phone_8",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 281.0f, 61.0f },
-        .tr = { 311.0f, 61.0f },
-        .bl = { 281.0f, 105.0f },
-        .br = { 311.0f, 105.0f }
+        .tl = { 33.0f, 95.0f },
+        .tr = { 63.0f, 95.0f },
+        .bl = { 33.0f, 139.0f },
+        .br = { 63.0f, 139.0f }
       }
     };
     static auto phone_9 = (grumble::SpriteDefinition) {
       .name = "phone_9",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 327.0f, 61.0f },
-        .tr = { 357.0f, 61.0f },
-        .bl = { 327.0f, 105.0f },
-        .br = { 357.0f, 105.0f }
+        .tl = { 97.0f, 93.0f },
+        .tr = { 127.0f, 93.0f },
+        .bl = { 97.0f, 137.0f },
+        .br = { 127.0f, 137.0f }
       }
     };
     static auto sit_left_1 = (grumble::SpriteDefinition) {
       .name = "sit_left_1",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 139.0f, 1.0f },
-        .tr = { 167.0f, 1.0f },
-        .bl = { 139.0f, 43.0f },
-        .br = { 167.0f, 43.0f }
+        .tl = { 65.0f, 49.0f },
+        .tr = { 93.0f, 49.0f },
+        .bl = { 65.0f, 91.0f },
+        .br = { 93.0f, 91.0f }
       }
     };
     static auto sit_left_2 = (grumble::SpriteDefinition) {
       .name = "sit_left_2",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 139.0f, 1.0f },
-        .tr = { 167.0f, 1.0f },
-        .bl = { 139.0f, 43.0f },
-        .br = { 167.0f, 43.0f }
+        .tl = { 65.0f, 49.0f },
+        .tr = { 93.0f, 49.0f },
+        .bl = { 65.0f, 91.0f },
+        .br = { 93.0f, 91.0f }
       }
     };
     static auto sit_left_3 = (grumble::SpriteDefinition) {
       .name = "sit_left_3",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 183.0f, 1.0f },
-        .tr = { 211.0f, 1.0f },
-        .bl = { 183.0f, 45.0f },
-        .br = { 211.0f, 45.0f }
+        .tl = { 31.0f, 141.0f },
+        .tr = { 59.0f, 141.0f },
+        .bl = { 31.0f, 185.0f },
+        .br = { 59.0f, 185.0f }
       }
     };
     static auto sit_left_4 = (grumble::SpriteDefinition) {
       .name = "sit_left_4",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 229.0f, 1.0f },
-        .tr = { 257.0f, 1.0f },
-        .bl = { 229.0f, 45.0f },
-        .br = { 257.0f, 45.0f }
+        .tl = { 95.0f, 139.0f },
+        .tr = { 123.0f, 139.0f },
+        .bl = { 95.0f, 183.0f },
+        .br = { 123.0f, 183.0f }
       }
     };
     static auto sit_left_5 = (grumble::SpriteDefinition) {
       .name = "sit_left_5",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 275.0f, 1.0f },
-        .tr = { 303.0f, 1.0f },
-        .bl = { 275.0f, 43.0f },
-        .br = { 303.0f, 43.0f }
+        .tl = { 95.0f, 49.0f },
+        .tr = { 123.0f, 49.0f },
+        .bl = { 95.0f, 91.0f },
+        .br = { 123.0f, 91.0f }
       }
     };
     static auto sit_left_6 = (grumble::SpriteDefinition) {
       .name = "sit_left_6",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 319.0f, 1.0f },
-        .tr = { 347.0f, 1.0f },
-        .bl = { 319.0f, 43.0f },
-        .br = { 347.0f, 43.0f }
+        .tl = { 211.0f, 185.0f },
+        .tr = { 239.0f, 185.0f },
+        .bl = { 211.0f, 227.0f },
+        .br = { 239.0f, 227.0f }
       }
     };
     static auto sit_right_1 = (grumble::SpriteDefinition) {
       .name = "sit_right_1",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 363.0f, 1.0f },
-        .tr = { 391.0f, 1.0f },
-        .bl = { 363.0f, 43.0f },
-        .br = { 391.0f, 43.0f }
+        .tl = { 211.0f, 229.0f },
+        .tr = { 239.0f, 229.0f },
+        .bl = { 211.0f, 271.0f },
+        .br = { 239.0f, 271.0f }
       }
     };
     static auto sit_right_2 = (grumble::SpriteDefinition) {
       .name = "sit_right_2",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 363.0f, 1.0f },
-        .tr = { 391.0f, 1.0f },
-        .bl = { 363.0f, 43.0f },
-        .br = { 391.0f, 43.0f }
+        .tl = { 211.0f, 229.0f },
+        .tr = { 239.0f, 229.0f },
+        .bl = { 211.0f, 271.0f },
+        .br = { 239.0f, 271.0f }
       }
     };
     static auto sit_right_3 = (grumble::SpriteDefinition) {
       .name = "sit_right_3",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 407.0f, 1.0f },
-        .tr = { 435.0f, 1.0f },
-        .bl = { 407.0f, 45.0f },
-        .br = { 435.0f, 45.0f }
+        .tl = { 125.0f, 139.0f },
+        .tr = { 153.0f, 139.0f },
+        .bl = { 125.0f, 183.0f },
+        .br = { 153.0f, 183.0f }
       }
     };
     static auto sit_right_4 = (grumble::SpriteDefinition) {
       .name = "sit_right_4",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 453.0f, 1.0f },
-        .tr = { 481.0f, 1.0f },
-        .bl = { 453.0f, 45.0f },
-        .br = { 481.0f, 45.0f }
+        .tl = { 155.0f, 139.0f },
+        .tr = { 183.0f, 139.0f },
+        .bl = { 155.0f, 183.0f },
+        .br = { 183.0f, 183.0f }
       }
     };
     static auto sit_right_5 = (grumble::SpriteDefinition) {
       .name = "sit_right_5",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 1.0f, 29.0f },
-        .tr = { 29.0f, 29.0f },
-        .bl = { 1.0f, 71.0f },
-        .br = { 29.0f, 71.0f }
+        .tl = { 241.0f, 185.0f },
+        .tr = { 269.0f, 185.0f },
+        .bl = { 241.0f, 227.0f },
+        .br = { 269.0f, 227.0f }
       }
     };
     static auto sit_right_6 = (grumble::SpriteDefinition) {
       .name = "sit_right_6",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 45.0f, 31.0f },
-        .tr = { 73.0f, 31.0f },
-        .bl = { 45.0f, 73.0f },
-        .br = { 73.0f, 73.0f }
+        .tl = { 241.0f, 229.0f },
+        .tr = { 269.0f, 229.0f },
+        .bl = { 241.0f, 271.0f },
+        .br = { 269.0f, 271.0f }
       }
     };
     static auto walk_down_1 = (grumble::SpriteDefinition) {
       .name = "walk_down_1",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 373.0f, 61.0f },
-        .tr = { 403.0f, 61.0f },
-        .bl = { 373.0f, 105.0f },
-        .br = { 403.0f, 105.0f }
+        .tl = { 129.0f, 93.0f },
+        .tr = { 159.0f, 93.0f },
+        .bl = { 129.0f, 137.0f },
+        .br = { 159.0f, 137.0f }
       }
     };
     static auto walk_down_2 = (grumble::SpriteDefinition) {
       .name = "walk_down_2",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 419.0f, 61.0f },
-        .tr = { 449.0f, 61.0f },
-        .bl = { 419.0f, 105.0f },
-        .br = { 449.0f, 105.0f }
+        .tl = { 161.0f, 93.0f },
+        .tr = { 191.0f, 93.0f },
+        .bl = { 161.0f, 137.0f },
+        .br = { 191.0f, 137.0f }
       }
     };
     static auto walk_down_3 = (grumble::SpriteDefinition) {
       .name = "walk_down_3",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 465.0f, 61.0f },
-        .tr = { 495.0f, 61.0f },
-        .bl = { 465.0f, 105.0f },
-        .br = { 495.0f, 105.0f }
+        .tl = { 167.0f, 1.0f },
+        .tr = { 197.0f, 1.0f },
+        .bl = { 167.0f, 45.0f },
+        .br = { 197.0f, 45.0f }
       }
     };
     static auto walk_down_4 = (grumble::SpriteDefinition) {
       .name = "walk_down_4",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 1.0f, 93.0f },
-        .tr = { 31.0f, 93.0f },
-        .bl = { 1.0f, 137.0f },
-        .br = { 31.0f, 137.0f }
+        .tl = { 167.0f, 47.0f },
+        .tr = { 197.0f, 47.0f },
+        .bl = { 167.0f, 91.0f },
+        .br = { 197.0f, 91.0f }
       }
     };
     static auto walk_down_5 = (grumble::SpriteDefinition) {
       .name = "walk_down_5",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 47.0f, 93.0f },
-        .tr = { 77.0f, 93.0f },
-        .bl = { 47.0f, 137.0f },
-        .br = { 77.0f, 137.0f }
+        .tl = { 193.0f, 93.0f },
+        .tr = { 223.0f, 93.0f },
+        .bl = { 193.0f, 137.0f },
+        .br = { 223.0f, 137.0f }
       }
     };
     static auto walk_down_6 = (grumble::SpriteDefinition) {
       .name = "walk_down_6",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 93.0f, 93.0f },
-        .tr = { 123.0f, 93.0f },
-        .bl = { 93.0f, 137.0f },
-        .br = { 123.0f, 137.0f }
+        .tl = { 199.0f, 1.0f },
+        .tr = { 229.0f, 1.0f },
+        .bl = { 199.0f, 45.0f },
+        .br = { 229.0f, 45.0f }
       }
     };
     static auto walk_left_1 = (grumble::SpriteDefinition) {
       .name = "walk_left_1",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 1.0f, 1.0f },
-        .tr = { 27.0f, 1.0f },
-        .bl = { 1.0f, 45.0f },
-        .br = { 27.0f, 45.0f }
+        .tl = { 245.0f, 139.0f },
+        .tr = { 271.0f, 139.0f },
+        .bl = { 245.0f, 183.0f },
+        .br = { 271.0f, 183.0f }
       }
     };
     static auto walk_left_2 = (grumble::SpriteDefinition) {
       .name = "walk_left_2",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 89.0f, 31.0f },
-        .tr = { 117.0f, 31.0f },
-        .bl = { 89.0f, 75.0f },
-        .br = { 117.0f, 75.0f }
+        .tl = { 185.0f, 139.0f },
+        .tr = { 213.0f, 139.0f },
+        .bl = { 185.0f, 183.0f },
+        .br = { 213.0f, 183.0f }
       }
     };
     static auto walk_left_3 = (grumble::SpriteDefinition) {
       .name = "walk_left_3",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 135.0f, 31.0f },
-        .tr = { 163.0f, 31.0f },
-        .bl = { 135.0f, 75.0f },
-        .br = { 163.0f, 75.0f }
+        .tl = { 215.0f, 139.0f },
+        .tr = { 243.0f, 139.0f },
+        .bl = { 215.0f, 183.0f },
+        .br = { 243.0f, 183.0f }
       }
     };
     static auto walk_left_4 = (grumble::SpriteDefinition) {
       .name = "walk_left_4",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 181.0f, 31.0f },
-        .tr = { 209.0f, 31.0f },
-        .bl = { 181.0f, 75.0f },
-        .br = { 209.0f, 75.0f }
+        .tl = { 61.0f, 185.0f },
+        .tr = { 89.0f, 185.0f },
+        .bl = { 61.0f, 229.0f },
+        .br = { 89.0f, 229.0f }
       }
     };
     static auto walk_left_5 = (grumble::SpriteDefinition) {
       .name = "walk_left_5",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 227.0f, 31.0f },
-        .tr = { 255.0f, 31.0f },
-        .bl = { 227.0f, 75.0f },
-        .br = { 255.0f, 75.0f }
+        .tl = { 1.0f, 187.0f },
+        .tr = { 29.0f, 187.0f },
+        .bl = { 1.0f, 231.0f },
+        .br = { 29.0f, 231.0f }
       }
     };
     static auto walk_left_6 = (grumble::SpriteDefinition) {
       .name = "walk_left_6",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 47.0f, 1.0f },
-        .tr = { 75.0f, 1.0f },
-        .bl = { 47.0f, 45.0f },
-        .br = { 75.0f, 45.0f }
+        .tl = { 65.0f, 139.0f },
+        .tr = { 93.0f, 139.0f },
+        .bl = { 65.0f, 183.0f },
+        .br = { 93.0f, 183.0f }
       }
     };
     static auto walk_right_1 = (grumble::SpriteDefinition) {
       .name = "walk_right_1",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 273.0f, 31.0f },
-        .tr = { 301.0f, 31.0f },
-        .bl = { 273.0f, 75.0f },
-        .br = { 301.0f, 75.0f }
+        .tl = { 31.0f, 187.0f },
+        .tr = { 59.0f, 187.0f },
+        .bl = { 31.0f, 231.0f },
+        .br = { 59.0f, 231.0f }
       }
     };
     static auto walk_right_2 = (grumble::SpriteDefinition) {
       .name = "walk_right_2",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 319.0f, 31.0f },
-        .tr = { 347.0f, 31.0f },
-        .bl = { 319.0f, 75.0f },
-        .br = { 347.0f, 75.0f }
+        .tl = { 91.0f, 185.0f },
+        .tr = { 119.0f, 185.0f },
+        .bl = { 91.0f, 229.0f },
+        .br = { 119.0f, 229.0f }
       }
     };
     static auto walk_right_3 = (grumble::SpriteDefinition) {
       .name = "walk_right_3",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 93.0f, 1.0f },
-        .tr = { 121.0f, 1.0f },
-        .bl = { 93.0f, 45.0f },
-        .br = { 121.0f, 45.0f }
+        .tl = { 1.0f, 141.0f },
+        .tr = { 29.0f, 141.0f },
+        .bl = { 1.0f, 185.0f },
+        .br = { 29.0f, 185.0f }
       }
     };
     static auto walk_right_4 = (grumble::SpriteDefinition) {
       .name = "walk_right_4",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 365.0f, 31.0f },
-        .tr = { 393.0f, 31.0f },
-        .bl = { 365.0f, 75.0f },
-        .br = { 393.0f, 75.0f }
+        .tl = { 121.0f, 185.0f },
+        .tr = { 149.0f, 185.0f },
+        .bl = { 121.0f, 229.0f },
+        .br = { 149.0f, 229.0f }
       }
     };
     static auto walk_right_5 = (grumble::SpriteDefinition) {
       .name = "walk_right_5",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 411.0f, 31.0f },
-        .tr = { 439.0f, 31.0f },
-        .bl = { 411.0f, 75.0f },
-        .br = { 439.0f, 75.0f }
+        .tl = { 151.0f, 185.0f },
+        .tr = { 179.0f, 185.0f },
+        .bl = { 151.0f, 229.0f },
+        .br = { 179.0f, 229.0f }
       }
     };
     static auto walk_right_6 = (grumble::SpriteDefinition) {
       .name = "walk_right_6",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 457.0f, 31.0f },
-        .tr = { 485.0f, 31.0f },
-        .bl = { 457.0f, 75.0f },
-        .br = { 485.0f, 75.0f }
+        .tl = { 181.0f, 185.0f },
+        .tr = { 209.0f, 185.0f },
+        .bl = { 181.0f, 229.0f },
+        .br = { 209.0f, 229.0f }
       }
     };
     static auto walk_up_1 = (grumble::SpriteDefinition) {
       .name = "walk_up_1",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 139.0f, 93.0f },
-        .tr = { 169.0f, 93.0f },
-        .bl = { 139.0f, 137.0f },
-        .br = { 169.0f, 137.0f }
+        .tl = { 199.0f, 47.0f },
+        .tr = { 229.0f, 47.0f },
+        .bl = { 199.0f, 91.0f },
+        .br = { 229.0f, 91.0f }
       }
     };
     static auto walk_up_2 = (grumble::SpriteDefinition) {
       .name = "walk_up_2",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 415.0f, 93.0f },
-        .tr = { 447.0f, 93.0f },
-        .bl = { 415.0f, 139.0f },
-        .br = { 447.0f, 139.0f }
+        .tl = { 1.0f, 1.0f },
+        .tr = { 33.0f, 1.0f },
+        .bl = { 1.0f, 47.0f },
+        .br = { 33.0f, 47.0f }
       }
     };
     static auto walk_up_3 = (grumble::SpriteDefinition) {
       .name = "walk_up_3",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 185.0f, 93.0f },
-        .tr = { 215.0f, 93.0f },
-        .bl = { 185.0f, 137.0f },
-        .br = { 215.0f, 137.0f }
+        .tl = { 225.0f, 93.0f },
+        .tr = { 255.0f, 93.0f },
+        .bl = { 225.0f, 137.0f },
+        .br = { 255.0f, 137.0f }
       }
     };
     static auto walk_up_4 = (grumble::SpriteDefinition) {
       .name = "walk_up_4",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 231.0f, 93.0f },
-        .tr = { 261.0f, 93.0f },
-        .bl = { 231.0f, 137.0f },
-        .br = { 261.0f, 137.0f }
+        .tl = { 231.0f, 1.0f },
+        .tr = { 261.0f, 1.0f },
+        .bl = { 231.0f, 45.0f },
+        .br = { 261.0f, 45.0f }
       }
     };
     static auto walk_up_5 = (grumble::SpriteDefinition) {
       .name = "walk_up_5",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 463.0f, 93.0f },
-        .tr = { 495.0f, 93.0f },
-        .bl = { 463.0f, 139.0f },
-        .br = { 495.0f, 139.0f }
+        .tl = { 35.0f, 1.0f },
+        .tr = { 67.0f, 1.0f },
+        .bl = { 35.0f, 47.0f },
+        .br = { 67.0f, 47.0f }
       }
     };
     static auto walk_up_6 = (grumble::SpriteDefinition) {
       .name = "walk_up_6",
       .atlas = "main",
       .region = (grumble::SpriteRegion) {
-        .tl = { 277.0f, 93.0f },
-        .tr = { 307.0f, 93.0f },
-        .bl = { 277.0f, 137.0f },
-        .br = { 307.0f, 137.0f }
+        .tl = { 231.0f, 47.0f },
+        .tr = { 261.0f, 47.0f },
+        .bl = { 231.0f, 91.0f },
+        .br = { 261.0f, 91.0f }
       }
     };
   }

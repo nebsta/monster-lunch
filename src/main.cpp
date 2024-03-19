@@ -73,7 +73,7 @@ int main() {
   grumble::View::shared_ptr mainView = game.viewFactory()->createView();
   mainView->renderer()->setTint(COLOR_RED);
   mainView->transform()->setLocalPosition({0.0f, 0.0f});
-  mainView->transform()->setSize({102.4f, 102.4f});
+  mainView->transform()->setSize({1000.4f, 1000.4f});
   game.setScreenSize(application->screenSize());
   game.getViewLayer(0)->addView(mainView);
 

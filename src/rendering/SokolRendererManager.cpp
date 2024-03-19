@@ -112,30 +112,29 @@ void SokolRendererManager::setup() {
   // setting up imgui
   simgui_setup((simgui_desc_t){.logger = {.func = sokol_log}});
 
-  auto imageFile = _fileManager->loadPNG("test.png");
-  // if (auto imageFile = _spriteManager->getAtlasData("main").lock()) {
-  if (auto data = imageFile->data().lock()) {
-    _state.view_bindings.fs.images[SLOT_tex] = sg_alloc_image();
-    _state.view_bindings.fs.samplers[SLOT_smp] =
-        sg_make_sampler((sg_sampler_desc){
-            .min_filter = SG_FILTER_LINEAR,
-            .mag_filter = SG_FILTER_LINEAR,
-        });
+  if (auto imageFile = _spriteManager->getAtlasData("main").lock()) {
+    if (auto data = imageFile->data().lock()) {
+      _state.view_bindings.fs.images[SLOT_tex] = sg_alloc_image();
+      _state.view_bindings.fs.samplers[SLOT_smp] =
+          sg_make_sampler((sg_sampler_desc){
+              .min_filter = SG_FILTER_LINEAR,
+              .mag_filter = SG_FILTER_LINEAR,
+          });
 
-    sg_image_data image_data;
-    sg_range subimage[SG_CUBEFACE_NUM][SG_MAX_MIPMAPS];
-    image_data.subimage[0][0] = {
-        .ptr = data.get(),
-        .size = (size_t)(imageFile->width() * imageFile->height() * 4),
-    };
+      sg_image_data image_data;
+      sg_range subimage[SG_CUBEFACE_NUM][SG_MAX_MIPMAPS];
+      image_data.subimage[0][0] = {
+          .ptr = data.get(),
+          .size = (size_t)(imageFile->width() * imageFile->height() * 4),
+      };
 
-    sg_init_image(_state.view_bindings.fs.images[SLOT_tex],
-                  (sg_image_desc){.width = imageFile->width(),
-                                  .height = imageFile->height(),
-                                  .pixel_format = SG_PIXELFORMAT_RGBA8,
-                                  .data = image_data});
+      sg_init_image(_state.view_bindings.fs.images[SLOT_tex],
+                    (sg_image_desc){.width = imageFile->width(),
+                                    .height = imageFile->height(),
+                                    .pixel_format = SG_PIXELFORMAT_RGBA8,
+                                    .data = image_data});
+    }
   }
-  // }
 }
 
 void SokolRendererManager::setupViewBindings() {
