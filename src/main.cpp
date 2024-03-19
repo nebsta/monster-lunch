@@ -4,6 +4,7 @@
 #include "core/SDLApplicationConfiguration.hpp"
 #include "input/SDLInputManager.hpp"
 #include "rendering/SokolRendererManager.hpp"
+#include "sprite/_gen_MainAtlas.hpp"
 #include <SDL_timer.h>
 #include <filesystem>
 #include <grumble/core/Game.hpp>
@@ -42,7 +43,8 @@ int main() {
   auto fileManager = std::make_shared<grumble::FileManager>(fileManangerConf);
 
   // sprite manager
-  auto spriteConf = (grumble::SpriteManagerConfiguration){.atlasPath = ""};
+  auto spriteConf = (grumble::SpriteManagerConfiguration){
+      .atlasPath = "", .preloadedAtlases = {atlas::main::name}};
   auto spriteManager =
       std::make_shared<grumble::SpriteManager>(spriteConf, fileManager);
 
@@ -73,11 +75,6 @@ int main() {
   mainView->transform()->setSize({102.4f, 102.4f});
   game.setScreenSize(application->screenSize());
   game.getViewLayer(0)->addView(mainView);
-
-  auto file = fileManager->loadPNG("main.png");
-  if (file != nullptr) {
-    grumble::Logger::info("Loaded file: {}", file->toString());
-  }
 
   // registering the camera movement
   grumble::System::unique_ptr cameraSystem =
