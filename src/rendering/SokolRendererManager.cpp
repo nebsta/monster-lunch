@@ -55,8 +55,8 @@ void SokolRendererManager::setup() {
   view_layout.buffers[1].step_func = SG_VERTEXSTEP_PER_INSTANCE;
   view_layout.attrs[ATTR_view_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
   view_layout.attrs[ATTR_view_vs_pos].buffer_index = 0;
-  view_layout.attrs[ATTR_view_vs_texcoord0].format = SG_VERTEXFORMAT_FLOAT2;
-  view_layout.attrs[ATTR_view_vs_texcoord0].buffer_index = 0;
+  // view_layout.attrs[ATTR_view_vs_texcoord0].format = SG_VERTEXFORMAT_FLOAT2;
+  // view_layout.attrs[ATTR_view_vs_texcoord0].buffer_index = 0;
   view_layout.attrs[ATTR_view_vs_inst_mod_colx].format = SG_VERTEXFORMAT_FLOAT4;
   view_layout.attrs[ATTR_view_vs_inst_mod_colx].buffer_index = 1;
   view_layout.attrs[ATTR_view_vs_inst_mod_coly].format = SG_VERTEXFORMAT_FLOAT4;
@@ -110,29 +110,29 @@ void SokolRendererManager::setup() {
   // setting up imgui
   simgui_setup((simgui_desc_t){.logger = {.func = sokol_log}});
 
-  if (auto imageFile = _spriteManager->getAtlasData("main").lock()) {
-    if (auto data = imageFile->data().lock()) {
-      _state.view_bindings.fs.images[SLOT_tex] = sg_alloc_image();
-      _state.view_bindings.fs.samplers[SLOT_smp] =
-          sg_make_sampler((sg_sampler_desc){
-              .min_filter = SG_FILTER_LINEAR,
-              .mag_filter = SG_FILTER_LINEAR,
-          });
-
-      sg_image_data image_data;
-      sg_range subimage[SG_CUBEFACE_NUM][SG_MAX_MIPMAPS];
-      image_data.subimage[0][0] = {
-          .ptr = data.get(),
-          .size = (size_t)(imageFile->width() * imageFile->height() * 4),
-      };
-
-      sg_init_image(_state.view_bindings.fs.images[SLOT_tex],
-                    (sg_image_desc){.width = imageFile->width(),
-                                    .height = imageFile->height(),
-                                    .pixel_format = SG_PIXELFORMAT_RGBA8,
-                                    .data = image_data});
-    }
-  }
+  // if (auto imageFile = _spriteManager->getAtlasData("main").lock()) {
+  //   if (auto data = imageFile->data().lock()) {
+  //     _state.view_bindings.fs.images[SLOT_tex] = sg_alloc_image();
+  //     _state.view_bindings.fs.samplers[SLOT_smp] =
+  //         sg_make_sampler((sg_sampler_desc){
+  //             .min_filter = SG_FILTER_LINEAR,
+  //             .mag_filter = SG_FILTER_LINEAR,
+  //         });
+  //
+  //     sg_image_data image_data;
+  //     sg_range subimage[SG_CUBEFACE_NUM][SG_MAX_MIPMAPS];
+  //     image_data.subimage[0][0] = {
+  //         .ptr = data.get(),
+  //         .size = (size_t)(imageFile->width() * imageFile->height() * 4),
+  //     };
+  //
+  //     sg_init_image(_state.view_bindings.fs.images[SLOT_tex],
+  //                   (sg_image_desc){.width = imageFile->width(),
+  //                                   .height = imageFile->height(),
+  //                                   .pixel_format = SG_PIXELFORMAT_RGBA8,
+  //                                   .data = image_data});
+  //   }
+  // }
 }
 
 void SokolRendererManager::setupViewBindings() {
