@@ -57,7 +57,7 @@ void SokolRendererManager::setup() {
   view_layout.buffers[1].step_func = SG_VERTEXSTEP_PER_INSTANCE;
   view_layout.attrs[ATTR_view_vs_pos].format = SG_VERTEXFORMAT_FLOAT3;
   view_layout.attrs[ATTR_view_vs_pos].buffer_index = 0;
-  view_layout.attrs[ATTR_view_vs_texcoord0].format = SG_VERTEXFORMAT_SHORT2;
+  view_layout.attrs[ATTR_view_vs_texcoord0].format = SG_VERTEXFORMAT_FLOAT2;
   view_layout.attrs[ATTR_view_vs_texcoord0].buffer_index = 0;
   view_layout.attrs[ATTR_view_vs_inst_mod_colx].format = SG_VERTEXFORMAT_FLOAT4;
   view_layout.attrs[ATTR_view_vs_inst_mod_colx].buffer_index = 1;
