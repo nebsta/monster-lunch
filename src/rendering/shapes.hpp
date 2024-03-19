@@ -1,8 +1,6 @@
 // clang-format off
 #pragma once
 
-#include "../sokol/sokol_gfx.h"
-
 /* Coordinate space
  *     1
  * -1     1

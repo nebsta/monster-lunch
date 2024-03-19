@@ -60,8 +60,7 @@ int main() {
 
   // renderer manager
   auto rendererManager = std::make_shared<SokolRendererManager>(
-      rendererConfig, fileManager, spriteManager, fontManager, inputManager,
-      application);
+      rendererConfig, spriteManager, fontManager, inputManager, application);
 
   // setting up the main game instance
   grumble::Logger::setActiveLogLevel(grumble::LogLevel::info);
