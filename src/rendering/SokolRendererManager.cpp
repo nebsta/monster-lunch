@@ -136,7 +136,7 @@ void SokolRendererManager::setup() {
 }
 
 void SokolRendererManager::setupViewBindings() {
-  float vertices[] = QUAD_VERTICES;
+  vertex vertices[] = QUAD_VERTICES;
   uint16_t indices[] = QUAD_INDICES;
 
   _state.view_bindings = SokolFactory::createBindings(
