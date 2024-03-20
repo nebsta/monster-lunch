@@ -11,7 +11,9 @@ void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
                const char *message_or_null, uint32_t line_nr,
                const char *filename_or_null, void *user_data) {
 
-  grumble::Logger::info(fmt::format("{}: {}", log_item_id, message_or_null));
+  grumble::Logger::info(
+      fmt::format("{}:{}:{} -  {}. line_nr: {}. filename: {}", tag, log_level,
+                  log_item_id, message_or_null, line_nr, filename_or_null));
 }
 
 SokolRendererManager::SokolRendererManager(
@@ -83,7 +85,15 @@ void SokolRendererManager::setup() {
   pipeline_desc.label = "main-pipeline";
   pipeline_desc.index_type = SG_INDEXTYPE_UINT16;
   pipeline_desc.layout = view_layout;
+  pipeline_desc.colors[0] = (sg_color_target_state){
+      .write_mask = SG_COLORMASK_RGB,
+      .blend = (sg_blend_state){.enabled = true,
+                                .src_factor_rgb = SG_BLENDFACTOR_SRC_ALPHA,
+                                .dst_factor_rgb =
+                                    SG_BLENDFACTOR_ONE_MINUS_SRC_ALPHA}};
+
   _state.pipeline = sg_make_pipeline(&pipeline_desc);
+  assert(_state.pipeline.id != SG_INVALID_ID);
 
   setupDebugGridBindings();
 
@@ -108,12 +118,8 @@ void SokolRendererManager::setup() {
   debug_pipeline_desc.layout = debug_layout;
   _state.debug_pipeline = sg_make_pipeline(debug_pipeline_desc);
 
-  // a pass action to clear framebuffer to black
   _state.pass_action =
-      (sg_pass_action){.colors = {{.load_action = SG_LOADACTION_CLEAR,
-                                   .clear_value = {0.0f, 0.0f, 0.0f, 1.0f}}}
-
-      };
+      (sg_pass_action){.colors = {{.load_action = SG_LOADACTION_DONTCARE}}};
 
   // setting up imgui
   simgui_setup((simgui_desc_t){.logger = {.func = sokol_log}});
