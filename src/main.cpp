@@ -15,12 +15,14 @@
 #include <grumble/logging/LogLevel.hpp>
 #include <grumble/logging/Logger.hpp>
 #include <grumble/render/RendererManagerConfiguration.hpp>
+#include <grumble/sprite/SpriteDefinition.hpp>
 #include <grumble/sprite/SpriteManager.hpp>
 #include <grumble/sprite/SpriteManagerConfiguration.hpp>
 #include <grumble/ui/View.hpp>
 #include <grumble/util/HandmadeMath.h>
 #include <mach-o/dyld.h>
 #include <memory>
+#include <vector>
 
 #define FIXED_DELTA_TIME_MS 10.0f
 #define MS_PER_FRAME 12.0f
@@ -70,23 +72,24 @@ int main() {
   game.setScreenSize(application->screenSize());
 
   // creating a dummy view
-  grumble::View::shared_ptr sprite1 = game.viewFactory()->createView();
-  sprite1->transform()->setLocalPosition({0.0f, 0.0f});
-  sprite1->transform()->setSize(atlas::main::walk_up_1.size);
-  sprite1->renderer()->setSprite(atlas::main::walk_up_1);
-  game.getViewLayer(0)->addView(sprite1);
+  std::vector<grumble::SpriteDefinition> spritePool = {
+      atlas::main::walk_up_1,   atlas::main::walk_right_2,
+      atlas::main::idle_right,  atlas::main::phone_1,
+      atlas::main::sit_right_3, atlas::main::sit_left_3,
+      atlas::main::walk_left_4, atlas::main::walk_down_4};
 
-  grumble::View::shared_ptr sprite2 = game.viewFactory()->createView();
-  sprite2->transform()->setLocalPosition({64.0f, 0.0f});
-  sprite2->transform()->setSize({64.0f, 64.0f});
-  sprite2->renderer()->setSprite(atlas::main::walk_down_1);
-  game.getViewLayer(0)->addView(sprite2);
+  for (int i = 0; i < 1000; i++) {
+    int index = rand() % spritePool.size();
+    int x = rand() % 1024;
+    int y = rand() % 1024;
+    grumble::SpriteDefinition sprite = spritePool[index];
 
-  grumble::View::shared_ptr sprite3 = game.viewFactory()->createView();
-  sprite3->transform()->setLocalPosition({128.0f, 0.0f});
-  sprite3->transform()->setSize({64.0f, 64.0f});
-  sprite3->renderer()->setSprite(atlas::main::phone_1);
-  game.getViewLayer(0)->addView(sprite3);
+    grumble::View::shared_ptr spriteView = game.viewFactory()->createView();
+    spriteView->transform()->setLocalPosition({(float)x, (float)y});
+    spriteView->transform()->setSize(sprite.size);
+    spriteView->renderer()->setSprite(sprite);
+    game.getViewLayer(0)->addView(spriteView);
+  }
 
   // registering the camera movement
   grumble::System::unique_ptr cameraSystem =
