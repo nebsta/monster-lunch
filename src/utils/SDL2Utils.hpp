@@ -9,9 +9,9 @@
 class SDL2Utils {
 public:
   static SDL_Rect to_SDL_Rect(grumble::Transform::shared_ptr transform) {
-    glm::vec2 pos = transform->localPosition();
-    glm::vec2 size = transform->size();
-    return {(int)pos.x, (int)pos.y, (int)size.x, (int)size.y};
+    HMM_Vec2 pos = transform->localPosition();
+    HMM_Vec2 size = transform->size();
+    return {(int)pos.X, (int)pos.Y, (int)size.Width, (int)size.Height};
   }
 
   static std::string SDL_Rect_to_string(SDL_Rect rect) {

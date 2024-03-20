@@ -67,15 +67,26 @@ int main() {
   auto game = grumble::Game(rendererManager, fileManager, spriteManager,
                             fontManager, inputManager);
   game.setup();
+  game.setScreenSize(application->screenSize());
 
   // creating a dummy view
-  grumble::View::shared_ptr mainView = game.viewFactory()->createView();
-  mainView->renderer()->setTint(COLOR_RED);
-  mainView->transform()->setLocalPosition({0.0f, 0.0f});
-  mainView->transform()->setSize({1000.4f, 1000.4f});
-  mainView->renderer()->setSprite(atlas::main::walk_up_1);
-  game.setScreenSize(application->screenSize());
-  game.getViewLayer(0)->addView(mainView);
+  grumble::View::shared_ptr sprite1 = game.viewFactory()->createView();
+  sprite1->transform()->setLocalPosition({0.0f, 0.0f});
+  sprite1->transform()->setSize(atlas::main::walk_up_1.size);
+  sprite1->renderer()->setSprite(atlas::main::walk_up_1);
+  game.getViewLayer(0)->addView(sprite1);
+
+  grumble::View::shared_ptr sprite2 = game.viewFactory()->createView();
+  sprite2->transform()->setLocalPosition({64.0f, 0.0f});
+  sprite2->transform()->setSize({64.0f, 64.0f});
+  sprite2->renderer()->setSprite(atlas::main::walk_down_1);
+  game.getViewLayer(0)->addView(sprite2);
+
+  grumble::View::shared_ptr sprite3 = game.viewFactory()->createView();
+  sprite3->transform()->setLocalPosition({128.0f, 0.0f});
+  sprite3->transform()->setSize({64.0f, 64.0f});
+  sprite3->renderer()->setSprite(atlas::main::phone_1);
+  game.getViewLayer(0)->addView(sprite3);
 
   // registering the camera movement
   grumble::System::unique_ptr cameraSystem =

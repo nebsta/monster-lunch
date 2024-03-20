@@ -10,6 +10,7 @@ namespace atlas {
     static auto {{ sprite.name }} = (grumble::SpriteDefinition) {
       .name = "{{sprite.name}}",
       .atlas = "{{name}}",
+      .size = { {{sprite.w}}, {{sprite.h}} },
       .region = (grumble::SpriteRegion) {
         .tl = { {{ sprite.tlx }}f, {{ sprite.tly }}f },
         .tr = { {{ sprite.trx }}f, {{ sprite.try }}f },

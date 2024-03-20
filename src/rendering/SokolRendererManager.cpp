@@ -189,7 +189,7 @@ void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view,
   uint32_t instanceId = view->renderer()->instanceId();
 
   grumble::SpriteDefinition sprite = view->renderer()->sprite();
-  logInfo("Sprite: {}", sprite.toString());
+  // logInfo("Sprite: {}", sprite.toString());
   _state.view_instances[instanceId].uv0 = sprite.region.tr;
   _state.view_instances[instanceId].uv1 = sprite.region.tl;
   _state.view_instances[instanceId].uv2 = sprite.region.bl;
