@@ -22,13 +22,13 @@ with open(f"{root_path}/../res/images/main.json") as file:
       "name": sprite_data["filename"][:-4],
       "atlas": atlas_name,
       "tlx": round(frame["x"] / atlas_w, 2),
-      "tly": round(frame["y"] / atlas_h, 2),
+      "tly": round((atlas_h - frame["y"]) / atlas_h, 2),
       "trx" : round((frame["x"] + frame["w"]) / atlas_w, 2),
-      "try" : round(frame["y"] / atlas_h, 2),
+      "try" : round((atlas_h - frame["y"]) / atlas_h, 2),
       "blx" : round(frame["x"] / atlas_w, 2),
-      "bly" : round((frame["y"] + frame["h"]) / atlas_h, 2),
+      "bly" : round((atlas_h - (frame["y"] + frame["h"])) / atlas_h, 2),
       "brx" : round((frame["x"] + frame["w"]) / atlas_w, 2),
-      "bry" : round((frame["y"] + frame["h"]) / atlas_h, 2)
+      "bry" : round((atlas_h - (frame["y"] + frame["h"])) / atlas_h, 2)
     }
     sprites.append(sprite)
 
