@@ -36,9 +36,9 @@ void main() {
     uv = inst_uv0;
   } else if (uv_index == 1) { // top right
     uv = inst_uv1;
-  } else if (uv_index == 2) { // bottom left
+  } else if (uv_index == 2) { // bottom right
     uv = inst_uv2;
-  } else { // bottom right
+  } else { // bottom left
     uv = inst_uv3;
   }
 }
