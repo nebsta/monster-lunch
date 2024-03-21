@@ -198,13 +198,13 @@ void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view,
   grumble::SpriteDefinition sprite = view->renderer()->sprite();
   float uvScaleFactorX = view->transform()->size().Width / sprite.size.Width;
   float uvScaleFactorY = view->transform()->size().Height / sprite.size.Height;
-  _state.view_instances[instanceId].uv0 = {sprite.region.tr.X * uvScaleFactorX,
+  _state.view_instances[instanceId].uv1 = {sprite.region.tr.X * uvScaleFactorX,
                                            sprite.region.tr.Y * uvScaleFactorY};
-  _state.view_instances[instanceId].uv1 = {sprite.region.tl.X * uvScaleFactorX,
+  _state.view_instances[instanceId].uv0 = {sprite.region.tl.X * uvScaleFactorX,
                                            sprite.region.tl.Y * uvScaleFactorY};
-  _state.view_instances[instanceId].uv2 = {sprite.region.bl.X * uvScaleFactorX,
+  _state.view_instances[instanceId].uv3 = {sprite.region.bl.X * uvScaleFactorX,
                                            sprite.region.bl.Y * uvScaleFactorY};
-  _state.view_instances[instanceId].uv3 = {sprite.region.br.X * uvScaleFactorX,
+  _state.view_instances[instanceId].uv2 = {sprite.region.br.X * uvScaleFactorX,
                                            sprite.region.br.Y * uvScaleFactorY};
   _state.view_instances[instanceId].colx = modelMatrix.Columns[0];
   _state.view_instances[instanceId].coly = modelMatrix.Columns[1];

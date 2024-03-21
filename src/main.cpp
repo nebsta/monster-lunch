@@ -22,7 +22,6 @@
 #include <grumble/util/HandmadeMath.h>
 #include <mach-o/dyld.h>
 #include <memory>
-#include <vector>
 
 #define FIXED_DELTA_TIME_MS 10.0f
 #define MS_PER_FRAME 12.0f
@@ -71,10 +70,9 @@ int main() {
   game.setup();
   game.setScreenSize(application->screenSize());
 
-  grumble::View::shared_ptr floorView =
-      game.viewFactory()->createView({-512, -512}, {2048, 2048});
-
   auto floorSprite = atlas::main::floor;
+  grumble::View::shared_ptr floorView =
+      game.viewFactory()->createView({100, 100}, floorSprite.size);
   floorView->renderer()->setSprite(floorSprite);
   game.getViewLayer(0)->addView(floorView);
 

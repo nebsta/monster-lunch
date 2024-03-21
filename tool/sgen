@@ -22,19 +22,21 @@ with open(f"{root_path}/../res/images/main.json") as file:
     sprite_y = frame["y"]
     sprite_w = frame["w"]
     sprite_h = frame["h"]
+
+    sprite_left = round(sprite_x / atlas_w, 2)
+    sprite_right = round((sprite_x + sprite_w) / atlas_w, 2) 
+    sprite_top = round((atlas_h - sprite_y) / atlas_h, 2)
+    sprite_bottom = round((atlas_h - (sprite_y + sprite_h)) / atlas_h, 2) 
+
     sprite = {
       "name": sprite_data["filename"][:-4],
       "atlas": atlas_name,
       "w": sprite_w,
       "h": sprite_h,
-      "tlx": round(sprite_x / atlas_w, 2),
-      "tly": round((atlas_h - sprite_y) / atlas_h, 2),
-      "trx" : round((sprite_x + sprite_w) / atlas_w, 2),
-      "try" : round((atlas_h - sprite_y) / atlas_h, 2),
-      "blx" : round(sprite_x / atlas_w, 2),
-      "bly" : round((atlas_h - (sprite_y + sprite_h)) / atlas_h, 2),
-      "brx" : round((sprite_x + sprite_w) / atlas_w, 2),
-      "bry" : round((atlas_h - (sprite_y + sprite_h)) / atlas_h, 2)
+      "tl": { "x": sprite_left, "y": sprite_top },
+      "tr": { "x": sprite_right, "y": sprite_top },
+      "bl": { "x": sprite_left, "y": sprite_bottom },
+      "br": { "x": sprite_right, "y": sprite_bottom },
     }
     sprites.append(sprite)
 
