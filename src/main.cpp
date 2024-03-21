@@ -37,8 +37,7 @@ int main() {
   // file manager
   char buf[PATH_MAX];
   uint32_t bufsize = PATH_MAX;
-  if (!_NSGetExecutablePath(buf, &bufsize))
-    puts(buf);
+  _NSGetExecutablePath(buf, &bufsize);
   auto executationPath = std::filesystem::path(buf);
   auto fileManangerConf = (grumble::FileManagerConfiguration){
       .rootReadPath = executationPath.parent_path(), .rootWritePath = "/"};
@@ -71,6 +70,13 @@ int main() {
   game.setup();
   game.setScreenSize(application->screenSize());
 
+  grumble::View::shared_ptr floorView =
+      game.viewFactory()->createView({-512, -512}, {2048, 2048});
+
+  auto floorSprite = atlas::main::floor;
+  floorView->renderer()->setSprite(floorSprite);
+  game.getViewLayer(0)->addView(floorView);
+
   // creating a dummy view
   std::vector<grumble::SpriteDefinition> spritePool = {
       atlas::main::walk_up_1,   atlas::main::walk_right_2,
@@ -83,7 +89,6 @@ int main() {
     int x = rand() % 1024;
     int y = rand() % 1024;
     grumble::SpriteDefinition sprite = spritePool[index];
-
     grumble::View::shared_ptr spriteView = game.viewFactory()->createView();
     spriteView->transform()->setLocalPosition({(float)x, (float)y});
     spriteView->transform()->setSize(sprite.size);

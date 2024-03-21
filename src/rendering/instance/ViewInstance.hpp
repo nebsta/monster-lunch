@@ -1,7 +1,7 @@
 #pragma once
 #include <grumble/util/HandmadeMath.h>
 
-#define MAX_VIEW_INSTANCES 500
+#define MAX_VIEW_INSTANCES 2000
 
 struct ViewInstance {
   HMM_Vec2 uv0;

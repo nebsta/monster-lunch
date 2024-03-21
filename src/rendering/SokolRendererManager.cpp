@@ -128,10 +128,10 @@ void SokolRendererManager::setup() {
     if (auto data = imageFile->data().lock()) {
       _state.view_bindings.fs.images[SLOT_tex] = sg_alloc_image();
       _state.view_bindings.fs.samplers[SLOT_smp] =
-          sg_make_sampler((sg_sampler_desc){
-              .min_filter = SG_FILTER_LINEAR,
-              .mag_filter = SG_FILTER_LINEAR,
-          });
+          sg_make_sampler((sg_sampler_desc){.min_filter = SG_FILTER_LINEAR,
+                                            .mag_filter = SG_FILTER_LINEAR,
+                                            .wrap_u = SG_WRAP_REPEAT,
+                                            .wrap_v = SG_WRAP_REPEAT});
 
       sg_image_data image_data;
       sg_range subimage[SG_CUBEFACE_NUM][SG_MAX_MIPMAPS];
@@ -195,7 +195,7 @@ void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view,
   uint32_t instanceId = view->renderer()->instanceId();
 
   grumble::SpriteDefinition sprite = view->renderer()->sprite();
-  // logInfo("Sprite: {}", sprite.toString());
+  // logInfo("Updating buffer for instance: {}", instanceId);
   _state.view_instances[instanceId].uv0 = sprite.region.tr;
   _state.view_instances[instanceId].uv1 = sprite.region.tl;
   _state.view_instances[instanceId].uv2 = sprite.region.bl;
