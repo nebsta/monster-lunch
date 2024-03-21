@@ -79,23 +79,23 @@ int main() {
   game.getViewLayer(0)->addView(floorView);
 
   // creating a dummy view
-  std::vector<grumble::SpriteDefinition> spritePool = {
-      atlas::main::walk_up_1,   atlas::main::walk_right_2,
-      atlas::main::idle_right,  atlas::main::phone_1,
-      atlas::main::sit_right_3, atlas::main::sit_left_3,
-      atlas::main::walk_left_4, atlas::main::walk_down_4};
-
-  for (int i = 0; i < 1000; i++) {
-    int index = rand() % spritePool.size();
-    int x = rand() % 1024;
-    int y = rand() % 1024;
-    grumble::SpriteDefinition sprite = spritePool[index];
-    grumble::View::shared_ptr spriteView = game.viewFactory()->createView();
-    spriteView->transform()->setLocalPosition({(float)x, (float)y});
-    spriteView->transform()->setSize(sprite.size);
-    spriteView->renderer()->setSprite(sprite);
-    game.getViewLayer(0)->addView(spriteView);
-  }
+  // std::vector<grumble::SpriteDefinition> spritePool = {
+  //     atlas::main::walk_up_1,   atlas::main::walk_right_2,
+  //     atlas::main::idle_right,  atlas::main::phone_1,
+  //     atlas::main::sit_right_3, atlas::main::sit_left_3,
+  //     atlas::main::walk_left_4, atlas::main::walk_down_4};
+  //
+  // for (int i = 0; i < 1000; i++) {
+  //   int index = rand() % spritePool.size();
+  //   int x = rand() % 1024;
+  //   int y = rand() % 1024;
+  //   grumble::SpriteDefinition sprite = spritePool[index];
+  //   grumble::View::shared_ptr spriteView = game.viewFactory()->createView();
+  //   spriteView->transform()->setLocalPosition({(float)x, (float)y});
+  //   spriteView->transform()->setSize(sprite.size);
+  //   spriteView->renderer()->setSprite(sprite);
+  //   game.getViewLayer(0)->addView(spriteView);
+  // }
 
   // registering the camera movement
   grumble::System::unique_ptr cameraSystem =

@@ -32,13 +32,13 @@ void main() {
   mat4 m;
   combine_to_mat4(inst_mod_colx, inst_mod_coly, inst_mod_colz, inst_mod_colw, m);
   gl_Position = pv * m * vec4(pos, 1.0);
-  if (uv_index == 0) {
+  if (uv_index == 0) { // top right
     uv = inst_uv0;
-  } else if (uv_index == 1) {
+  } else if (uv_index == 1) { // top left
     uv = inst_uv1;
-  } else if (uv_index == 2) {
+  } else if (uv_index == 2) { // bottom left
     uv = inst_uv2;
-  } else {
+  } else { // bottom right
     uv = inst_uv3;
   }
 }
@@ -52,7 +52,8 @@ in vec2 uv;
 out vec4 frag_color;
 
 void main() {
-  frag_color = texture(sampler2D(tex, smp), uv);
+  vec2 reworkedUv = vec2(mod(uv.x, 0.35f), 1.0f - mod(uv.y, 0.24f));
+  frag_color = texture(sampler2D(tex, smp), reworkedUv);
 }
 @end
 
