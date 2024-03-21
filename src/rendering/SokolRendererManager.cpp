@@ -18,13 +18,14 @@ void sokol_log(const char *tag, uint32_t log_level, uint32_t log_item_id,
 
 SokolRendererManager::SokolRendererManager(
     grumble::RendererManagerConfiguration configuration,
+    grumble::FileManager::shared_ptr fileManager,
     grumble::SpriteManager::shared_ptr spriteManager,
     grumble::FontManager::shared_ptr fontMananger,
     grumble::InputManager::shared_ptr inputManager,
     SDLApplication::shared_ptr sdlApplication)
-    : _spriteManager(spriteManager), _fontManager(fontMananger),
-      _sdlApplication(sdlApplication), _inputManager(inputManager),
-      grumble::RendererManager(configuration) {
+    : _fileManager(fileManager), _spriteManager(spriteManager),
+      _fontManager(fontMananger), _sdlApplication(sdlApplication),
+      _inputManager(inputManager), grumble::RendererManager(configuration) {
   _state = {};
 }
 
@@ -195,7 +196,6 @@ void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view,
   uint32_t instanceId = view->renderer()->instanceId();
 
   grumble::SpriteDefinition sprite = view->renderer()->sprite();
-  // logInfo("Updating buffer for instance: {}", instanceId);
   _state.view_instances[instanceId].uv0 = sprite.region.tr;
   _state.view_instances[instanceId].uv1 = sprite.region.tl;
   _state.view_instances[instanceId].uv2 = sprite.region.bl;

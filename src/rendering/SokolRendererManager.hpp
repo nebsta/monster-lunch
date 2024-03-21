@@ -22,6 +22,7 @@ public:
   typedef std::shared_ptr<SokolRendererManager> shared_ptr;
 
   SokolRendererManager(grumble::RendererManagerConfiguration configuration,
+                       grumble::FileManager::shared_ptr fileManager,
                        grumble::SpriteManager::shared_ptr spriteManager,
                        grumble::FontManager::shared_ptr fontManager,
                        grumble::InputManager::shared_ptr inputManager,
@@ -44,6 +45,7 @@ protected:
 
 private:
   grumble::SpriteManager::shared_ptr _spriteManager;
+  grumble::FileManager::shared_ptr _fileManager;
   grumble::FontManager::shared_ptr _fontManager;
   grumble::InputManager::shared_ptr _inputManager;
   SDLApplication::shared_ptr _sdlApplication;
