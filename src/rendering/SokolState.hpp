@@ -1,9 +1,11 @@
 #pragma once
 
 #include "instance/DebugLineInstance.hpp"
-#include "instance/ViewInstance.hpp"
-
 #include "sokol.hpp"
+
+#include <grumble/render/ViewInstance.hpp>
+
+#define MAX_VIEW_INSTANCES 2000
 
 struct SokolState {
   sg_pass_action pass_action;

@@ -19,6 +19,7 @@
 #include <grumble/sprite/SpriteManager.hpp>
 #include <grumble/sprite/SpriteManagerConfiguration.hpp>
 #include <grumble/ui/View.hpp>
+#include <grumble/ui/ViewLayerType.hpp>
 #include <grumble/util/HandmadeMath.h>
 #include <mach-o/dyld.h>
 #include <memory>
@@ -72,10 +73,10 @@ int main() {
 
   // actual floor image
   auto floorSprite = atlas::main::floor;
-  grumble::View::shared_ptr floorView =
+  grumble::View::unique_ptr floorView =
       game.viewFactory()->createView({-512, -512}, {2048, 2048});
-  floorView->renderer()->setSprite(floorSprite);
-  game.getViewLayer(0)->addView(floorView);
+  floorView->setSprite(floorSprite);
+  game.addView(std::move(floorView), grumble::ViewLayerType::BACKGROUND_1);
 
   // creating a dummy view
   std::vector<grumble::SpriteDefinition> spritePool = {
@@ -89,11 +90,11 @@ int main() {
     int x = (rand() % 2048) - 512;
     int y = (rand() % 2048) - 512;
     grumble::SpriteDefinition sprite = spritePool[index];
-    grumble::View::shared_ptr spriteView = game.viewFactory()->createView();
-    spriteView->transform()->setLocalPosition({(float)x, (float)y});
-    spriteView->transform()->setSize(sprite.size);
-    spriteView->renderer()->setSprite(sprite);
-    game.getViewLayer(0)->addView(spriteView);
+    grumble::View::unique_ptr spriteView = game.viewFactory()->createView();
+    spriteView->setPosition({(float)x, (float)y});
+    spriteView->setSize(sprite.size);
+    spriteView->setSprite(sprite);
+    game.addView(std::move(spriteView), grumble::ViewLayerType::FOREGROUND_1);
   }
 
   // registering the camera movement

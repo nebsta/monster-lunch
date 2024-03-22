@@ -129,29 +129,6 @@ void SokolRendererManager::setup() {
   // setting up imgui
   simgui_setup((simgui_desc_t){.logger = {.func = sokol_log}});
 
-  // auto imageFile = _fileManager->loadPNG("test.png");
-  // if (auto data = imageFile->data().lock()) {
-  //   _state.view_bindings.fs.images[SLOT_tex] = sg_alloc_image();
-  //   _state.view_bindings.fs.samplers[SLOT_smp] =
-  //       sg_make_sampler((sg_sampler_desc){.min_filter = SG_FILTER_LINEAR,
-  //                                         .mag_filter = SG_FILTER_LINEAR,
-  //                                         .wrap_u = SG_WRAP_REPEAT,
-  //                                         .wrap_v = SG_WRAP_REPEAT});
-  //
-  //   sg_image_data image_data;
-  //   sg_range subimage[SG_CUBEFACE_NUM][SG_MAX_MIPMAPS];
-  //   image_data.subimage[0][0] = {
-  //       .ptr = data.get(),
-  //       .size = (size_t)(imageFile->width() * imageFile->height() * 4),
-  //   };
-  //
-  //   sg_init_image(_state.view_bindings.fs.images[SLOT_tex],
-  //                 (sg_image_desc){.width = imageFile->width(),
-  //                                 .height = imageFile->height(),
-  //                                 .pixel_format = SG_PIXELFORMAT_RGBA8,
-  //                                 .data = image_data});
-  // }
-
   if (auto imageFile = _spriteManager->getAtlasData("main").lock()) {
     if (auto data = imageFile->data().lock()) {
       _state.view_bindings.fs.images[SLOT_tex] = sg_alloc_image();
@@ -217,48 +194,10 @@ void SokolRendererManager::prepareMainLayer(double t) {
   sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_view_vs_uni, SG_RANGE(view_uni));
 }
 
-void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view,
-                                        double t) {
-  HMM_Mat4 modelMatrix = view->transform()->modelMatrix(1.0f);
-  uint32_t instanceId = view->renderer()->instanceId();
-
-  grumble::SpriteDefinition sprite = view->renderer()->sprite();
-  HMM_Vec2 spriteSize = sprite.size;
-  // HMM_Vec2 spriteSize = {20, 20};
-
-  // to add the actual one
-  HMM_Vec2 uvOrigin = sprite.region.bl;
-  // HMM_Vec2 uvOrigin = {0.0, 0.5f};
-
-  HMM_Vec2 uvSize = sprite.region.size();
-  // HMM_Vec2 uvSize = {0.5, 0.5};
-
-  float uvScaleFactorX = view->transform()->size().Width / spriteSize.Width;
-  float uvScaleFactorY = view->transform()->size().Height / spriteSize.Height;
-  // logInfo("Sprite: {}", sprite.toString());
-  // _state.view_instances[instanceId].uv0 = {0 * uvScaleFactorX,
-  //                                          1 * uvScaleFactorY};
-  // _state.view_instances[instanceId].uv1 = {0.5f * uvScaleFactorX,
-  //                                          1 * uvScaleFactorY};
-  // _state.view_instances[instanceId].uv2 = {0.5f * uvScaleFactorX,
-  //                                          0.5f * uvScaleFactorY};
-  // _state.view_instances[instanceId].uv3 = {0 * uvScaleFactorX,
-  //                                          0.5f * uvScaleFactorY};
-
-  _state.view_instances[instanceId].uv0 = {sprite.region.tl.X * uvScaleFactorX,
-                                           sprite.region.tl.Y * uvScaleFactorY};
-  _state.view_instances[instanceId].uv1 = {sprite.region.tr.X * uvScaleFactorX,
-                                           sprite.region.tr.Y * uvScaleFactorY};
-  _state.view_instances[instanceId].uv2 = {sprite.region.br.X * uvScaleFactorX,
-                                           sprite.region.br.Y * uvScaleFactorY};
-  _state.view_instances[instanceId].uv3 = {sprite.region.bl.X * uvScaleFactorX,
-                                           sprite.region.bl.Y * uvScaleFactorY};
-  _state.view_instances[instanceId].uvs = uvSize;
-  _state.view_instances[instanceId].uvo = uvOrigin;
-  _state.view_instances[instanceId].colx = modelMatrix.Columns[0];
-  _state.view_instances[instanceId].coly = modelMatrix.Columns[1];
-  _state.view_instances[instanceId].colz = modelMatrix.Columns[2];
-  _state.view_instances[instanceId].colw = modelMatrix.Columns[3];
+void SokolRendererManager::updateInstanceBuffer(int instanceId,
+                                                ViewInstance instance,
+                                                double t) {
+  _state.view_instances[instanceId] = instance;
 }
 
 void SokolRendererManager::drawMainLayer() {

@@ -35,7 +35,10 @@ protected:
   void setup() override;
 
   void prepareMainLayer(double t) override;
-  void updateBuffer(grumble::View::shared_ptr view, double t) override;
+
+  void updateInstanceBuffer(int instanceId, ViewInstance instance,
+                            double t) override;
+
   void drawMainLayer() override;
 
   void drawDebugGrid(grumble::GridResolution resolution, double t) override;
