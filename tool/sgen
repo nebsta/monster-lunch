@@ -9,6 +9,21 @@ env_path = f"{root_path}/../templates"
 
 atlas_name = "main"
 
+"""
+The coorinate space used by Texture packer is
+  0,0  1,0
+
+  0,1  1,1
+
+However the UV space within the engine is
+ 0,1   1,1
+
+ 0,0   1,0 
+
+So part of this script is converting between these coordinate spaces
+"""
+
+
 with open(f"{root_path}/../res/images/main.json") as file:
   data = json.load(file)
   atlas_w = data["meta"]["size"]["w"]
@@ -23,11 +38,11 @@ with open(f"{root_path}/../res/images/main.json") as file:
     sprite_w = frame["w"]
     sprite_h = frame["h"]
 
-    sprite_left = round(sprite_x / atlas_w, 2)
-    sprite_right = round((sprite_x + sprite_w) / atlas_w, 2) 
-    sprite_top = round((atlas_h - sprite_y) / atlas_h, 2)
-    sprite_bottom = round((atlas_h - (sprite_y + sprite_h)) / atlas_h, 2) 
-
+    sprite_left = round(sprite_x / atlas_w, 4)
+    sprite_right = round((sprite_x + sprite_w) / atlas_w, 4) 
+    sprite_top = round((atlas_h - sprite_y) / atlas_h, 4)
+    sprite_bottom = round((atlas_h - (sprite_y + sprite_h)) / atlas_h, 4)
+    
     sprite = {
       "name": sprite_data["filename"][:-4],
       "atlas": atlas_name,

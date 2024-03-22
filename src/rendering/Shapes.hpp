@@ -9,11 +9,12 @@
  *    -1
  */
 
-/*
- *  1.0f, 1.0f,
- *  0.0f, 1.0f,
- *  0.0f, 0.0f,
- *  1.0f, 0.0f
+
+/* UV space
+ *  0,0    1,0
+ *  
+ *
+ *  0,1    1,1
  *
  */
 
@@ -22,6 +23,12 @@ typedef struct {
   int16_t i;
 } vertex;
 
+
+/*
+ * UV corrinate order
+ * tl, tr, br, bl
+ *
+ */
 #define QUAD_VERTICES \
 { \
   { 0.0f, 0.0f, 0.5f, 0 }, \

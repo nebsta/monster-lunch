@@ -70,6 +70,8 @@ void SokolRendererManager::setup() {
   view_layout.attrs[ATTR_view_vs_inst_uv2].buffer_index = 1;
   view_layout.attrs[ATTR_view_vs_inst_uv3].format = SG_VERTEXFORMAT_FLOAT2;
   view_layout.attrs[ATTR_view_vs_inst_uv3].buffer_index = 1;
+  view_layout.attrs[ATTR_view_vs_inst_uvs].format = SG_VERTEXFORMAT_FLOAT2;
+  view_layout.attrs[ATTR_view_vs_inst_uvs].buffer_index = 1;
   view_layout.attrs[ATTR_view_vs_inst_mod_colx].format = SG_VERTEXFORMAT_FLOAT4;
   view_layout.attrs[ATTR_view_vs_inst_mod_colx].buffer_index = 1;
   view_layout.attrs[ATTR_view_vs_inst_mod_coly].format = SG_VERTEXFORMAT_FLOAT4;
@@ -124,6 +126,29 @@ void SokolRendererManager::setup() {
 
   // setting up imgui
   simgui_setup((simgui_desc_t){.logger = {.func = sokol_log}});
+
+  // auto imageFile = _fileManager->loadPNG("test.png");
+  // if (auto data = imageFile->data().lock()) {
+  //   _state.view_bindings.fs.images[SLOT_tex] = sg_alloc_image();
+  //   _state.view_bindings.fs.samplers[SLOT_smp] =
+  //       sg_make_sampler((sg_sampler_desc){.min_filter = SG_FILTER_LINEAR,
+  //                                         .mag_filter = SG_FILTER_LINEAR,
+  //                                         .wrap_u = SG_WRAP_REPEAT,
+  //                                         .wrap_v = SG_WRAP_REPEAT});
+  //
+  //   sg_image_data image_data;
+  //   sg_range subimage[SG_CUBEFACE_NUM][SG_MAX_MIPMAPS];
+  //   image_data.subimage[0][0] = {
+  //       .ptr = data.get(),
+  //       .size = (size_t)(imageFile->width() * imageFile->height() * 4),
+  //   };
+  //
+  //   sg_init_image(_state.view_bindings.fs.images[SLOT_tex],
+  //                 (sg_image_desc){.width = imageFile->width(),
+  //                                 .height = imageFile->height(),
+  //                                 .pixel_format = SG_PIXELFORMAT_RGBA8,
+  //                                 .data = image_data});
+  // }
 
   if (auto imageFile = _spriteManager->getAtlasData("main").lock()) {
     if (auto data = imageFile->data().lock()) {
@@ -198,6 +223,14 @@ void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view,
   grumble::SpriteDefinition sprite = view->renderer()->sprite();
   float uvScaleFactorX = view->transform()->size().Width / sprite.size.Width;
   float uvScaleFactorY = view->transform()->size().Height / sprite.size.Height;
+  // logInfo("Scale factor: {} {}", uvScaleFactorX, uvScaleFactorY);
+  // logInfo("Sprite: {}", sprite.toString());
+
+  // _state.view_instances[instanceId].uv3 = {0, 1}; // tl
+  // _state.view_instances[instanceId].uv2 = {1, 1}; // tr
+  // _state.view_instances[instanceId].uv1 = {1, 0}; // br
+  // _state.view_instances[instanceId].uv0 = {0, 0}; // bl
+
   _state.view_instances[instanceId].uv0 = {sprite.region.tl.X * uvScaleFactorX,
                                            sprite.region.tl.Y * uvScaleFactorY};
   _state.view_instances[instanceId].uv1 = {sprite.region.tr.X * uvScaleFactorX,
@@ -206,6 +239,7 @@ void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view,
                                            sprite.region.br.Y * uvScaleFactorY};
   _state.view_instances[instanceId].uv3 = {sprite.region.bl.X * uvScaleFactorX,
                                            sprite.region.bl.Y * uvScaleFactorY};
+  _state.view_instances[instanceId].uvs = sprite.region.size();
   _state.view_instances[instanceId].colx = modelMatrix.Columns[0];
   _state.view_instances[instanceId].coly = modelMatrix.Columns[1];
   _state.view_instances[instanceId].colz = modelMatrix.Columns[2];
