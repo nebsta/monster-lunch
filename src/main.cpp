@@ -24,6 +24,7 @@
 #include <grumble/ui/View.hpp>
 #include <grumble/ui/ViewLayerType.hpp>
 #include <grumble/util/HandmadeMath.h>
+#include <grumble/util/MathUtils.hpp>
 #include <mach-o/dyld.h>
 #include <memory>
 
@@ -97,6 +98,26 @@ int main() {
   spriteView->spriteAnimator = animator;
 
   game.addView(std::move(spriteView), grumble::ViewLayerType::FOREGROUND_1);
+
+  auto iter = atlas::main::walk_down.begin();
+  int index = 0;
+  for (; iter != atlas::main::walk_down.end(); iter++) {
+    float x = 250 + index * 50;
+    grumble::SpriteDefinition sprite = *iter;
+    grumble::View::unique_ptr spriteView = game.viewFactory()->createView();
+    spriteView->setPosition({x, 200});
+    spriteView->setSize(sprite.size);
+    spriteView->setSprite(sprite);
+    index++;
+    game.addView(std::move(spriteView), grumble::ViewLayerType::FOREGROUND_1);
+  }
+
+  grumble::SpriteDefinition walkDownSprite = atlas::main::walk_down[0];
+  grumble::View::unique_ptr testSpriteView = game.viewFactory()->createView();
+  testSpriteView->setPosition({300, 300});
+  testSpriteView->setSize(walkDownSprite.size);
+  testSpriteView->setSprite(walkDownSprite);
+  game.addView(std::move(testSpriteView), grumble::ViewLayerType::FOREGROUND_1);
 
   // CROWD SAMPLE
   // std::vector<grumble::SpriteDefinition> spritePool = {
