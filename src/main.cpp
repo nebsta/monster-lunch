@@ -72,8 +72,8 @@ int main() {
 
   auto floorSprite = atlas::main::floor;
   grumble::View::shared_ptr floorView =
-      game.viewFactory()->createView({100, 100}, floorSprite.size);
-  floorView->renderer()->setSprite(floorSprite);
+      game.viewFactory()->createView({100, 100}, {40, 40});
+  // floorView->renderer()->setSprite(floorSprite);
   game.getViewLayer(0)->addView(floorView);
 
   // creating a dummy view

@@ -43,6 +43,9 @@ with open(f"{root_path}/../res/images/main.json") as file:
     sprite_top = round((atlas_h - sprite_y) / atlas_h, 4)
     sprite_bottom = round((atlas_h - (sprite_y + sprite_h)) / atlas_h, 4)
     
+    # sprite_top = round(sprite_y / atlas_h, 4)
+    # sprite_bottom = round((sprite_y + sprite_h) / atlas_h, 4)
+    
     sprite = {
       "name": sprite_data["filename"][:-4],
       "atlas": atlas_name,
