@@ -23,6 +23,7 @@ However the UV space within the engine is
 So part of this script is converting between these coordinate spaces
 """
 
+ROUNDING = 8
 
 with open(f"{root_path}/../res/images/main.json") as file:
   data = json.load(file)
@@ -38,10 +39,11 @@ with open(f"{root_path}/../res/images/main.json") as file:
     sprite_w = frame["w"]
     sprite_h = frame["h"]
 
-    sprite_left = round(sprite_x / atlas_w, 4)
-    sprite_right = round((sprite_x + sprite_w) / atlas_w, 4) 
-    sprite_top = round((atlas_h - sprite_y) / atlas_h, 4)
-    sprite_bottom = round((atlas_h - (sprite_y + sprite_h)) / atlas_h, 4)
+
+    sprite_left = round(sprite_x / atlas_w, ROUNDING)
+    sprite_right = round((sprite_x + sprite_w) / atlas_w, ROUNDING) 
+    sprite_top = round((atlas_h - sprite_y) / atlas_h, ROUNDING)
+    sprite_bottom = round((atlas_h - (sprite_y + sprite_h)) / atlas_h, ROUNDING)
     
     # sprite_top = round(sprite_y / atlas_h, 4)
     # sprite_bottom = round((sprite_y + sprite_h) / atlas_h, 4)

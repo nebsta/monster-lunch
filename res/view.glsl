@@ -62,14 +62,8 @@ out vec4 frag_color;
 void main() {
 
   vec2 final_uv = uv;
-  // if (uv.y > 1.0) {
-    final_uv = vec2(final_uv.x,  mod(final_uv.y, uv_s.y) + uv_o.y); 
-  // }
-
-  // if (uv.x > 1.0) {
-    final_uv = vec2(mod(final_uv.x, uv_s.x) + uv_o.x, final_uv.y);
-  // }
-
+  final_uv = vec2(final_uv.x,  mod(final_uv.y - uv_o.y, uv_s.y) + uv_o.y); 
+  final_uv = vec2(mod(final_uv.x - uv_o.x, uv_s.x) + uv_o.x, final_uv.y);
   frag_color = texture(sampler2D(tex, smp), final_uv);
 }
 @end
