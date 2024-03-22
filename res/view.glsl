@@ -22,12 +22,14 @@ in vec2 inst_uv1;
 in vec2 inst_uv2;
 in vec2 inst_uv3;
 in vec2 inst_uvs;
+in vec2 inst_uvo;
 in vec4 inst_mod_colx;
 in vec4 inst_mod_coly;
 in vec4 inst_mod_colz;
 in vec4 inst_mod_colw;
 out vec2 uv;
 out vec2 uv_s;
+out vec2 uv_o;
 @include_block mat_utils
 
 void main() {
@@ -44,6 +46,7 @@ void main() {
     uv = inst_uv3;
   }
   uv_s = inst_uvs;
+  uv_o = inst_uvo;
 }
 @end
 
@@ -53,17 +56,18 @@ uniform sampler smp;
 
 in vec2 uv;
 in vec2 uv_s;
+in vec2 uv_o;
 out vec4 frag_color;
 
 void main() {
 
   vec2 final_uv = uv;
   // if (uv.y > 1.0) {
-    final_uv = vec2(final_uv.x,  mod(final_uv.y, 0.5) + 0.5); 
+    final_uv = vec2(final_uv.x,  mod(final_uv.y, uv_s.y) + uv_o.y); 
   // }
 
   // if (uv.x > 1.0) {
-    final_uv = vec2(mod(final_uv.x, 0.5), final_uv.y);
+    final_uv = vec2(mod(final_uv.x, uv_s.x) + uv_o.x, final_uv.y);
   // }
 
   frag_color = texture(sampler2D(tex, smp), final_uv);

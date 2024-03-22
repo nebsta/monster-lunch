@@ -72,6 +72,8 @@ void SokolRendererManager::setup() {
   view_layout.attrs[ATTR_view_vs_inst_uv3].buffer_index = 1;
   view_layout.attrs[ATTR_view_vs_inst_uvs].format = SG_VERTEXFORMAT_FLOAT2;
   view_layout.attrs[ATTR_view_vs_inst_uvs].buffer_index = 1;
+  view_layout.attrs[ATTR_view_vs_inst_uvo].format = SG_VERTEXFORMAT_FLOAT2;
+  view_layout.attrs[ATTR_view_vs_inst_uvo].buffer_index = 1;
   view_layout.attrs[ATTR_view_vs_inst_mod_colx].format = SG_VERTEXFORMAT_FLOAT4;
   view_layout.attrs[ATTR_view_vs_inst_mod_colx].buffer_index = 1;
   view_layout.attrs[ATTR_view_vs_inst_mod_coly].format = SG_VERTEXFORMAT_FLOAT4;
@@ -223,6 +225,13 @@ void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view,
   grumble::SpriteDefinition sprite = view->renderer()->sprite();
   // HMM_Vec2 spriteSize = sprite.size;
   HMM_Vec2 spriteSize = {20, 20};
+
+  // to add the actual one
+  HMM_Vec2 uvOrigin = {0.0, 0.5f};
+
+  // HMM_Vec2 uvSize = sprite.region.size();
+  HMM_Vec2 uvSize = {0.5, 0.5};
+
   float uvScaleFactorX = view->transform()->size().Width / spriteSize.Width;
   float uvScaleFactorY = view->transform()->size().Height / spriteSize.Height;
   // logInfo("Sprite: {}", sprite.toString());
@@ -251,7 +260,8 @@ void SokolRendererManager::updateBuffer(grumble::View::shared_ptr view,
   // uvScaleFactorX,
   //                                          sprite.region.bl.Y *
   //                                          uvScaleFactorY};
-  _state.view_instances[instanceId].uvs = sprite.region.size();
+  _state.view_instances[instanceId].uvs = uvSize;
+  _state.view_instances[instanceId].uvo = uvOrigin;
   _state.view_instances[instanceId].colx = modelMatrix.Columns[0];
   _state.view_instances[instanceId].coly = modelMatrix.Columns[1];
   _state.view_instances[instanceId].colz = modelMatrix.Columns[2];
