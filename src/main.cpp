@@ -7,6 +7,9 @@
 #include "sprite/_gen_MainAtlas.hpp"
 #include <SDL_timer.h>
 #include <filesystem>
+#include <grumble/anim/ReplayBehaviour.hpp>
+#include <grumble/anim/SpriteAnimator.hpp>
+#include <grumble/anim/SpriteAnimatorConfiguration.hpp>
 #include <grumble/core/Game.hpp>
 #include <grumble/font/FontManagerConfiguration.hpp>
 #include <grumble/input/InputManager.hpp>
@@ -79,7 +82,21 @@ int main() {
   game.addView(std::move(floorView), grumble::ViewLayerType::BACKGROUND_1);
 
   // ANIMATION SAMPLE
-  auto frames = atlas::main::sit_left;
+  grumble::SpriteDefinition sprite = atlas::main::idle_down;
+  grumble::View::unique_ptr spriteView = game.viewFactory()->createView();
+  spriteView->setPosition({200, 200});
+  spriteView->setSize(sprite.size);
+  spriteView->setSprite(sprite);
+
+  auto frames = atlas::main::walk_down;
+  auto config = (grumble::SpriteAnimatorConfiguration){
+      .frameDelay = 500.0f,
+      .playImmediately = true,
+      .replayBehaviour = grumble::ReplayBehaviour::RepeatFromBeginning};
+  auto animator = std::make_shared<grumble::SpriteAnimator>(config, frames);
+  spriteView->spriteAnimator = animator;
+
+  game.addView(std::move(spriteView), grumble::ViewLayerType::FOREGROUND_1);
 
   // CROWD SAMPLE
   // std::vector<grumble::SpriteDefinition> spritePool = {

@@ -20,7 +20,7 @@ namespace atlas {
     };{% endfor %}
 
     {% for anim in animations %}
-    static grumble::SpriteDefinition {{ anim.name }}[{{anim.frames|length}}] = { {% for frame in anim.frames %}
+    static const grumble::SpriteDefinition::vector {{ anim.name }} = { {% for frame in anim.frames %}
       {{frame}},{% endfor %}
     };
     {% endfor %}

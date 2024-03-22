@@ -559,7 +559,7 @@ namespace atlas {
     };
 
     
-    static grumble::SpriteDefinition phone[9] = { 
+    static const grumble::SpriteDefinition::vector phone = { 
       phone_1,
       phone_2,
       phone_3,
@@ -571,7 +571,7 @@ namespace atlas {
       phone_9,
     };
     
-    static grumble::SpriteDefinition sit_left[6] = { 
+    static const grumble::SpriteDefinition::vector sit_left = { 
       sit_left_1,
       sit_left_2,
       sit_left_3,
@@ -580,7 +580,7 @@ namespace atlas {
       sit_left_6,
     };
     
-    static grumble::SpriteDefinition sit_right[6] = { 
+    static const grumble::SpriteDefinition::vector sit_right = { 
       sit_right_1,
       sit_right_2,
       sit_right_3,
@@ -589,7 +589,7 @@ namespace atlas {
       sit_right_6,
     };
     
-    static grumble::SpriteDefinition walk_down[6] = { 
+    static const grumble::SpriteDefinition::vector walk_down = { 
       walk_down_1,
       walk_down_2,
       walk_down_3,
@@ -598,7 +598,7 @@ namespace atlas {
       walk_down_6,
     };
     
-    static grumble::SpriteDefinition walk_left[6] = { 
+    static const grumble::SpriteDefinition::vector walk_left = { 
       walk_left_1,
       walk_left_2,
       walk_left_3,
@@ -607,7 +607,7 @@ namespace atlas {
       walk_left_6,
     };
     
-    static grumble::SpriteDefinition walk_right[6] = { 
+    static const grumble::SpriteDefinition::vector walk_right = { 
       walk_right_1,
       walk_right_2,
       walk_right_3,
@@ -616,7 +616,7 @@ namespace atlas {
       walk_right_6,
     };
     
-    static grumble::SpriteDefinition walk_up[6] = { 
+    static const grumble::SpriteDefinition::vector walk_up = { 
       walk_up_1,
       walk_up_2,
       walk_up_3,
