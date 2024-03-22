@@ -3,27 +3,15 @@
 from jinja2 import Environment, FileSystemLoader
 import os
 import json
+import re
+
+ROUNDING = 8
 
 root_path = os.path.dirname(os.path.abspath(__file__))
 env_path = f"{root_path}/../templates"
 
 atlas_name = "main"
-
-"""
-The coorinate space used by Texture packer is
-  0,0  1,0
-
-  0,1  1,1
-
-However the UV space within the engine is
- 0,1   1,1
-
- 0,0   1,0 
-
-So part of this script is converting between these coordinate spaces
-"""
-
-ROUNDING = 8
+sprite_anim_regex = re.compile(r"(.*)_(\d+).png$")
 
 with open(f"{root_path}/../res/images/main.json") as file:
   data = json.load(file)
@@ -32,22 +20,23 @@ with open(f"{root_path}/../res/images/main.json") as file:
   atlas = {}
   atlas["name"] = atlas_name
   sprites = []
+  animations = {}
+
   for sprite_data in data["frames"]:
     frame = sprite_data["frame"]
+    sprite_name = sprite_data["filename"]
     sprite_x = frame["x"]
     sprite_y = frame["y"]
     sprite_w = frame["w"]
     sprite_h = frame["h"]
 
-
+    # calculate the sprite bounds
     sprite_left = round(sprite_x / atlas_w, ROUNDING)
     sprite_right = round((sprite_x + sprite_w) / atlas_w, ROUNDING) 
     sprite_top = round((atlas_h - sprite_y) / atlas_h, ROUNDING)
     sprite_bottom = round((atlas_h - (sprite_y + sprite_h)) / atlas_h, ROUNDING)
     
-    # sprite_top = round(sprite_y / atlas_h, 4)
-    # sprite_bottom = round((sprite_y + sprite_h) / atlas_h, 4)
-    
+    # create the sprite data and append
     sprite = {
       "name": sprite_data["filename"][:-4],
       "atlas": atlas_name,
@@ -60,7 +49,26 @@ with open(f"{root_path}/../res/images/main.json") as file:
     }
     sprites.append(sprite)
 
+    # check if the sprite is part of an animation
+    match = sprite_anim_regex.search(sprite_name)
+    if match is None:
+      continue
+
+    # create an entry for the animation set
+    anim_name = match.group(1)
+    anim_frame_num = match.group(2)
+    if anim_name not in animations:
+      animations[anim_name] = {
+        "name": anim_name,
+        "frames": []
+      }
+
+    # add the frame to the set
+    anim_frame_name = f"{anim_name}_{anim_frame_num}"
+    animations[anim_name]["frames"].append(anim_frame_name)
+
   atlas["sprites"] = sprites
+  atlas["animations"] = animations.values()
 
   environment = Environment(loader=FileSystemLoader(env_path))
   template = environment.get_template("sprite_atlas_template.jinga")

@@ -18,6 +18,12 @@ namespace atlas {
         .br = { {{ sprite.br.x }}f, {{ sprite.br.y }}f }
       }
     };{% endfor %}
+
+    {% for anim in animations %}
+    static grumble::SpriteDefinition {{ anim.name }}[{{anim.frames|length}}] = { {% for frame in anim.frames %}
+      {{frame}},{% endfor %}
+    };
+    {% endfor %}
   }
 }
 // clang-format on

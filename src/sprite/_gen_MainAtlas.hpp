@@ -557,6 +557,74 @@ namespace atlas {
         .br = { 0.80797101f, 0.33695652f }
       }
     };
+
+    
+    static grumble::SpriteDefinition phone[9] = { 
+      phone_1,
+      phone_2,
+      phone_3,
+      phone_4,
+      phone_5,
+      phone_6,
+      phone_7,
+      phone_8,
+      phone_9,
+    };
+    
+    static grumble::SpriteDefinition sit_left[6] = { 
+      sit_left_1,
+      sit_left_2,
+      sit_left_3,
+      sit_left_4,
+      sit_left_5,
+      sit_left_6,
+    };
+    
+    static grumble::SpriteDefinition sit_right[6] = { 
+      sit_right_1,
+      sit_right_2,
+      sit_right_3,
+      sit_right_4,
+      sit_right_5,
+      sit_right_6,
+    };
+    
+    static grumble::SpriteDefinition walk_down[6] = { 
+      walk_down_1,
+      walk_down_2,
+      walk_down_3,
+      walk_down_4,
+      walk_down_5,
+      walk_down_6,
+    };
+    
+    static grumble::SpriteDefinition walk_left[6] = { 
+      walk_left_1,
+      walk_left_2,
+      walk_left_3,
+      walk_left_4,
+      walk_left_5,
+      walk_left_6,
+    };
+    
+    static grumble::SpriteDefinition walk_right[6] = { 
+      walk_right_1,
+      walk_right_2,
+      walk_right_3,
+      walk_right_4,
+      walk_right_5,
+      walk_right_6,
+    };
+    
+    static grumble::SpriteDefinition walk_up[6] = { 
+      walk_up_1,
+      walk_up_2,
+      walk_up_3,
+      walk_up_4,
+      walk_up_5,
+      walk_up_6,
+    };
+    
   }
 }
 // clang-format on
