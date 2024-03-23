@@ -3,6 +3,8 @@
 #include "core/SDLApplication.hpp"
 #include "core/SDLApplicationConfiguration.hpp"
 #include "input/SDLInputManager.hpp"
+#include "level/Level.hpp"
+#include "level/LevelSystem.hpp"
 #include "rendering/SokolRendererManager.hpp"
 #include "sprite/_gen_MainAtlas.hpp"
 #include <SDL_timer.h>
@@ -104,6 +106,10 @@ int main() {
     game.addView(std::move(spriteView), grumble::ViewLayerType::FOREGROUND_1);
     index++;
   }
+
+  auto level = std::make_unique<ml::Level>();
+  auto levelSystem = std::make_unique<ml::LevelSystem>(std::move(level));
+  game.registerSystem(std::move(levelSystem));
 
   // game.addView(std::move(testSpriteView),
   // grumble::ViewLayerType::FOREGROUND_1);
