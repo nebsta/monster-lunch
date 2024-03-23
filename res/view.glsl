@@ -60,11 +60,11 @@ in vec2 uv_o;
 out vec4 frag_color;
 
 void main() {
+  float wrap_uv_x = mod(uv.x - uv_o.x, uv_s.x) + uv_o.x;
+  float wrap_uv_y =  mod(uv.y - uv_o.y, uv_s.y) + uv_o.y;
 
-  vec2 final_uv = uv;
-  final_uv = vec2(final_uv.x,  mod(final_uv.y - uv_o.y, uv_s.y) + uv_o.y); 
-  final_uv = vec2(mod(final_uv.x - uv_o.x, uv_s.x) + uv_o.x, final_uv.y);
-  frag_color = texture(sampler2D(tex, smp), final_uv);
+  vec2 wrap_uv = vec2(wrap_uv_x, wrap_uv_y);
+  frag_color = texture(sampler2D(tex, smp), wrap_uv);
 }
 @end
 
