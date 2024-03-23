@@ -31,8 +31,6 @@
 #define FIXED_DELTA_TIME_MS 10.0f
 #define MS_PER_FRAME 12.0f
 
-void sendImguiInputs(grumble::InputManager::shared_ptr inputManager) {}
-
 int main() {
   SDLApplicationConfiguration sdlAppConf = {{1024, 1024}};
   auto application = std::make_shared<SDLApplication>(sdlAppConf);
@@ -83,41 +81,32 @@ int main() {
   game.addView(std::move(floorView), grumble::ViewLayerType::BACKGROUND_1);
 
   // ANIMATION SAMPLE
-  grumble::SpriteDefinition sprite = atlas::main::idle_down;
-  grumble::View::unique_ptr spriteView = game.viewFactory()->createView();
-  spriteView->setPosition({200, 200});
-  spriteView->setSize(sprite.size);
-  spriteView->setSprite(sprite);
+  auto animations = {
+      atlas::main::walk_down, atlas::main::walk_up,  atlas::main::walk_right,
+      atlas::main::walk_left, atlas::main::sit_left, atlas::main::phone,
+  };
 
-  auto frames = atlas::main::walk_down;
-  auto config = (grumble::SpriteAnimatorConfiguration){
-      .frameDelay = 500.0f,
-      .playImmediately = true,
-      .replayBehaviour = grumble::ReplayBehaviour::RepeatFromBeginning};
-  auto animator = std::make_shared<grumble::SpriteAnimator>(config, frames);
-  spriteView->spriteAnimator = animator;
-
-  game.addView(std::move(spriteView), grumble::ViewLayerType::FOREGROUND_1);
-
-  auto iter = atlas::main::walk_down.begin();
+  auto iter = animations.begin();
   int index = 0;
-  for (; iter != atlas::main::walk_down.end(); iter++) {
-    float x = 250 + index * 50;
-    grumble::SpriteDefinition sprite = *iter;
+  for (; iter != animations.end(); iter++) {
+    auto frames = (*iter);
     grumble::View::unique_ptr spriteView = game.viewFactory()->createView();
+    float x = 200 + index * 40;
     spriteView->setPosition({x, 200});
-    spriteView->setSize(sprite.size);
-    spriteView->setSprite(sprite);
-    index++;
+    spriteView->setSize(frames[0].size);
+
+    auto config = (grumble::SpriteAnimatorConfiguration){
+        .frameDelay = 150.0f,
+        .playImmediately = true,
+        .replayBehaviour = grumble::ReplayBehaviour::RepeatFromBeginning};
+    auto animator = std::make_shared<grumble::SpriteAnimator>(config, frames);
+    spriteView->spriteAnimator = animator;
     game.addView(std::move(spriteView), grumble::ViewLayerType::FOREGROUND_1);
+    index++;
   }
 
-  grumble::SpriteDefinition walkDownSprite = atlas::main::walk_down[0];
-  grumble::View::unique_ptr testSpriteView = game.viewFactory()->createView();
-  testSpriteView->setPosition({300, 300});
-  testSpriteView->setSize(walkDownSprite.size);
-  testSpriteView->setSprite(walkDownSprite);
-  game.addView(std::move(testSpriteView), grumble::ViewLayerType::FOREGROUND_1);
+  // game.addView(std::move(testSpriteView),
+  // grumble::ViewLayerType::FOREGROUND_1);
 
   // CROWD SAMPLE
   // std::vector<grumble::SpriteDefinition> spritePool = {
