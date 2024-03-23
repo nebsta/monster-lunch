@@ -160,7 +160,7 @@ void SokolRendererManager::setupViewBindings() {
 
   _state.view_bindings = SokolFactory::createBindings(
       SG_RANGE(vertices), SG_RANGE(indices), MAX_VIEW_INSTANCES,
-      sizeof(ViewInstance), "view");
+      sizeof(grumble::ViewInstance), "view");
 }
 
 void SokolRendererManager::setupDebugGridBindings() {
@@ -195,7 +195,7 @@ void SokolRendererManager::prepareMainLayer(double t) {
 }
 
 void SokolRendererManager::updateInstanceBuffer(int instanceId,
-                                                ViewInstance instance,
+                                                grumble::ViewInstance instance,
                                                 double t) {
   _state.view_instances[instanceId] = instance;
 }
@@ -204,7 +204,7 @@ void SokolRendererManager::drawMainLayer() {
   sg_update_buffer(
       _state.view_bindings.vertex_buffers[1],
       (sg_range){.ptr = _state.view_instances,
-                 .size = MAX_VIEW_INSTANCES * sizeof(ViewInstance)});
+                 .size = MAX_VIEW_INSTANCES * sizeof(grumble::ViewInstance)});
 
   sg_draw(0, 6, MAX_VIEW_INSTANCES);
 }

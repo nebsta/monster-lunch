@@ -36,7 +36,7 @@ protected:
 
   void prepareMainLayer(double t) override;
 
-  void updateInstanceBuffer(int instanceId, ViewInstance instance,
+  void updateInstanceBuffer(int instanceId, grumble::ViewInstance instance,
                             double t) override;
 
   void drawMainLayer() override;

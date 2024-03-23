@@ -12,7 +12,7 @@ struct SokolState {
 
   sg_pipeline pipeline;
   sg_bindings view_bindings;
-  ViewInstance view_instances[MAX_VIEW_INSTANCES];
+  grumble::ViewInstance view_instances[MAX_VIEW_INSTANCES];
 
   sg_pipeline debug_pipeline;
   sg_bindings debug_grid_bindings;
