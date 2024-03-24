@@ -76,38 +76,38 @@ int main() {
   game.setScreenSize(application->screenSize());
 
   // actual floor image
-  auto floorSprite = atlas::main::floor;
-  grumble::View::unique_ptr floorView =
-      game.viewFactory()->createView({-512, -512}, {2048, 2048});
-  floorView->setSprite(floorSprite);
-  game.addView(std::move(floorView), grumble::ViewLayerType::BACKGROUND_1);
+  // auto floorSprite = atlas::main::floor;
+  // grumble::View::unique_ptr floorView =
+  //     game.viewFactory()->createView({-512, -512}, {2048, 2048});
+  // floorView->setSprite(floorSprite);
+  // game.addView(std::move(floorView), grumble::ViewLayerType::BACKGROUND_1);
 
   // ANIMATION SAMPLE
-  auto animations = {
-      atlas::main::walk_down, atlas::main::walk_up,  atlas::main::walk_right,
-      atlas::main::walk_left, atlas::main::sit_left, atlas::main::phone,
-  };
+  // auto animations = {
+  //     atlas::main::walk_down, atlas::main::walk_up,  atlas::main::walk_right,
+  //     atlas::main::walk_left, atlas::main::sit_left, atlas::main::phone,
+  // };
+  //
+  // auto iter = animations.begin();
+  // int index = 0;
+  // for (; iter != animations.end(); iter++) {
+  //   auto frames = (*iter);
+  //   grumble::View::unique_ptr spriteView = game.viewFactory()->createView();
+  //   float x = 200 + index * 40;
+  //   spriteView->setPosition({x, 200});
+  //   spriteView->setSize(frames[0].size);
+  //
+  //   auto config = (grumble::SpriteAnimatorConfiguration){
+  //       .frameDelay = 150.0f,
+  //       .playImmediately = true,
+  //       .replayBehaviour = grumble::ReplayBehaviour::RepeatFromBeginning};
+  //   auto animator = std::make_shared<grumble::SpriteAnimator>(config,
+  //   frames); spriteView->spriteAnimator = animator;
+  //   game.addView(std::move(spriteView),
+  //   grumble::ViewLayerType::FOREGROUND_1); index++;
+  // }
 
-  auto iter = animations.begin();
-  int index = 0;
-  for (; iter != animations.end(); iter++) {
-    auto frames = (*iter);
-    grumble::View::unique_ptr spriteView = game.viewFactory()->createView();
-    float x = 200 + index * 40;
-    spriteView->setPosition({x, 200});
-    spriteView->setSize(frames[0].size);
-
-    auto config = (grumble::SpriteAnimatorConfiguration){
-        .frameDelay = 150.0f,
-        .playImmediately = true,
-        .replayBehaviour = grumble::ReplayBehaviour::RepeatFromBeginning};
-    auto animator = std::make_shared<grumble::SpriteAnimator>(config, frames);
-    spriteView->spriteAnimator = animator;
-    game.addView(std::move(spriteView), grumble::ViewLayerType::FOREGROUND_1);
-    index++;
-  }
-
-  auto level = std::make_unique<ml::Level>();
+  auto level = std::make_unique<ml::Level>(game.viewFactory());
   auto levelSystem = std::make_unique<ml::LevelSystem>(std::move(level));
   game.registerSystem(std::move(levelSystem));
 
