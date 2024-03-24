@@ -4,7 +4,7 @@
 #include <array>
 #include <grumble/core/Object.hpp>
 #include <grumble/render/RendererManager.hpp>
-#include <grumble/ui/View.hpp>
+#include <grumble/ui/ImageView.hpp>
 #include <memory>
 
 namespace ml {
@@ -13,7 +13,7 @@ public:
   typedef std::unique_ptr<TileLayer> unique_ptr;
   typedef std::array<unique_ptr, MAX_TILE_LAYER_TYPES> unique_array;
 
-  TileLayer(grumble::View::unique_ptr view);
+  TileLayer(grumble::ImageView::unique_ptr imageView);
   ~TileLayer();
 
   void update(double dt);
@@ -22,6 +22,6 @@ public:
                        double t);
 
 private:
-  grumble::View::unique_ptr _view;
+  grumble::ImageView::unique_ptr _imageView;
 };
 } // namespace ml

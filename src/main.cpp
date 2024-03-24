@@ -23,7 +23,6 @@
 #include <grumble/sprite/SpriteDefinition.hpp>
 #include <grumble/sprite/SpriteManager.hpp>
 #include <grumble/sprite/SpriteManagerConfiguration.hpp>
-#include <grumble/ui/View.hpp>
 #include <grumble/ui/ViewLayerType.hpp>
 #include <grumble/util/HandmadeMath.h>
 #include <grumble/util/MathUtils.hpp>

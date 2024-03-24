@@ -1,8 +1,4 @@
 #include "Tile.hpp"
-#include "TileCoordinate.hpp"
-#include "TileLayerType.hpp"
-#include <grumble/util/HandmadeMath.h>
-#include <memory>
 
 namespace ml {
 Tile::Tile(grumble::ViewFactory::shared_ptr viewFactory,
@@ -11,8 +7,8 @@ Tile::Tile(grumble::ViewFactory::shared_ptr viewFactory,
                        float(coords.y * TILE_DIMENSION)};
 
   for (int i = 0; i < MAX_TILE_LAYER_TYPES; i++) {
-    grumble::View::unique_ptr view =
-        viewFactory->createView(position, TILE_SIZE);
+    grumble::ImageView::unique_ptr view =
+        viewFactory->createImageView(position, TILE_SIZE);
 
     _layers[i] = std::make_unique<TileLayer>(std::move(view));
   }
