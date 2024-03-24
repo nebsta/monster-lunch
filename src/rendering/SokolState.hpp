@@ -5,7 +5,7 @@
 
 #include <grumble/render/ViewInstance.hpp>
 
-#define MAX_VIEW_INSTANCES 2000
+#define MAX_VIEW_INSTANCES 50000
 
 struct SokolState {
   sg_pass_action pass_action;

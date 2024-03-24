@@ -68,7 +68,7 @@ int main() {
       application);
 
   // setting up the main game instance
-  grumble::Logger::setActiveLogLevel(grumble::LogLevel::info);
+  grumble::Logger::setActiveLogLevel(grumble::LogLevel::debug);
   auto game = grumble::Game(rendererManager, fileManager, spriteManager,
                             fontManager, inputManager);
   game.setup();
@@ -107,8 +107,7 @@ int main() {
   // }
 
   auto level = std::make_unique<ml::Level>(game.viewFactory());
-  auto levelSystem = std::make_unique<ml::LevelSystem>(std::move(level));
-  game.registerSystem(std::move(levelSystem));
+  game.addView(std::move(level), grumble::ViewLayerType::FOREGROUND_1);
 
   // game.addView(std::move(testSpriteView),
   // grumble::ViewLayerType::FOREGROUND_1);

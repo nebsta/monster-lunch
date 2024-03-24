@@ -1,4 +1,5 @@
 #include "Tile.hpp"
+#include "../sprite/_gen_MainAtlas.hpp"
 
 namespace ml {
 Tile::Tile(grumble::ViewFactory::shared_ptr viewFactory,
@@ -9,7 +10,7 @@ Tile::Tile(grumble::ViewFactory::shared_ptr viewFactory,
   for (int i = 0; i < MAX_TILE_LAYER_TYPES; i++) {
     grumble::ImageView::unique_ptr view =
         viewFactory->createImageView(position, TILE_SIZE);
-
+    view->setSprite(atlas::main::floor_tiled);
     _layers[i] = std::make_unique<TileLayer>(std::move(view));
   }
 }

@@ -10,17 +10,17 @@
 #define MAX_LEVEL_HEIGHT 100
 
 namespace ml {
-class Level : public grumble::Object {
+class Level : public grumble::View {
 public:
   typedef std::unique_ptr<Level> unique_ptr;
 
   Level(grumble::ViewFactory::shared_ptr viewFactory);
   ~Level();
 
-  void update(double dt);
+  void update(double dt) override;
   void
   updateInstanceBuffer(grumble::RendererManager::shared_ptr rendererManager,
-                       double t);
+                       double t) override;
 
 private:
   Tile::unique_ptr _tiles[MAX_LEVEL_WIDTH][MAX_LEVEL_HEIGHT];
