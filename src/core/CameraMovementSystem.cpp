@@ -1,10 +1,16 @@
 #include "CameraMovementSystem.hpp"
+#include <grumble/core/CameraRange.hpp>
 
 CameraMovementSystem::CameraMovementSystem(
     grumble::InputManager::shared_ptr inputManager,
     grumble::Camera::shared_ptr camera)
     : _inputManager(inputManager), _camera(camera),
-      grumble::System("cameraMovementSystem") {}
+      grumble::System("cameraMovementSystem") {
+
+  auto range = (grumble::CameraRange){
+      .left = 0.0f, .top = 0.0f, .bottom = 1000.0f, .right = 1000.0f};
+  _camera->setCameraRange(range);
+}
 
 CameraMovementSystem::~CameraMovementSystem() {}
 
