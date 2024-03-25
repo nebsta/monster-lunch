@@ -194,6 +194,9 @@ void SokolRendererManager::prepareMainLayer(double t) {
   view_vs_uni_t view_uni;
   view_uni.pv = projectionViewMatrix(t);
   sg_apply_uniforms(SG_SHADERSTAGE_VS, SLOT_view_vs_uni, SG_RANGE(view_uni));
+
+  simgui_new_frame(
+      {(int)size.Width, (int)size.Height, ImGui::GetIO().DeltaTime});
 }
 
 void SokolRendererManager::updateInstanceBuffer(int instanceId,
@@ -298,6 +301,7 @@ void SokolRendererManager::drawDebugMenu(
 }
 
 void SokolRendererManager::commitFrame() {
+  simgui_render();
   sg_end_pass();
   sg_commit();
   SDL_GL_SwapWindow(_sdlApplication->window());

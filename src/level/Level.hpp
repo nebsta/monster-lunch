@@ -6,8 +6,8 @@
 #include <grumble/ui/ViewFactory.hpp>
 #include <memory>
 
-#define MAX_LEVEL_WIDTH 100
-#define MAX_LEVEL_HEIGHT 100
+#define MAX_LEVEL_WIDTH 50
+#define MAX_LEVEL_HEIGHT 50
 
 namespace ml {
 class Level : public grumble::View {

@@ -66,8 +66,8 @@ int main() {
 
   // editor
   auto editorState = std::make_shared<ml::MLEditorState>();
-  auto editorView = std::make_unique<ml::LevelEditorView>(
-      application, inputManager, editorState);
+  auto editorView =
+      std::make_unique<ml::LevelEditorView>(inputManager, editorState);
 
   // renderer manager
   auto rendererManager = std::make_shared<SokolRendererManager>(

@@ -30,6 +30,8 @@ public:
       return grumble::InputCode::ArrowUp;
     } else if (keycode == SDLK_d) {
       return grumble::InputCode::D;
+    } else if (keycode == SDLK_e) {
+      return grumble::InputCode::E;
     }
     return grumble::InputCode::Unknown;
   }

@@ -1,13 +1,10 @@
 #include "ImGuiDebugView.hpp"
 #include "../rendering/sokol.hpp"
+#include <imgui.h>
 
 void ImGuiDebugView::draw(HMM_Vec2 screenSize, HMM_Vec2 cameraPos,
                           grumble::DebugState::shared_ptr state) {
-  simgui_new_frame({(int)screenSize.Width, (int)screenSize.Height,
-                    ImGui::GetIO().DeltaTime});
-
-  ImGui::Spacing();
-
+  ImGui::Begin("Debug");
   if (ImGui::BeginTabBar("Main")) {
 
     drawGeneralTab(screenSize, cameraPos, state);
@@ -18,8 +15,7 @@ void ImGuiDebugView::draw(HMM_Vec2 screenSize, HMM_Vec2 cameraPos,
 
     ImGui::EndTabBar();
   }
-
-  simgui_render();
+  ImGui::End();
 }
 
 void ImGuiDebugView::drawGeneralTab(HMM_Vec2 screenSize, HMM_Vec2 cameraPos,

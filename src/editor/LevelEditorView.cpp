@@ -1,32 +1,32 @@
 #include "LevelEditorView.hpp"
-#include "../rendering/sokol.hpp"
 #include <grumble/util/HandmadeMath.h>
+#include <imgui.h>
 
 namespace ml {
-LevelEditorView::LevelEditorView(SDLApplication::shared_ptr sdlApplication,
-                                 SDLInputManager::shared_ptr inputManager,
+LevelEditorView::LevelEditorView(SDLInputManager::shared_ptr inputManager,
                                  MLEditorState::shared_ptr state)
-    : _sdlApplication(sdlApplication), _inputManager(inputManager),
-      _state(state) {}
+    : _inputManager(inputManager), _state(state) {}
 
 LevelEditorView::~LevelEditorView() {}
 
 void LevelEditorView::draw() {
-  HMM_Vec2 screenSize = _sdlApplication->screenSize();
-  simgui_new_frame({(int)screenSize.Width, (int)screenSize.Height,
-                    ImGui::GetIO().DeltaTime});
-
+  ImGui::Begin("Editor");
   ImGui::Spacing();
+  if (ImGui::BeginTabBar("Editor-Main")) {
 
-  if (ImGui::BeginTabBar("Editor")) {
+    drawTilePallete();
 
     ImGui::EndTabBar();
   }
-
-  simgui_render();
+  ImGui::End();
 }
 
-void LevelEditorView::drawTilePallete() {}
+void LevelEditorView::drawTilePallete() {
+  if (ImGui::BeginTabItem("Tile Pallete")) {
+    ImGui::Text("This is some text");
+    ImGui::EndTabItem();
+  }
+}
 
 bool LevelEditorView::isActive() const { return _state->isActive(); }
 
