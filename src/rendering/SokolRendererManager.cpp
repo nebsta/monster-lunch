@@ -212,24 +212,20 @@ void SokolRendererManager::drawMainLayer() {
 void SokolRendererManager::drawDebugGrid(grumble::GridResolution resolution,
                                          double t) {
   HMM_Vec2 size = _sdlApplication->screenSize();
-  float gridUnit;
   float offset = 0.1f;
 
   switch (resolution) {
   case grumble::GridResolution::Small:
     _state.debug_line_instance_count = 84;
-    gridUnit = size.Width / 40.0f;
-    offset = 0.05f;
+    offset = 0.0625f;
     break;
   case grumble::GridResolution::Medium:
     _state.debug_line_instance_count = 42;
-    offset = 0.1f;
-    gridUnit = size.Width / 20.0f;
+    offset = 0.125f;
     break;
   case grumble::GridResolution::Large:
     _state.debug_line_instance_count = 20;
-    offset = 0.2f;
-    gridUnit = size.Width / 10.0f;
+    offset = 0.25f;
     break;
   }
 
