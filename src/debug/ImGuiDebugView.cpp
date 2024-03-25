@@ -1,4 +1,5 @@
 #include "ImGuiDebugView.hpp"
+#include "../rendering/sokol.hpp"
 
 void ImGuiDebugView::draw(HMM_Vec2 screenSize, HMM_Vec2 cameraPos,
                           grumble::DebugState::shared_ptr state) {

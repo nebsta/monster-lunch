@@ -2,6 +2,8 @@
 #include "core/CameraMovementSystem.hpp"
 #include "core/SDLApplication.hpp"
 #include "core/SDLApplicationConfiguration.hpp"
+#include "editor/LevelEditorView.hpp"
+#include "editor/MLEditorState.hpp"
 #include "input/SDLInputManager.hpp"
 #include "level/Level.hpp"
 #include "level/LevelSystem.hpp"
@@ -62,15 +64,20 @@ int main() {
   // input manager
   auto inputManager = std::make_shared<SDLInputManager>();
 
+  // editor
+  auto editorState = std::make_shared<ml::MLEditorState>();
+  auto editorView = std::make_unique<ml::LevelEditorView>(
+      application, inputManager, editorState);
+
   // renderer manager
   auto rendererManager = std::make_shared<SokolRendererManager>(
       rendererConfig, fileManager, spriteManager, fontManager, inputManager,
-      application);
+      std::move(editorView), application);
 
   // setting up the main game instance
   grumble::Logger::setActiveLogLevel(grumble::LogLevel::info);
   auto game = grumble::Game(rendererManager, fileManager, spriteManager,
-                            fontManager, inputManager);
+                            fontManager, inputManager, editorState);
   game.setup();
   game.setScreenSize(application->screenSize());
 

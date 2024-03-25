@@ -26,6 +26,7 @@ public:
                        grumble::SpriteManager::shared_ptr spriteManager,
                        grumble::FontManager::shared_ptr fontManager,
                        grumble::InputManager::shared_ptr inputManager,
+                       grumble::EditorView::unique_ptr editorView,
                        SDLApplication::shared_ptr sdlApplication);
   ~SokolRendererManager() override;
 
@@ -51,6 +52,7 @@ private:
   grumble::FileManager::shared_ptr _fileManager;
   grumble::FontManager::shared_ptr _fontManager;
   grumble::InputManager::shared_ptr _inputManager;
+
   SDLApplication::shared_ptr _sdlApplication;
 
   void setupViewBindings();

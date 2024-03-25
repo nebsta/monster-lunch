@@ -22,10 +22,12 @@ SokolRendererManager::SokolRendererManager(
     grumble::SpriteManager::shared_ptr spriteManager,
     grumble::FontManager::shared_ptr fontMananger,
     grumble::InputManager::shared_ptr inputManager,
+    grumble::EditorView::unique_ptr editorView,
     SDLApplication::shared_ptr sdlApplication)
     : _fileManager(fileManager), _spriteManager(spriteManager),
       _fontManager(fontMananger), _sdlApplication(sdlApplication),
-      _inputManager(inputManager), grumble::RendererManager(configuration) {
+      _inputManager(inputManager),
+      grumble::RendererManager(configuration, std::move(editorView)) {
   _state = {};
 }
 

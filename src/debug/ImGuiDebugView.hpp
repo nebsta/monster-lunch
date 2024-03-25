@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../rendering/sokol.hpp"
 #include <grumble/debug/DebugState.hpp>
 #include <grumble/util/HandmadeMath.h>
 
