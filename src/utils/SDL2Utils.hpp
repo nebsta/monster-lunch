@@ -9,7 +9,7 @@
 class SDL2Utils {
 public:
   static SDL_Rect to_SDL_Rect(grumble::Transform::shared_ptr transform) {
-    HMM_Vec2 pos = transform->localPosition();
+    HMM_Vec2 pos = transform->position();
     HMM_Vec2 size = transform->size();
     return {(int)pos.X, (int)pos.Y, (int)size.Width, (int)size.Height};
   }
