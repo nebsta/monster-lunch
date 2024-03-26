@@ -12,10 +12,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 64, 64 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.00362319f, 0.99637681f },
-        .tr = { 0.23550725f, 0.99637681f },
-        .bl = { 0.00362319f, 0.76449275f },
-        .br = { 0.23550725f, 0.76449275f }
+        .tl = { 0.22377622f, 0.22377622f },
+        .tr = { 0.44755245f, 0.22377622f },
+        .bl = { 0.22377622f, 0.0f },
+        .br = { 0.44755245f, 0.0f }
       }
     };
     static auto idle_down = (grumble::SpriteDefinition) {
@@ -23,10 +23,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 32, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.11956522f, 0.40942029f },
-        .tr = { 0.23550725f, 0.40942029f },
-        .bl = { 0.11956522f, 0.25f },
-        .br = { 0.23550725f, 0.25f }
+        .tl = { 0.73426573f, 0.37762238f },
+        .tr = { 0.84615385f, 0.37762238f },
+        .bl = { 0.73426573f, 0.22377622f },
+        .br = { 0.84615385f, 0.22377622f }
       }
     };
     static auto idle_left = (grumble::SpriteDefinition) {
@@ -34,10 +34,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.70652174f, 0.82971014f },
-        .tr = { 0.80797101f, 0.82971014f },
-        .bl = { 0.70652174f, 0.67028986f },
-        .br = { 0.80797101f, 0.67028986f }
+        .tl = { 0.09090909f, 1.0f },
+        .tr = { 0.18881119f, 1.0f },
+        .bl = { 0.09090909f, 0.84615385f },
+        .br = { 0.18881119f, 0.84615385f }
       }
     };
     static auto idle_right = (grumble::SpriteDefinition) {
@@ -45,10 +45,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.81521739f, 0.82971014f },
-        .tr = { 0.91666667f, 0.82971014f },
-        .bl = { 0.81521739f, 0.67028986f },
-        .br = { 0.91666667f, 0.67028986f }
+        .tl = { 0.18881119f, 1.0f },
+        .tr = { 0.28671329f, 1.0f },
+        .bl = { 0.18881119f, 0.84615385f },
+        .br = { 0.28671329f, 0.84615385f }
       }
     };
     static auto idle_up = (grumble::SpriteDefinition) {
@@ -56,10 +56,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 32, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.11956522f, 0.24275362f },
-        .tr = { 0.23550725f, 0.24275362f },
-        .bl = { 0.11956522f, 0.08333333f },
-        .br = { 0.23550725f, 0.08333333f }
+        .tl = { 0.84615385f, 0.37762238f },
+        .tr = { 0.95804196f, 0.37762238f },
+        .bl = { 0.84615385f, 0.22377622f },
+        .br = { 0.95804196f, 0.22377622f }
       }
     };
     static auto phone_1 = (grumble::SpriteDefinition) {
@@ -67,10 +67,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.12681159f, 0.75724638f },
-        .tr = { 0.23550725f, 0.75724638f },
-        .bl = { 0.12681159f, 0.59782609f },
-        .br = { 0.23550725f, 0.59782609f }
+        .tl = { 0.58741259f, 0.69230769f },
+        .tr = { 0.69230769f, 0.69230769f },
+        .bl = { 0.58741259f, 0.53846154f },
+        .br = { 0.69230769f, 0.53846154f }
       }
     };
     static auto phone_2 = (grumble::SpriteDefinition) {
@@ -78,10 +78,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.12681159f, 0.59057971f },
-        .tr = { 0.23550725f, 0.59057971f },
-        .bl = { 0.12681159f, 0.43115942f },
-        .br = { 0.23550725f, 0.43115942f }
+        .tl = { 0.69230769f, 0.69230769f },
+        .tr = { 0.7972028f, 0.69230769f },
+        .bl = { 0.69230769f, 0.53846154f },
+        .br = { 0.7972028f, 0.53846154f }
       }
     };
     static auto phone_3 = (grumble::SpriteDefinition) {
@@ -89,10 +89,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.24275362f, 0.99637681f },
-        .tr = { 0.35144928f, 0.99637681f },
-        .bl = { 0.24275362f, 0.83695652f },
-        .br = { 0.35144928f, 0.83695652f }
+        .tl = { 0.7972028f, 0.69230769f },
+        .tr = { 0.9020979f, 0.69230769f },
+        .bl = { 0.7972028f, 0.53846154f },
+        .br = { 0.9020979f, 0.53846154f }
       }
     };
     static auto phone_4 = (grumble::SpriteDefinition) {
@@ -100,10 +100,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.35869565f, 0.99637681f },
-        .tr = { 0.4673913f, 0.99637681f },
-        .bl = { 0.35869565f, 0.83695652f },
-        .br = { 0.4673913f, 0.83695652f }
+        .tl = { 0.0f, 0.53846154f },
+        .tr = { 0.1048951f, 0.53846154f },
+        .bl = { 0.0f, 0.38461538f },
+        .br = { 0.1048951f, 0.38461538f }
       }
     };
     static auto phone_5 = (grumble::SpriteDefinition) {
@@ -111,10 +111,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.35869565f, 0.99637681f },
-        .tr = { 0.4673913f, 0.99637681f },
-        .bl = { 0.35869565f, 0.83695652f },
-        .br = { 0.4673913f, 0.83695652f }
+        .tl = { 0.1048951f, 0.53846154f },
+        .tr = { 0.20979021f, 0.53846154f },
+        .bl = { 0.1048951f, 0.38461538f },
+        .br = { 0.20979021f, 0.38461538f }
       }
     };
     static auto phone_6 = (grumble::SpriteDefinition) {
@@ -122,10 +122,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 46 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.00362319f, 0.40942029f },
-        .tr = { 0.11231884f, 0.40942029f },
-        .bl = { 0.00362319f, 0.24275362f },
-        .br = { 0.11231884f, 0.24275362f }
+        .tl = { 0.20979021f, 0.53846154f },
+        .tr = { 0.31468531f, 0.53846154f },
+        .bl = { 0.20979021f, 0.37762238f },
+        .br = { 0.31468531f, 0.37762238f }
       }
     };
     static auto phone_7 = (grumble::SpriteDefinition) {
@@ -133,10 +133,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 46 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.00362319f, 0.23550725f },
-        .tr = { 0.11231884f, 0.23550725f },
-        .bl = { 0.00362319f, 0.06884058f },
-        .br = { 0.11231884f, 0.06884058f }
+        .tl = { 0.31468531f, 0.53846154f },
+        .tr = { 0.41958042f, 0.53846154f },
+        .bl = { 0.31468531f, 0.37762238f },
+        .br = { 0.41958042f, 0.37762238f }
       }
     };
     static auto phone_8 = (grumble::SpriteDefinition) {
@@ -144,10 +144,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.47463768f, 0.99637681f },
-        .tr = { 0.58333333f, 0.99637681f },
-        .bl = { 0.47463768f, 0.83695652f },
-        .br = { 0.58333333f, 0.83695652f }
+        .tl = { 0.41958042f, 0.53846154f },
+        .tr = { 0.52447552f, 0.53846154f },
+        .bl = { 0.41958042f, 0.38461538f },
+        .br = { 0.52447552f, 0.38461538f }
       }
     };
     static auto phone_9 = (grumble::SpriteDefinition) {
@@ -155,10 +155,21 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.59057971f, 0.99637681f },
-        .tr = { 0.69927536f, 0.99637681f },
-        .bl = { 0.59057971f, 0.83695652f },
-        .br = { 0.69927536f, 0.83695652f }
+        .tl = { 0.52447552f, 0.53846154f },
+        .tr = { 0.62937063f, 0.53846154f },
+        .bl = { 0.52447552f, 0.38461538f },
+        .br = { 0.62937063f, 0.38461538f }
+      }
+    };
+    static auto selection = (grumble::SpriteDefinition) {
+      .name = "selection",
+      .atlas = "main",
+      .size = { 64, 64 },
+      .region = (grumble::SpriteRegion) {
+        .tl = { 0.44755245f, 0.22377622f },
+        .tr = { 0.67132867f, 0.22377622f },
+        .bl = { 0.44755245f, 0.0f },
+        .br = { 0.67132867f, 0.0f }
       }
     };
     static auto sit_left_1 = (grumble::SpriteDefinition) {
@@ -166,10 +177,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 42 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.57608696f, 0.16304348f },
-        .tr = { 0.67753623f, 0.16304348f },
-        .bl = { 0.57608696f, 0.01086957f },
-        .br = { 0.67753623f, 0.01086957f }
+        .tl = { 0.28671329f, 1.0f },
+        .tr = { 0.38461538f, 1.0f },
+        .bl = { 0.28671329f, 0.85314685f },
+        .br = { 0.38461538f, 0.85314685f }
       }
     };
     static auto sit_left_2 = (grumble::SpriteDefinition) {
@@ -177,10 +188,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 42 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.57608696f, 0.16304348f },
-        .tr = { 0.67753623f, 0.16304348f },
-        .bl = { 0.57608696f, 0.01086957f },
-        .br = { 0.67753623f, 0.01086957f }
+        .tl = { 0.38461538f, 1.0f },
+        .tr = { 0.48251748f, 1.0f },
+        .bl = { 0.38461538f, 0.85314685f },
+        .br = { 0.48251748f, 0.85314685f }
       }
     };
     static auto sit_left_3 = (grumble::SpriteDefinition) {
@@ -188,10 +199,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.35869565f, 0.66304348f },
-        .tr = { 0.46014493f, 0.66304348f },
-        .bl = { 0.35869565f, 0.50362319f },
-        .br = { 0.46014493f, 0.50362319f }
+        .tl = { 0.48251748f, 1.0f },
+        .tr = { 0.58041958f, 1.0f },
+        .bl = { 0.48251748f, 0.84615385f },
+        .br = { 0.58041958f, 0.84615385f }
       }
     };
     static auto sit_left_4 = (grumble::SpriteDefinition) {
@@ -199,10 +210,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.35869565f, 0.49637681f },
-        .tr = { 0.46014493f, 0.49637681f },
-        .bl = { 0.35869565f, 0.33695652f },
-        .br = { 0.46014493f, 0.33695652f }
+        .tl = { 0.58041958f, 1.0f },
+        .tr = { 0.67832168f, 1.0f },
+        .bl = { 0.58041958f, 0.84615385f },
+        .br = { 0.67832168f, 0.84615385f }
       }
     };
     static auto sit_left_5 = (grumble::SpriteDefinition) {
@@ -210,10 +221,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 42 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.68478261f, 0.49637681f },
-        .tr = { 0.78623188f, 0.49637681f },
-        .bl = { 0.68478261f, 0.3442029f },
-        .br = { 0.78623188f, 0.3442029f }
+        .tl = { 0.67832168f, 1.0f },
+        .tr = { 0.77622378f, 1.0f },
+        .bl = { 0.67832168f, 0.85314685f },
+        .br = { 0.77622378f, 0.85314685f }
       }
     };
     static auto sit_left_6 = (grumble::SpriteDefinition) {
@@ -221,10 +232,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 42 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.79347826f, 0.49637681f },
-        .tr = { 0.89492754f, 0.49637681f },
-        .bl = { 0.79347826f, 0.3442029f },
-        .br = { 0.89492754f, 0.3442029f }
+        .tl = { 0.77622378f, 1.0f },
+        .tr = { 0.87412587f, 1.0f },
+        .bl = { 0.77622378f, 0.85314685f },
+        .br = { 0.87412587f, 0.85314685f }
       }
     };
     static auto sit_right_1 = (grumble::SpriteDefinition) {
@@ -232,10 +243,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 42 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.68478261f, 0.33695652f },
-        .tr = { 0.78623188f, 0.33695652f },
-        .bl = { 0.68478261f, 0.18478261f },
-        .br = { 0.78623188f, 0.18478261f }
+        .tl = { 0.87412587f, 1.0f },
+        .tr = { 0.97202797f, 1.0f },
+        .bl = { 0.87412587f, 0.85314685f },
+        .br = { 0.97202797f, 0.85314685f }
       }
     };
     static auto sit_right_2 = (grumble::SpriteDefinition) {
@@ -243,10 +254,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 42 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.68478261f, 0.33695652f },
-        .tr = { 0.78623188f, 0.33695652f },
-        .bl = { 0.68478261f, 0.18478261f },
-        .br = { 0.78623188f, 0.18478261f }
+        .tl = { 0.0f, 0.84615385f },
+        .tr = { 0.0979021f, 0.84615385f },
+        .bl = { 0.0f, 0.6993007f },
+        .br = { 0.0979021f, 0.6993007f }
       }
     };
     static auto sit_right_3 = (grumble::SpriteDefinition) {
@@ -254,10 +265,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.35869565f, 0.32971014f },
-        .tr = { 0.46014493f, 0.32971014f },
-        .bl = { 0.35869565f, 0.17028986f },
-        .br = { 0.46014493f, 0.17028986f }
+        .tl = { 0.0979021f, 0.84615385f },
+        .tr = { 0.1958042f, 0.84615385f },
+        .bl = { 0.0979021f, 0.69230769f },
+        .br = { 0.1958042f, 0.69230769f }
       }
     };
     static auto sit_right_4 = (grumble::SpriteDefinition) {
@@ -265,10 +276,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.35869565f, 0.16304348f },
-        .tr = { 0.46014493f, 0.16304348f },
-        .bl = { 0.35869565f, 0.00362319f },
-        .br = { 0.46014493f, 0.00362319f }
+        .tl = { 0.1958042f, 0.84615385f },
+        .tr = { 0.29370629f, 0.84615385f },
+        .bl = { 0.1958042f, 0.69230769f },
+        .br = { 0.29370629f, 0.69230769f }
       }
     };
     static auto sit_right_5 = (grumble::SpriteDefinition) {
@@ -276,10 +287,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 42 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.68478261f, 0.17753623f },
-        .tr = { 0.78623188f, 0.17753623f },
-        .bl = { 0.68478261f, 0.02536232f },
-        .br = { 0.78623188f, 0.02536232f }
+        .tl = { 0.29370629f, 0.84615385f },
+        .tr = { 0.39160839f, 0.84615385f },
+        .bl = { 0.29370629f, 0.6993007f },
+        .br = { 0.39160839f, 0.6993007f }
       }
     };
     static auto sit_right_6 = (grumble::SpriteDefinition) {
@@ -287,10 +298,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 42 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.79347826f, 0.33695652f },
-        .tr = { 0.89492754f, 0.33695652f },
-        .bl = { 0.79347826f, 0.18478261f },
-        .br = { 0.89492754f, 0.18478261f }
+        .tl = { 0.39160839f, 0.84615385f },
+        .tr = { 0.48951049f, 0.84615385f },
+        .bl = { 0.39160839f, 0.6993007f },
+        .br = { 0.48951049f, 0.6993007f }
       }
     };
     static auto walk_down_1 = (grumble::SpriteDefinition) {
@@ -298,10 +309,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.70652174f, 0.99637681f },
-        .tr = { 0.81521739f, 0.99637681f },
-        .bl = { 0.70652174f, 0.83695652f },
-        .br = { 0.81521739f, 0.83695652f }
+        .tl = { 0.62937063f, 0.53846154f },
+        .tr = { 0.73426573f, 0.53846154f },
+        .bl = { 0.62937063f, 0.38461538f },
+        .br = { 0.73426573f, 0.38461538f }
       }
     };
     static auto walk_down_2 = (grumble::SpriteDefinition) {
@@ -309,10 +320,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.82246377f, 0.99637681f },
-        .tr = { 0.93115942f, 0.99637681f },
-        .bl = { 0.82246377f, 0.83695652f },
-        .br = { 0.93115942f, 0.83695652f }
+        .tl = { 0.73426573f, 0.53846154f },
+        .tr = { 0.83916084f, 0.53846154f },
+        .bl = { 0.73426573f, 0.38461538f },
+        .br = { 0.83916084f, 0.38461538f }
       }
     };
     static auto walk_down_3 = (grumble::SpriteDefinition) {
@@ -320,10 +331,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.24275362f, 0.82971014f },
-        .tr = { 0.35144928f, 0.82971014f },
-        .bl = { 0.24275362f, 0.67028986f },
-        .br = { 0.35144928f, 0.67028986f }
+        .tl = { 0.83916084f, 0.53846154f },
+        .tr = { 0.94405594f, 0.53846154f },
+        .bl = { 0.83916084f, 0.38461538f },
+        .br = { 0.94405594f, 0.38461538f }
       }
     };
     static auto walk_down_4 = (grumble::SpriteDefinition) {
@@ -331,10 +342,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.24275362f, 0.66304348f },
-        .tr = { 0.35144928f, 0.66304348f },
-        .bl = { 0.24275362f, 0.50362319f },
-        .br = { 0.35144928f, 0.50362319f }
+        .tl = { 0.0f, 0.37762238f },
+        .tr = { 0.1048951f, 0.37762238f },
+        .bl = { 0.0f, 0.22377622f },
+        .br = { 0.1048951f, 0.22377622f }
       }
     };
     static auto walk_down_5 = (grumble::SpriteDefinition) {
@@ -342,10 +353,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.24275362f, 0.49637681f },
-        .tr = { 0.35144928f, 0.49637681f },
-        .bl = { 0.24275362f, 0.33695652f },
-        .br = { 0.35144928f, 0.33695652f }
+        .tl = { 0.1048951f, 0.37762238f },
+        .tr = { 0.20979021f, 0.37762238f },
+        .bl = { 0.1048951f, 0.22377622f },
+        .br = { 0.20979021f, 0.22377622f }
       }
     };
     static auto walk_down_6 = (grumble::SpriteDefinition) {
@@ -353,10 +364,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.24275362f, 0.32971014f },
-        .tr = { 0.35144928f, 0.32971014f },
-        .bl = { 0.24275362f, 0.17028986f },
-        .br = { 0.35144928f, 0.17028986f }
+        .tl = { 0.20979021f, 0.37762238f },
+        .tr = { 0.31468531f, 0.37762238f },
+        .bl = { 0.20979021f, 0.22377622f },
+        .br = { 0.31468531f, 0.22377622f }
       }
     };
     static auto walk_left_1 = (grumble::SpriteDefinition) {
@@ -364,10 +375,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 26, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.90217391f, 0.66304348f },
-        .tr = { 0.99637681f, 0.66304348f },
-        .bl = { 0.90217391f, 0.50362319f },
-        .br = { 0.99637681f, 0.50362319f }
+        .tl = { 0.0f, 1.0f },
+        .tr = { 0.09090909f, 1.0f },
+        .bl = { 0.0f, 0.84615385f },
+        .br = { 0.09090909f, 0.84615385f }
       }
     };
     static auto walk_left_2 = (grumble::SpriteDefinition) {
@@ -375,10 +386,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.4673913f, 0.66304348f },
-        .tr = { 0.56884058f, 0.66304348f },
-        .bl = { 0.4673913f, 0.50362319f },
-        .br = { 0.56884058f, 0.50362319f }
+        .tl = { 0.48951049f, 0.84615385f },
+        .tr = { 0.58741259f, 0.84615385f },
+        .bl = { 0.48951049f, 0.69230769f },
+        .br = { 0.58741259f, 0.69230769f }
       }
     };
     static auto walk_left_3 = (grumble::SpriteDefinition) {
@@ -386,10 +397,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.57608696f, 0.66304348f },
-        .tr = { 0.67753623f, 0.66304348f },
-        .bl = { 0.57608696f, 0.50362319f },
-        .br = { 0.67753623f, 0.50362319f }
+        .tl = { 0.58741259f, 0.84615385f },
+        .tr = { 0.68531469f, 0.84615385f },
+        .bl = { 0.58741259f, 0.69230769f },
+        .br = { 0.68531469f, 0.69230769f }
       }
     };
     static auto walk_left_4 = (grumble::SpriteDefinition) {
@@ -397,10 +408,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.68478261f, 0.66304348f },
-        .tr = { 0.78623188f, 0.66304348f },
-        .bl = { 0.68478261f, 0.50362319f },
-        .br = { 0.78623188f, 0.50362319f }
+        .tl = { 0.68531469f, 0.84615385f },
+        .tr = { 0.78321678f, 0.84615385f },
+        .bl = { 0.68531469f, 0.69230769f },
+        .br = { 0.78321678f, 0.69230769f }
       }
     };
     static auto walk_left_5 = (grumble::SpriteDefinition) {
@@ -408,10 +419,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.79347826f, 0.66304348f },
-        .tr = { 0.89492754f, 0.66304348f },
-        .bl = { 0.79347826f, 0.50362319f },
-        .br = { 0.89492754f, 0.50362319f }
+        .tl = { 0.78321678f, 0.84615385f },
+        .tr = { 0.88111888f, 0.84615385f },
+        .bl = { 0.78321678f, 0.69230769f },
+        .br = { 0.88111888f, 0.69230769f }
       }
     };
     static auto walk_left_6 = (grumble::SpriteDefinition) {
@@ -419,10 +430,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.70652174f, 0.82971014f },
-        .tr = { 0.80797101f, 0.82971014f },
-        .bl = { 0.70652174f, 0.67028986f },
-        .br = { 0.80797101f, 0.67028986f }
+        .tl = { 0.88111888f, 0.84615385f },
+        .tr = { 0.97902098f, 0.84615385f },
+        .bl = { 0.88111888f, 0.69230769f },
+        .br = { 0.97902098f, 0.69230769f }
       }
     };
     static auto walk_right_1 = (grumble::SpriteDefinition) {
@@ -430,10 +441,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.4673913f, 0.49637681f },
-        .tr = { 0.56884058f, 0.49637681f },
-        .bl = { 0.4673913f, 0.33695652f },
-        .br = { 0.56884058f, 0.33695652f }
+        .tl = { 0.0f, 0.69230769f },
+        .tr = { 0.0979021f, 0.69230769f },
+        .bl = { 0.0f, 0.53846154f },
+        .br = { 0.0979021f, 0.53846154f }
       }
     };
     static auto walk_right_2 = (grumble::SpriteDefinition) {
@@ -441,10 +452,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.4673913f, 0.32971014f },
-        .tr = { 0.56884058f, 0.32971014f },
-        .bl = { 0.4673913f, 0.17028986f },
-        .br = { 0.56884058f, 0.17028986f }
+        .tl = { 0.0979021f, 0.69230769f },
+        .tr = { 0.1958042f, 0.69230769f },
+        .bl = { 0.0979021f, 0.53846154f },
+        .br = { 0.1958042f, 0.53846154f }
       }
     };
     static auto walk_right_3 = (grumble::SpriteDefinition) {
@@ -452,10 +463,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.81521739f, 0.82971014f },
-        .tr = { 0.91666667f, 0.82971014f },
-        .bl = { 0.81521739f, 0.67028986f },
-        .br = { 0.91666667f, 0.67028986f }
+        .tl = { 0.1958042f, 0.69230769f },
+        .tr = { 0.29370629f, 0.69230769f },
+        .bl = { 0.1958042f, 0.53846154f },
+        .br = { 0.29370629f, 0.53846154f }
       }
     };
     static auto walk_right_4 = (grumble::SpriteDefinition) {
@@ -463,10 +474,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.4673913f, 0.16304348f },
-        .tr = { 0.56884058f, 0.16304348f },
-        .bl = { 0.4673913f, 0.00362319f },
-        .br = { 0.56884058f, 0.00362319f }
+        .tl = { 0.29370629f, 0.69230769f },
+        .tr = { 0.39160839f, 0.69230769f },
+        .bl = { 0.29370629f, 0.53846154f },
+        .br = { 0.39160839f, 0.53846154f }
       }
     };
     static auto walk_right_5 = (grumble::SpriteDefinition) {
@@ -474,10 +485,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.57608696f, 0.49637681f },
-        .tr = { 0.67753623f, 0.49637681f },
-        .bl = { 0.57608696f, 0.33695652f },
-        .br = { 0.67753623f, 0.33695652f }
+        .tl = { 0.39160839f, 0.69230769f },
+        .tr = { 0.48951049f, 0.69230769f },
+        .bl = { 0.39160839f, 0.53846154f },
+        .br = { 0.48951049f, 0.53846154f }
       }
     };
     static auto walk_right_6 = (grumble::SpriteDefinition) {
@@ -485,10 +496,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 28, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.57608696f, 0.32971014f },
-        .tr = { 0.67753623f, 0.32971014f },
-        .bl = { 0.57608696f, 0.17028986f },
-        .br = { 0.67753623f, 0.17028986f }
+        .tl = { 0.48951049f, 0.69230769f },
+        .tr = { 0.58741259f, 0.69230769f },
+        .bl = { 0.48951049f, 0.53846154f },
+        .br = { 0.58741259f, 0.53846154f }
       }
     };
     static auto walk_up_1 = (grumble::SpriteDefinition) {
@@ -496,10 +507,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.24275362f, 0.16304348f },
-        .tr = { 0.35144928f, 0.16304348f },
-        .bl = { 0.24275362f, 0.00362319f },
-        .br = { 0.35144928f, 0.00362319f }
+        .tl = { 0.31468531f, 0.37762238f },
+        .tr = { 0.41958042f, 0.37762238f },
+        .bl = { 0.31468531f, 0.22377622f },
+        .br = { 0.41958042f, 0.22377622f }
       }
     };
     static auto walk_up_2 = (grumble::SpriteDefinition) {
@@ -507,10 +518,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 32, 46 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.00362319f, 0.75724638f },
-        .tr = { 0.11956522f, 0.75724638f },
-        .bl = { 0.00362319f, 0.59057971f },
-        .br = { 0.11956522f, 0.59057971f }
+        .tl = { 0.0f, 0.22377622f },
+        .tr = { 0.11188811f, 0.22377622f },
+        .bl = { 0.0f, 0.06293706f },
+        .br = { 0.11188811f, 0.06293706f }
       }
     };
     static auto walk_up_3 = (grumble::SpriteDefinition) {
@@ -518,10 +529,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.35869565f, 0.82971014f },
-        .tr = { 0.4673913f, 0.82971014f },
-        .bl = { 0.35869565f, 0.67028986f },
-        .br = { 0.4673913f, 0.67028986f }
+        .tl = { 0.41958042f, 0.37762238f },
+        .tr = { 0.52447552f, 0.37762238f },
+        .bl = { 0.41958042f, 0.22377622f },
+        .br = { 0.52447552f, 0.22377622f }
       }
     };
     static auto walk_up_4 = (grumble::SpriteDefinition) {
@@ -529,10 +540,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.47463768f, 0.82971014f },
-        .tr = { 0.58333333f, 0.82971014f },
-        .bl = { 0.47463768f, 0.67028986f },
-        .br = { 0.58333333f, 0.67028986f }
+        .tl = { 0.52447552f, 0.37762238f },
+        .tr = { 0.62937063f, 0.37762238f },
+        .bl = { 0.52447552f, 0.22377622f },
+        .br = { 0.62937063f, 0.22377622f }
       }
     };
     static auto walk_up_5 = (grumble::SpriteDefinition) {
@@ -540,10 +551,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 32, 46 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.00362319f, 0.58333333f },
-        .tr = { 0.11956522f, 0.58333333f },
-        .bl = { 0.00362319f, 0.41666667f },
-        .br = { 0.11956522f, 0.41666667f }
+        .tl = { 0.11188811f, 0.22377622f },
+        .tr = { 0.22377622f, 0.22377622f },
+        .bl = { 0.11188811f, 0.06293706f },
+        .br = { 0.22377622f, 0.06293706f }
       }
     };
     static auto walk_up_6 = (grumble::SpriteDefinition) {
@@ -551,10 +562,10 @@ namespace atlas {
       .atlas = "main",
       .size = { 30, 44 },
       .region = (grumble::SpriteRegion) {
-        .tl = { 0.59057971f, 0.82971014f },
-        .tr = { 0.69927536f, 0.82971014f },
-        .bl = { 0.59057971f, 0.67028986f },
-        .br = { 0.69927536f, 0.67028986f }
+        .tl = { 0.62937063f, 0.37762238f },
+        .tr = { 0.73426573f, 0.37762238f },
+        .bl = { 0.62937063f, 0.22377622f },
+        .br = { 0.73426573f, 0.22377622f }
       }
     };
 

@@ -29,4 +29,7 @@ void Tile::updateInstanceBuffer(
     _layers[i]->updateInstanceBuffer(rendererManager, t);
   }
 }
+
+#pragma mark getters
+
 } // namespace ml

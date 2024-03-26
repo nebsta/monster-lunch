@@ -1,5 +1,7 @@
 #include "Level.hpp"
+#include "Tile.hpp"
 #include "TileCoordinate.hpp"
+#include <grumble/core/CameraRange.hpp>
 #include <grumble/util/HandmadeMath.h>
 #include <memory>
 
@@ -30,6 +32,13 @@ void Level::updateInstanceBuffer(
       _tiles[i][j]->updateInstanceBuffer(rendererManager, t);
     }
   }
+}
+
+#pragma mark getters
+
+HMM_Vec2 Level::levelSize() const {
+  return (HMM_Vec2){.Width = TILE_DIMENSION * MAX_LEVEL_WIDTH,
+                    .Height = TILE_DIMENSION * MAX_LEVEL_HEIGHT};
 }
 
 } // namespace ml

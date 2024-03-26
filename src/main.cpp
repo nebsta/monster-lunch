@@ -6,7 +6,6 @@
 #include "editor/MLEditorState.hpp"
 #include "input/SDLInputManager.hpp"
 #include "level/Level.hpp"
-#include "level/LevelSystem.hpp"
 #include "rendering/SokolRendererManager.hpp"
 #include "sprite/_gen_MainAtlas.hpp"
 #include <SDL_timer.h>
@@ -14,6 +13,7 @@
 #include <grumble/anim/ReplayBehaviour.hpp>
 #include <grumble/anim/SpriteAnimator.hpp>
 #include <grumble/anim/SpriteAnimatorConfiguration.hpp>
+#include <grumble/core/CameraRange.hpp>
 #include <grumble/core/Game.hpp>
 #include <grumble/font/FontManagerConfiguration.hpp>
 #include <grumble/input/InputManager.hpp>
@@ -138,6 +138,15 @@ int main() {
   //   game.addView(std::move(spriteView),
   //   grumble::ViewLayerType::FOREGROUND_1);
   // }
+
+  // calculte the range of motion for the camera
+  auto levelSize = level->levelSize();
+  auto cameraRange = (grumble::CameraRange){.left = 0.0,
+                                            .top = 0.0,
+                                            .bottom = levelSize.Height - 1024,
+                                            .right = levelSize.Width - 1024};
+  grumble::Logger::info("Camera Range: {}", cameraRange.toString());
+  game.camera()->setCameraRange(cameraRange);
 
   // registering the camera movement
   grumble::System::unique_ptr cameraSystem =
