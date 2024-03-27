@@ -21,10 +21,10 @@ Level::Level(grumble::ViewFactory::shared_ptr viewFactory)
 
 Level::~Level() {}
 
-void Level::update(double dt) {
+void Level::update(double dt, grumble::FrameInput &input) {
   for (int i = 0; i < MAX_LEVEL_WIDTH; i++) {
     for (int j = 0; j < MAX_LEVEL_HEIGHT; j++) {
-      _tiles[i][j]->update(dt);
+      _tiles[i][j]->update(dt, input);
     }
   }
 }
@@ -36,17 +36,6 @@ void Level::pushBuffer(grumble::InstanceBufferCollection &collection,
       _tiles[i][j]->pushBuffer(collection, t);
     }
   }
-}
-
-bool Level::tryHandleTouchInternal(HMM_Vec2 position) {
-  for (int i = 0; i < MAX_LEVEL_WIDTH; i++) {
-    for (int j = 0; j < MAX_LEVEL_HEIGHT; j++) {
-      if (_tiles[i][j]->tryHandleTouch(position)) {
-        return true;
-      }
-    }
-  }
-  return false;
 }
 
 #pragma mark getters

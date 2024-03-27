@@ -20,14 +20,11 @@ public:
   Level(grumble::ViewFactory::shared_ptr viewFactory);
   ~Level();
 
-  void update(double dt) override;
+  void update(double dt, grumble::FrameInput &input) override;
   void pushBuffer(grumble::InstanceBufferCollection &collection,
                   double t) override;
 
   HMM_Vec2 levelSize() const;
-
-protected:
-  bool tryHandleTouchInternal(HMM_Vec2 position) override;
 
 private:
   Tile::unique_ptr _tiles[MAX_LEVEL_WIDTH][MAX_LEVEL_HEIGHT];

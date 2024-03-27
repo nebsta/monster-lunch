@@ -1,17 +1,19 @@
 #include "SDLInputManager.hpp"
+#include "../rendering/sokol.hpp"
+#include "../utils/SDL2Utils.hpp"
 #include <SDL_events.h>
 #include <grumble/core/Object.hpp>
+#include <grumble/input/FrameInput.hpp>
 
 SDLInputManager::SDLInputManager() : grumble::InputManager() {}
 
 SDLInputManager::~SDLInputManager() {}
 
-bool SDLInputManager::update() {
+void SDLInputManager::update() {
   SDL_Event e;
-  bool terminate = false;
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
-      terminate = true;
+      scheduleTermination();
       break;
     }
 
@@ -32,5 +34,4 @@ bool SDLInputManager::update() {
       simgui_add_mouse_pos_event(e.motion.x, e.motion.y);
     }
   }
-  return terminate;
 }
