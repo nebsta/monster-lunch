@@ -1,4 +1,5 @@
 #include "TileLayer.hpp"
+#include <grumble/render/InstanceBufferCollection.hpp>
 
 namespace ml {
 TileLayer::TileLayer(grumble::ImageView::unique_ptr imageView)
@@ -8,9 +9,9 @@ TileLayer::~TileLayer() {}
 
 void TileLayer::update(double dt) { _imageView->update(dt); }
 
-void TileLayer::updateInstanceBuffer(
-    grumble::RendererManager::shared_ptr rendererManager, double t) {
-  _imageView->updateInstanceBuffer(rendererManager, t);
+void TileLayer::pushBuffer(grumble::InstanceBufferCollection &collection,
+                           double t) {
+  _imageView->pushBuffer(collection, t);
 }
 
 } // namespace ml

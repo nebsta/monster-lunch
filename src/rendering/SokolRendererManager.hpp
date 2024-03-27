@@ -37,9 +37,6 @@ protected:
 
   void prepareMainLayer(double t) override;
 
-  void updateInstanceBuffer(int instanceId, grumble::ViewInstance instance,
-                            double t) override;
-
   void drawMainLayer() override;
 
   void drawDebugGrid(grumble::GridResolution resolution, double t) override;

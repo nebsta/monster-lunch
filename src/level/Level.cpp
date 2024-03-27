@@ -2,11 +2,13 @@
 #include "Tile.hpp"
 #include "TileCoordinate.hpp"
 #include <grumble/core/CameraRange.hpp>
+#include <grumble/render/InstanceBufferCollection.hpp>
 #include <grumble/util/HandmadeMath.h>
 #include <memory>
 
 namespace ml {
-Level::Level(grumble::ViewFactory::shared_ptr viewFactory) {
+Level::Level(grumble::ViewFactory::shared_ptr viewFactory)
+    : View("level_view") {
   for (int i = 0; i < MAX_LEVEL_WIDTH; i++) {
     for (int j = 0; j < MAX_LEVEL_HEIGHT; j++) {
       auto coordinate = (TileCoordinate){.x = i, .y = j};
@@ -25,11 +27,11 @@ void Level::update(double dt) {
   }
 }
 
-void Level::updateInstanceBuffer(
-    grumble::RendererManager::shared_ptr rendererManager, double t) {
+void Level::pushBuffer(grumble::InstanceBufferCollection &collection,
+                       double t) {
   for (int i = 0; i < MAX_LEVEL_WIDTH; i++) {
     for (int j = 0; j < MAX_LEVEL_HEIGHT; j++) {
-      _tiles[i][j]->updateInstanceBuffer(rendererManager, t);
+      _tiles[i][j]->pushBuffer(collection, t);
     }
   }
 }

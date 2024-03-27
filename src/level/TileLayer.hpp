@@ -3,6 +3,7 @@
 #include "TileLayerType.hpp"
 #include <array>
 #include <grumble/core/Object.hpp>
+#include <grumble/render/InstanceBufferCollection.hpp>
 #include <grumble/render/RendererManager.hpp>
 #include <grumble/ui/ImageView.hpp>
 #include <memory>
@@ -17,9 +18,7 @@ public:
   ~TileLayer();
 
   void update(double dt);
-  void
-  updateInstanceBuffer(grumble::RendererManager::shared_ptr rendererManager,
-                       double t);
+  void pushBuffer(grumble::InstanceBufferCollection &collection, double t);
 
 private:
   grumble::ImageView::unique_ptr _imageView;

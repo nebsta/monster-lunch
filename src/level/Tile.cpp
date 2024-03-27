@@ -1,5 +1,6 @@
 #include "Tile.hpp"
 #include "../sprite/_gen_MainAtlas.hpp"
+#include <grumble/render/InstanceBufferCollection.hpp>
 
 namespace ml {
 Tile::Tile(grumble::ViewFactory::shared_ptr viewFactory,
@@ -9,7 +10,7 @@ Tile::Tile(grumble::ViewFactory::shared_ptr viewFactory,
 
   for (int i = 0; i < MAX_TILE_LAYER_TYPES; i++) {
     grumble::ImageView::unique_ptr view =
-        viewFactory->createImageView(EMPTY_SPRITE, position, TILE_SIZE);
+        viewFactory->createImageView("", EMPTY_SPRITE, position, TILE_SIZE);
     view->setSprite(atlas::main::floor_tiled);
     _layers[i] = std::make_unique<TileLayer>(std::move(view));
   }
@@ -23,10 +24,9 @@ void Tile::update(double dt) {
   }
 }
 
-void Tile::updateInstanceBuffer(
-    grumble::RendererManager::shared_ptr rendererManager, double t) {
+void Tile::pushBuffer(grumble::InstanceBufferCollection &collection, double t) {
   for (int i = 0; i < MAX_TILE_LAYER_TYPES; i++) {
-    _layers[i]->updateInstanceBuffer(rendererManager, t);
+    _layers[i]->pushBuffer(collection, t);
   }
 }
 

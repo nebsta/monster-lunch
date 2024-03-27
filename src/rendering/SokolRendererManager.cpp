@@ -199,17 +199,10 @@ void SokolRendererManager::prepareMainLayer(double t) {
       {(int)size.Width, (int)size.Height, ImGui::GetIO().DeltaTime});
 }
 
-void SokolRendererManager::updateInstanceBuffer(int instanceId,
-                                                grumble::ViewInstance instance,
-                                                double t) {
-  _state.view_instances[instanceId] = instance;
-}
-
 void SokolRendererManager::drawMainLayer() {
-  sg_update_buffer(
-      _state.view_bindings.vertex_buffers[1],
-      (sg_range){.ptr = _state.view_instances,
-                 .size = MAX_VIEW_INSTANCES * sizeof(grumble::ViewInstance)});
+  sg_update_buffer(_state.view_bindings.vertex_buffers[1],
+                   (sg_range){.ptr = _instanceBuffers.data(),
+                              .size = _instanceBuffers.size()});
 
   sg_draw(0, 6, MAX_VIEW_INSTANCES);
 }

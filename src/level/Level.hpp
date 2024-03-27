@@ -3,6 +3,7 @@
 #include "Tile.hpp"
 #include <grumble/core/CameraRange.hpp>
 #include <grumble/core/Object.hpp>
+#include <grumble/render/InstanceBufferCollection.hpp>
 #include <grumble/render/RendererManager.hpp>
 #include <grumble/ui/ViewFactory.hpp>
 #include <grumble/util/HandmadeMath.h>
@@ -20,9 +21,8 @@ public:
   ~Level();
 
   void update(double dt) override;
-  void
-  updateInstanceBuffer(grumble::RendererManager::shared_ptr rendererManager,
-                       double t) override;
+  void pushBuffer(grumble::InstanceBufferCollection &collection,
+                  double t) override;
 
   HMM_Vec2 levelSize() const;
 
