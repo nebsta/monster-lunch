@@ -36,6 +36,17 @@ void Level::pushBuffer(grumble::InstanceBufferCollection &collection,
   }
 }
 
+bool Level::tryHandleTouchInternal(HMM_Vec2 position) {
+  for (int i = 0; i < MAX_LEVEL_WIDTH; i++) {
+    for (int j = 0; j < MAX_LEVEL_HEIGHT; j++) {
+      if (_tiles[i][j]->tryHandleTouch(position)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 #pragma mark getters
 
 HMM_Vec2 Level::levelSize() const {

@@ -26,6 +26,9 @@ public:
 
   HMM_Vec2 levelSize() const;
 
+protected:
+  bool tryHandleTouchInternal(HMM_Vec2 position) override;
+
 private:
   Tile::unique_ptr _tiles[MAX_LEVEL_WIDTH][MAX_LEVEL_HEIGHT];
 };

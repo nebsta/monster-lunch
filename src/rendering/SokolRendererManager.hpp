@@ -1,5 +1,6 @@
 #pragma once
 #include "../core/SDLApplication.hpp"
+#include "../debug/ImGuiDebugView.hpp"
 #include "../rendering/SokolState.hpp"
 #include <SDL.h>
 #include <SDL_video.h>
@@ -49,6 +50,8 @@ private:
   grumble::FileManager::shared_ptr _fileManager;
   grumble::FontManager::shared_ptr _fontManager;
   grumble::InputManager::shared_ptr _inputManager;
+
+  ImGuiDebugView _debugView;
 
   SDLApplication::shared_ptr _sdlApplication;
 

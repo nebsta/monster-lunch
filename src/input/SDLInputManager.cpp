@@ -28,6 +28,7 @@ bool SDLInputManager::update() {
       deactivateInput(grumble::InputCode::MouseLeft);
       simgui_add_mouse_button_event(0, false);
     } else if (e.type == SDL_MOUSEMOTION) {
+      mouseMoved({(float)e.motion.x, (float)e.motion.y});
       simgui_add_mouse_pos_event(e.motion.x, e.motion.y);
     }
   }

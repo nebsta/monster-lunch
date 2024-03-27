@@ -1,5 +1,4 @@
 #include "SokolRendererManager.hpp"
-#include "../debug/ImGuiDebugView.hpp"
 #include "../rendering/sokol.hpp"
 #include "Shapes.hpp"
 #include "SokolFactory.hpp"
@@ -26,7 +25,7 @@ SokolRendererManager::SokolRendererManager(
     SDLApplication::shared_ptr sdlApplication)
     : _fileManager(fileManager), _spriteManager(spriteManager),
       _fontManager(fontMananger), _sdlApplication(sdlApplication),
-      _inputManager(inputManager),
+      _inputManager(inputManager), _debugView(inputManager),
       grumble::RendererManager(configuration, std::move(editorView)) {
   _state = {};
 }
@@ -204,7 +203,7 @@ void SokolRendererManager::drawMainLayer() {
                    (sg_range){.ptr = _instanceBuffers.data(),
                               .size = _instanceBuffers.size()});
 
-  sg_draw(0, 6, MAX_VIEW_INSTANCES);
+  sg_draw(0, 6, _instanceBuffers.count());
 }
 
 void SokolRendererManager::drawDebugGrid(grumble::GridResolution resolution,
@@ -290,7 +289,7 @@ void SokolRendererManager::drawDebugStats(
 void SokolRendererManager::drawDebugMenu(
     grumble::DebugState::shared_ptr debugState, double t) {
   HMM_Vec2 size = _sdlApplication->screenSize();
-  ImGuiDebugView::draw(size, cameraPos(t), debugState);
+  _debugView.draw(size, cameraPos(t), debugState);
 }
 
 void SokolRendererManager::commitFrame() {

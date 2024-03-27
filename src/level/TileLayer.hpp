@@ -19,6 +19,7 @@ public:
 
   void update(double dt);
   void pushBuffer(grumble::InstanceBufferCollection &collection, double t);
+  bool tryHandleTouch(HMM_Vec2 position);
 
 private:
   grumble::ImageView::unique_ptr _imageView;

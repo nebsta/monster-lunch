@@ -1,6 +1,10 @@
 #include "ImGuiDebugView.hpp"
-#include "../rendering/sokol.hpp"
 #include <imgui.h>
+
+ImGuiDebugView::ImGuiDebugView(grumble::InputManager::shared_ptr inputManager)
+    : _inputManager(inputManager) {}
+
+ImGuiDebugView::~ImGuiDebugView() {}
 
 void ImGuiDebugView::draw(HMM_Vec2 screenSize, HMM_Vec2 cameraPos,
                           grumble::DebugState::shared_ptr state) {

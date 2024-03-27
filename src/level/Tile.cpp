@@ -30,6 +30,15 @@ void Tile::pushBuffer(grumble::InstanceBufferCollection &collection, double t) {
   }
 }
 
+bool Tile::tryHandleTouch(HMM_Vec2 position) {
+  for (int i = 0; i < MAX_TILE_LAYER_TYPES; i++) {
+    if (_layers[i]->tryHandleTouch(position)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 #pragma mark getters
 
 } // namespace ml
