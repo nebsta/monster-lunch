@@ -113,8 +113,8 @@ int main() {
   //   grumble::ViewLayerType::FOREGROUND_1); index++;
   // }
 
-  auto level = std::make_unique<ml::Level>(game.viewFactory());
-  game.addView(std::move(level), grumble::ViewLayerType::FOREGROUND_1);
+  // auto level = std::make_unique<ml::Level>(game.viewFactory());
+  // game.addView(std::move(level), grumble::ViewLayerType::FOREGROUND_1);
 
   // game.addView(std::move(testSpriteView),
   // grumble::ViewLayerType::FOREGROUND_1);
@@ -140,13 +140,14 @@ int main() {
   // }
 
   // calculte the range of motion for the camera
-  auto levelSize = level->levelSize();
-  auto cameraRange = (grumble::CameraRange){.left = 0.0,
-                                            .top = 0.0,
-                                            .bottom = levelSize.Height - 1024,
-                                            .right = levelSize.Width - 1024};
-  grumble::Logger::info("Camera Range: {}", cameraRange.toString());
-  game.camera()->setCameraRange(cameraRange);
+  // auto levelSize = level->levelSize();
+  // auto cameraRange = (grumble::CameraRange){.left = 0.0,
+  //                                           .top = 0.0,
+  //                                           .bottom = levelSize.Height -
+  //                                           1024, .right = levelSize.Width -
+  //                                           1024};
+  // grumble::Logger::info("Camera Range: {}", cameraRange.toString());
+  // game.camera()->setCameraRange(cameraRange);
 
   // registering the camera movement
   grumble::System::unique_ptr cameraSystem =

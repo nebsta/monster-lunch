@@ -9,19 +9,12 @@
 #include <memory>
 
 namespace ml {
-class TileLayer : public grumble::Object {
+class TileLayer : public grumble::ImageView {
 public:
   typedef std::unique_ptr<TileLayer> unique_ptr;
   typedef std::array<unique_ptr, MAX_TILE_LAYER_TYPES> unique_array;
 
-  TileLayer(grumble::ImageView::unique_ptr imageView);
+  TileLayer(const std::string &id);
   ~TileLayer();
-
-  void update(double dt);
-  void pushBuffer(grumble::InstanceBufferCollection &collection, double t);
-  bool tryHandleTouch(HMM_Vec2 position);
-
-private:
-  grumble::ImageView::unique_ptr _imageView;
 };
 } // namespace ml

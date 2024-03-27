@@ -1,6 +1,7 @@
 #include "Level.hpp"
 #include "Tile.hpp"
 #include "TileCoordinate.hpp"
+#include <fmt/core.h>
 #include <grumble/core/CameraRange.hpp>
 #include <grumble/render/InstanceBufferCollection.hpp>
 #include <grumble/util/HandmadeMath.h>
@@ -12,7 +13,8 @@ Level::Level(grumble::ViewFactory::shared_ptr viewFactory)
   for (int i = 0; i < MAX_LEVEL_WIDTH; i++) {
     for (int j = 0; j < MAX_LEVEL_HEIGHT; j++) {
       auto coordinate = (TileCoordinate){.x = i, .y = j};
-      _tiles[i][j] = std::make_unique<Tile>(viewFactory, coordinate);
+      std::string id = fmt::format("{}{}", i, j);
+      _tiles[i][j] = std::make_unique<Tile>(id, coordinate);
     }
   }
 }

@@ -199,6 +199,10 @@ void SokolRendererManager::prepareMainLayer(double t) {
 }
 
 void SokolRendererManager::drawMainLayer() {
+  if (_instanceBuffers.count() == 0) {
+    return;
+  }
+
   sg_update_buffer(_state.view_bindings.vertex_buffers[1],
                    (sg_range){.ptr = _instanceBuffers.data(),
                               .size = _instanceBuffers.size()});
