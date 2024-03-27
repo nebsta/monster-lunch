@@ -12,10 +12,10 @@ Tile::Tile(const std::string &id, TileCoordinate coords)
                        float(coords.y * TILE_DIMENSION)};
 
   for (int i = 0; i < MAX_TILE_LAYER_TYPES; i++) {
-    // auto layerType = static_cast<TileLayerType>(i);
-    // std::string id =
-    // fmt::format("{}_{}", id, TileLayerType_toString(layerType));
-    auto layer = std::make_unique<TileLayer>("");
+    auto layerType = static_cast<TileLayerType>(i);
+    std::string layerId =
+        fmt::format("{}_{}", id, TileLayerType_toString(layerType));
+    auto layer = std::make_unique<TileLayer>(layerId);
     layer->setPosition(position);
     layer->setSize(TILE_SIZE);
     if (i == 0) {
